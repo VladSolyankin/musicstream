@@ -5,7 +5,7 @@ const Header = () => {
 		<div className="container flex justify-between items-center mx-auto max-w-5xl">
 			<div className="flex justify-start items-center basis-3/4 h-12 bg-gray-900 rounded-xl bg-gray-12 my-4 p-4">
 				<img src="src/assets/logo-transparent.png" className="w-36" alt="Musicstream logo"/>
-				<ul className="flex items-center justify-between basis-2/4 text-white text-sm font-jost mx-auto">
+				<ul className="flex items-center justify-between basis-4/6 text-white text-lg font-jost mx-auto">
 					<li>Треки</li>
 					<li>Исполнители</li>
 					<li>Моя музыка</li>
