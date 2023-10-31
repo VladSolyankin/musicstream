@@ -9,6 +9,11 @@ module.exports = {
       extend: {
           fontFamily: {
               "jost": ["Jost", "sans-serif"]
+          },
+          backgroundImage: {
+              'new-tracks': "url('src/assets/new_tracks.png')",
+              'top-songs': "url('src/assets/top_songs.png')",
+              'trending': "url('src/assets/trending.png')",
           }
       },
       colors: {
