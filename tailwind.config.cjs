@@ -18,7 +18,11 @@ module.exports = {
       },
       colors: {
           "gray-12": '#121212',
-          "white": '#FFFFFF'
+          "white": '#FFFFFF',
+          "gray-600": "#666666"
+      },
+      boxShadow: {
+          'cardShadow': '0px 0px 15px 3px rgba(0, 0, 0, 1)'
       }
 
   },

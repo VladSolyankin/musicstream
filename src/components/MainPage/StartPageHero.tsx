@@ -1,6 +1,3 @@
-import '../css/App.css'
-import '../js/parallax.js'
-
 const StartPageHero = () => {
     return (
         <div className="flex items-center justify-center">
