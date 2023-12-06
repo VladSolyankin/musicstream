@@ -10,7 +10,7 @@ const Header = () => {
 					src="src/assets/logo-transparent.png" className="w-36 cursor-pointer" alt="Musicstream logo"/>
 				<ul className="flex items-center justify-between basis-4/6 text-white text-lg font-jost mx-auto">
 					<li className="cursor-pointer" onClick={() => navigator("/tracks")}>Треки</li>
-					<li className="cursor-pointer">Исполнители</li>
+					<li className="cursor-pointer" onClick={() => navigator("/creators")}>Исполнители</li>
 					<li className="cursor-pointer" onClick={() => navigator("/my_music")}>Моя музыка</li>
 					<li className="cursor-pointer">Прочее</li>
 				</ul>
