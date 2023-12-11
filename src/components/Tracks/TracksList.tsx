@@ -9,15 +9,12 @@ export const TracksList = () => {
     const [isFunctionExecuted, setIsFunctionExecuted] = useState(false)
     const [likedTracksIds, setLikedTracksIds] = useState([])
 
-
     const onTrackSearch = async () => {
         try {
             const tracksIds = await getIdsByName(query)
             const trackPreviews = await getTrackPreviews(tracksIds)
             setTracks(trackPreviews)
-
             setIsFunctionExecuted(true)
-
         } catch (error) {
             console.error('Error searching tracks:', error.message);
         }

@@ -1,5 +1,7 @@
 import {useState} from 'react';
+import SelectedPlaylist from "./SelectedPlaylist";
 const Playlists = () => {
+    const [isPlaylistSelected, setIsPlaylistSelected] = useState(false)
     const [playlists, setPlaylists] = useState([
         { id: 1, name: 'Название', imgPath: "src/assets/carousel1.jpg" },
         { id: 2, name: 'Название', imgPath: "src/assets/carousel2.jpg" },
@@ -8,14 +10,16 @@ const Playlists = () => {
         { id: 4, name: 'Название', imgPath: "src/assets/carousel2.jpg" },
         { id: 5, name: 'Название', imgPath: "src/assets/carousel3.jpg" },
         { id: 6, name: 'Название', imgPath: "src/assets/carousel1.jpg" },
-        { id: 7, name: 'Название', imgPath: "src/assets/carousel2.jpg" },
-        { id: 8, name: 'Название', imgPath: "src/assets/carousel3.jpg" },
     ]);
 
     const addPlaylist = () => {
         const newPlaylist = { id: playlists.length + 1, name: 'Новый плейлист', imgPath: "src/assets/carousel1.jpg" };
         setPlaylists([...playlists, newPlaylist]);
     };
+
+    const onPlaylistSelect = () => {
+        setIsPlaylistSelected(!isPlaylistSelected)
+    }
 
     return (
         <div className="flex flex-col justify-center items-center border-2 border-white max-w-5xl mx-auto my-10 py-10 rounded-xl bg-gray-12">
@@ -33,17 +37,23 @@ const Playlists = () => {
             <div className="grid grid-cols-3 gap-20">
                 {playlists.map(playlist => (
                     <div key={playlist.id}>
-                        <div
-                            className="bg-gray-100 p-2 rounded flex items-center"
+                        <div className="bg-gray-100 p-2 rounded flex items-center"
+
                         >
-                            <img className="w-44 h-44 rounded mr-2" src={playlist.imgPath} alt={playlist.name} />
+                            <img className="w-44 h-44 rounded mr-2 hover:scale-90 duration-150"
+                                 src={playlist.imgPath} alt={playlist.name}
+                                 onClick = {onPlaylistSelect}
+
+                            />
                         </div>
-                        <h2 className="text-white text-lg text-center">
+                        <h2 className="text-white text-xl text-center">
                             {playlist.name}
                         </h2>
                     </div>
                 ))}
             </div>
+
+            {isPlaylistSelected && <SelectedPlaylist />}
         </div>
     );
 };
