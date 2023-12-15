@@ -1,25 +1,27 @@
-import {useState} from 'react';
-import SelectedPlaylist from "./SelectedPlaylist";
-const Playlists = () => {
-    const [isPlaylistSelected, setIsPlaylistSelected] = useState(false)
-    const [playlists, setPlaylists] = useState([
-        { id: 1, name: 'Название', imgPath: "src/assets/carousel1.jpg" },
-        { id: 2, name: 'Название', imgPath: "src/assets/carousel2.jpg" },
-        { id: 3, name: 'Название', imgPath: "src/assets/carousel3.jpg" },
-        { id: 3, name: 'Название', imgPath: "src/assets/carousel1.jpg" },
-        { id: 4, name: 'Название', imgPath: "src/assets/carousel2.jpg" },
-        { id: 5, name: 'Название', imgPath: "src/assets/carousel3.jpg" },
-        { id: 6, name: 'Название', imgPath: "src/assets/carousel1.jpg" },
-    ]);
+import React, {useState} from 'react';
+
+
+interface Playlist {
+    id: number,
+    name: string,
+    imgPath: string
+}
+
+interface PlaylistsProps {
+    onPlaylistSelect: () => void;
+}
+
+const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
+    const [playlists, setPlaylists] = useState<Playlist[]>([]);
 
     const addPlaylist = () => {
-        const newPlaylist = { id: playlists.length + 1, name: 'Новый плейлист', imgPath: "src/assets/carousel1.jpg" };
+        const newPlaylist: Playlist = {
+            id: playlists.length + 1,
+            name: 'Новый плейлист',
+            imgPath: "src/assets/carousel1.jpg"
+        };
         setPlaylists([...playlists, newPlaylist]);
     };
-
-    const onPlaylistSelect = () => {
-        setIsPlaylistSelected(!isPlaylistSelected)
-    }
 
     return (
         <div className="flex flex-col justify-center items-center border-2 border-white max-w-5xl mx-auto my-10 py-10 rounded-xl bg-gray-12">
@@ -43,7 +45,6 @@ const Playlists = () => {
                             <img className="w-44 h-44 rounded mr-2 hover:scale-90 duration-150"
                                  src={playlist.imgPath} alt={playlist.name}
                                  onClick = {onPlaylistSelect}
-
                             />
                         </div>
                         <h2 className="text-white text-xl text-center">
@@ -52,8 +53,6 @@ const Playlists = () => {
                     </div>
                 ))}
             </div>
-
-            {isPlaylistSelected && <SelectedPlaylist />}
         </div>
     );
 };
