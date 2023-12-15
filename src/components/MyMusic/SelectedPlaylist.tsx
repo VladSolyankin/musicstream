@@ -1,7 +1,11 @@
 import React from 'react';
 import '../../css/Sidemenu.css'
 
-const SelectedPlaylist = ({isVisible}) => {
+interface SelectedPlaylistProps {
+	isVisible: boolean
+}
+
+const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible}) => {
 	return (
 		<div className="wrapper">
 			<div className={isVisible ? "menu__closed" : "menu__opened"}>
