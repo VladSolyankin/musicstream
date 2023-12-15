@@ -1,26 +1,25 @@
-import axios from "axios";
-import {useEffect, useState} from "react";
-import {getIdsByName, getTrackPreviews} from "../../js/spotifyAPI.js"
-// import "./Tracks.css"
+import {useState} from "react";
+import {getIdsByName, getTrackPreviews} from "../../js/spotifyAPI.ts"
+import {Track} from "../../interfaces";
 
 export const TracksList = () => {
     const [query, setQuery] = useState('');
-    const [tracks, setTracks] = useState([]);
+    const [tracks, setTracks] = useState<Array<Track>>([]);
     const [isFunctionExecuted, setIsFunctionExecuted] = useState(false)
-    const [likedTracksIds, setLikedTracksIds] = useState([])
+    const [likedTracksIds, setLikedTracksIds] = useState<Array<string>>([])
 
-    const onTrackSearch = async () => {
+    const onTrackSearch = async (): Promise<void> => {
         try {
             const tracksIds = await getIdsByName(query)
             const trackPreviews = await getTrackPreviews(tracksIds)
             setTracks(trackPreviews)
             setIsFunctionExecuted(true)
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error searching tracks:', error.message);
         }
     };
 
-    const onLikeClick = (trackId) => {
+    const onLikeClick = (trackId: string) => {
         if (likedTracksIds.includes(trackId)) {
             setLikedTracksIds(likedTracksIds.filter(id => id !== trackId))
         }
@@ -42,7 +41,7 @@ export const TracksList = () => {
                 isFunctionExecuted ?
                     <div>
                         <ol className="flex-col">
-                            {tracks.map((track) => (
+                            {tracks.map((track: Track) => (
                                 <li key={track.id} className="border p-4 mb-4 text-white flex items-center justify-between gap-10">
                                     <img src={track.album.images[2].url} alt="" className="basis-1/8"/>
                                     <span className="text-center text-white basis-1/4">{track.name + " - " + track.artists[0].name}</span>
