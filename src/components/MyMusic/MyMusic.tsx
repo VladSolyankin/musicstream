@@ -5,11 +5,10 @@ import LikedPlaylists from "./LikedPlaylists.tsx";
 import SelectedPlaylist from "./SelectedPlaylist.tsx";
 import {useState} from "react";
 
-const MyMusic = () => {
-    const [isPlaylistSelected, setIsPlaylistSelected] = useState(false)
-    const onPlaylistSelect = () => {
+const MyMusic: React.FC = () => {
+    const [isPlaylistSelected, setIsPlaylistSelected] = useState<boolean>(false)
+    const onPlaylistSelect = (): void => {
         setIsPlaylistSelected(!isPlaylistSelected)
-        console.log('clicked')
     }
     return (
         <div>
