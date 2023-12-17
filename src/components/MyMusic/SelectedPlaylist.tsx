@@ -7,10 +7,8 @@ interface SelectedPlaylistProps {
 
 const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible}) => {
 	return (
-		<div className="wrapper">
-			<div className={isVisible ? "menu__closed" : "menu__opened"}>
-
-			</div>
+		<div className={isVisible ? "wrapper menu__opened" : "menu__closed"}>
+			
 		</div>
 	);
 };
