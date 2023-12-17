@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 
-
 interface Playlist {
     id: number,
     name: string,
@@ -24,7 +23,7 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
     };
 
     return (
-        <div className="flex flex-col justify-center items-center border-2 border-white max-w-5xl mx-auto my-10 py-10 rounded-xl bg-gray-12">
+        <div className="flex flex-col justify-center items-center border-2 border-white max-w-5xl mx-auto my-10 py-10 rounded-xl bg-gray-12 p-10">
             <div className="flex justify-between">
                 <div className="relative">
                     <img src="src/assets/grid_icon.png" alt="Add new playlist button" className="w-8 h-8 mr-5"/>
@@ -39,9 +38,7 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
             <div className="grid grid-cols-3 gap-20">
                 {playlists.map(playlist => (
                     <div key={playlist.id}>
-                        <div className="bg-gray-100 p-2 rounded flex items-center"
-
-                        >
+                        <div className="bg-gray-100 p-2 rounded flex items-center">
                             <img className="w-44 h-44 rounded mr-2 hover:scale-90 duration-150"
                                  src={playlist.imgPath} alt={playlist.name}
                                  onClick = {onPlaylistSelect}
