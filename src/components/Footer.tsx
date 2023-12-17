@@ -1,7 +1,7 @@
 
 const Footer = () => {
     return (
-        <footer className="flex justify-center items-center bg-gray-100 py-6 container mx-auto max-w-5xl border-2 rounded-t-2xl border-white px-5">
+        <footer className="flex justify-center items-center bg-gray-100 py-6 container mx-auto border-2 rounded-t-2xl border-white px-5 max-w-5xl">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="text-center md:text-left">
                     <img className="w-64" src="src/assets/logo-transparent.png" alt="Musicstream logo transparent"/>
