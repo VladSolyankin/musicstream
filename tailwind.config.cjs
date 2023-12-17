@@ -14,6 +14,9 @@ module.exports = {
               'new-tracks': "url('src/assets/new_tracks.png')",
               'top-songs': "url('src/assets/top_songs.png')",
               'trending': "url('src/assets/trending.png')",
+          },
+          gridTemplateColumns: {
+              'playlistsWrap': 'repeat(auto-fit, minmax(176px)'
           }
       },
       colors: {
@@ -23,8 +26,7 @@ module.exports = {
       },
       boxShadow: {
           'cardShadow': '0px 0px 15px 3px rgba(0, 0, 0, 1)'
-      }
-
+      },
   },
   plugins: [],
 }
