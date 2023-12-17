@@ -11,7 +11,7 @@ const MyMusic: React.FC = () => {
         setIsPlaylistSelected(!isPlaylistSelected)
     }
     return (
-        <div>
+        <div className="flex flex-col justify-between min-h-screen">
             <Header />
             <Playlists onPlaylistSelect={onPlaylistSelect}/>
             <LikedPlaylists />
