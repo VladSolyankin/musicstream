@@ -11,19 +11,27 @@ const MyMusic: React.FC = () => {
     const [selectedPlaylistTitle, setSelectedPlaylistTitle] = useState<string>("")
 
     const onPlaylistSelect = (imagePath: string, playlistTitle: string): void => {
-        setIsPlaylistSelected(!isPlaylistSelected)
+        setIsPlaylistSelected(true)
         setSelectedPlaylistTitle(playlistTitle)
         setSelectedPlaylistImage(imagePath)
+
+        document.body.style.overflow = 'hidden'
+    }
+
+    const onPlaylistClosed = () => {
+        setIsPlaylistSelected(false)
+        document.body.style.overflow = ''
     }
 
     return (
-        <div className="flex flex-col justify-between min-h-full">
+        <div className="flex flex-col justify-between min-h-screen">
             <Header />
             <Playlists onPlaylistSelect={onPlaylistSelect}/>
             <LikedPlaylists />
             <Footer />
             {isPlaylistSelected &&
                 <SelectedPlaylist isVisible={isPlaylistSelected}
+                                  onPlaylistClosed={onPlaylistClosed}
                                   imagePath={selectedPlaylistImage}
                                   title={selectedPlaylistTitle}
                 />}

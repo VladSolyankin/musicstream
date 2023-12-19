@@ -4,18 +4,20 @@ import '../../css/Sidemenu.css'
 interface SelectedPlaylistProps {
 	isVisible: boolean,
 	imagePath: string,
-	title: string
+	title: string,
+	onPlaylistClosed: () => void;
 }
 
-const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, imagePath, title}) => {
+const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, imagePath, title, onPlaylistClosed}) => {
 
 	const onMenuClosed = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.stopPropagation()
 		const menuClassList = event.currentTarget.parentElement?.classList;
-		menuClassList.replace("wrapper", "menu__closed")
+		menuClassList?.replace("wrapper", "menu__closed")
+		onPlaylistClosed()
 	}
 	return (
-		<div className={isVisible ? "wrapper" : "menu__closed"}>
+		<div className={isVisible ? "wrapper" : "menu__closed overscroll-contain"}>
 			<div className="menu__background" onClick={onMenuClosed}></div>
 			<div className="menu__opened">
 				<div className="flex justify-between">
