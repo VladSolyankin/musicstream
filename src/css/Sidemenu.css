@@ -5,35 +5,30 @@
 
 .wrapper {
   position: absolute;
-  left: 70%;
-  height: 100vh;
-  background: white;
-  float: right;
-  width: 30%;
+  height: 100%;
+  width: 100%;
+  display: flex;
 }
 
 .menu__closed {
   background-color: black;
-  visibility: hidden;
+  display: none;
 }
 
 .menu__opened {
   visibility: visible;
-  animation-duration: 3s;
-  animation-name: slidein;
+  left: 65%;
+  height: 100%;
+  float: right;
+  width: 35%;
   background: lightslategray;
   border: 2px solid white;
 }
 
-@keyframes slidein {
-  from {
-    margin-left: -100%;
-  }
-
-  to {
-    margin-left: 0%;
-    width: 30%;
-  }
+.menu__background {
+  width: 65%;
+  height: 100%;
+  background: black;
+  opacity: .4;
 }
-
 
