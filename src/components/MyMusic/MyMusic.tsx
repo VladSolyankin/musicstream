@@ -7,16 +7,26 @@ import {useState} from "react";
 
 const MyMusic: React.FC = () => {
     const [isPlaylistSelected, setIsPlaylistSelected] = useState<boolean>(false)
-    const onPlaylistSelect = (): void => {
+    const [selectedPlaylistImage, setSelectedPlaylistImage] = useState<string>("")
+    const [selectedPlaylistTitle, setSelectedPlaylistTitle] = useState<string>("")
+
+    const onPlaylistSelect = (imagePath: string, playlistTitle: string): void => {
         setIsPlaylistSelected(!isPlaylistSelected)
+        setSelectedPlaylistTitle(playlistTitle)
+        setSelectedPlaylistImage(imagePath)
     }
+
     return (
-        <div className="flex flex-col justify-between min-h-screen">
+        <div className="flex flex-col justify-between min-h-full">
             <Header />
             <Playlists onPlaylistSelect={onPlaylistSelect}/>
             <LikedPlaylists />
             <Footer />
-            {isPlaylistSelected && <SelectedPlaylist isVisible={isPlaylistSelected}/>}
+            {isPlaylistSelected &&
+                <SelectedPlaylist isVisible={isPlaylistSelected}
+                                  imagePath={selectedPlaylistImage}
+                                  title={selectedPlaylistTitle}
+                />}
         </div>
     );
 };
