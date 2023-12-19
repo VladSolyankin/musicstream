@@ -11,7 +11,7 @@ const rapidApiRequests = {
 	"tracks": 'https://spotify23.p.rapidapi.com/tracks/',
 }
 
-export const getIdsByName = async (query: string) => {
+export const getIdsByName = async (query: string, offset: string) => {
 	try {
 		const response = await axios.request({
 			method: 'GET',
@@ -19,7 +19,7 @@ export const getIdsByName = async (query: string) => {
 			params: {
 				q: query,
 				type: 'multi',
-				offset: '0',
+				offset: offset,
 				limit: '10',
 				numberOfTopResults: '5'
 			},
