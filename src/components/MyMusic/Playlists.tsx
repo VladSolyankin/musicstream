@@ -7,7 +7,7 @@ interface Playlist {
 }
 
 interface PlaylistsProps {
-    onPlaylistSelect: () => void;
+    onPlaylistSelect: (imagePath: string, playlistTitle: string) => void;
 }
 
 const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
@@ -41,7 +41,7 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
                         <div className="bg-gray-100 p-2 rounded flex items-center">
                             <img className="w-44 h-44 rounded mr-2 hover:scale-90 duration-150"
                                  src={playlist.imgPath} alt={playlist.name}
-                                 onClick = {onPlaylistSelect}
+                                 onClick = {() => onPlaylistSelect(playlist.imgPath, playlist.name)}
                             />
                         </div>
                         <h2 className="text-white text-xl text-center">
