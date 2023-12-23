@@ -1,7 +1,7 @@
 import Footer from "../Footer.tsx";
 import Header from "./Header.tsx";
 import Playlists from "./Playlists.tsx";
-import LikedPlaylists from "./LikedPlaylists.tsx";
+import LikedTracks from "./LikedTracks.tsx";
 import SelectedPlaylist from "./SelectedPlaylist.tsx";
 import {useState} from "react";
 
@@ -27,7 +27,7 @@ const MyMusic: React.FC = () => {
         <div className="flex flex-col justify-between min-h-screen">
             <Header />
             <Playlists onPlaylistSelect={onPlaylistSelect}/>
-            <LikedPlaylists />
+            <LikedTracks />
             <Footer />
             {isPlaylistSelected &&
                 <SelectedPlaylist isVisible={isPlaylistSelected}
