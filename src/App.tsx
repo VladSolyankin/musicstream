@@ -7,8 +7,7 @@ import Creators from "./components/Creators/Creators.tsx";
 import Other from "./components/Other/Other.tsx";
 
 function App() {
-
-  return (
+    return (
     <div>
         <BrowserRouter>
             <Routes>
@@ -20,7 +19,7 @@ function App() {
             </Routes>
         </BrowserRouter>
     </div>
-  )
+    )
 }
 
 export default App

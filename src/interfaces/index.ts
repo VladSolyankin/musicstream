@@ -1,4 +1,4 @@
-export interface Track {
+interface Track {
     id: string,
     album: Album,
     name: string,
@@ -18,3 +18,5 @@ interface Album {
 interface Image {
     url: string
 }
+
+export default Track
