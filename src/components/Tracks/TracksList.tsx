@@ -1,22 +1,29 @@
-import {useEffect, useState} from "react";
-import {getIdsByName, getTrackPreviews} from "../../js/spotifyAPI.ts"
-import {Track} from "../../interfaces";
+import {useEffect} from "react";
+import {getIdsByName, getSearchedTracks} from "../../js/spotifyAPI.ts"
 import SearchBar from "./SearchBar";
 import SearchedTracks from "./SearchedTracks";
 import TracksPagination from "./TracksPagination";
+import useStore from "../../store/store.js";
 
 export const TracksList = () => {
-    const [query, setQuery] = useState('')
-    const [page, setPage] = useState(0)
-    const [tracks, setTracks] = useState<Array<Track>>([]);
-    const [isFunctionExecuted, setIsFunctionExecuted] = useState(false)
-    const [likedTracksIds, setLikedTracksIds] = useState<Array<string>>([])
+    const {
+        query,
+        page,
+        tracks,
+        isFunctionExecuted,
+        likedTracksIds,
+        setQuery,
+        setPage,
+        setTracks,
+        setIsFunctionExecuted,
+        setLikedTracksIds } = useStore();
+
 
     const onTrackSearch = async (): Promise<void> => {
         try {
             const tracksIds = await getIdsByName(query, (page * 10).toString())
-            const trackPreviews = await getTrackPreviews(tracksIds)
-            setTracks(trackPreviews)
+            const searchedTracks = await getSearchedTracks(tracksIds)
+            setTracks(searchedTracks)
             setIsFunctionExecuted(true)
         } catch (error: any) {
             console.error('Error searching tracks:', error.message);

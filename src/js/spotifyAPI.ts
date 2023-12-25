@@ -2,7 +2,7 @@ import axios from "axios";
 import {Track} from "../interfaces";
 
 const rapidApiHeaders = {
-	'X-RapidAPI-Key': '0bbb99e9camsh3a78c22b61a5eb1p11d075jsn4925d1d25223',
+	'X-RapidAPI-Key': 'ce85377694mshd0b7c2f5e54523dp1325b4jsn354dbf9bda58',
 	'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
 }
 
@@ -32,7 +32,7 @@ export const getIdsByName = async (query: string, offset: string) => {
 	}
 };
 
-export const getTrackPreviews = async (trackIds: Array<string>): Promise<Track[]> => {
+export const getSearchedTracks = async (trackIds: Array<string>): Promise<Track[]> => {
 	try {
 		const response = await axios.request({
 			method: 'GET',

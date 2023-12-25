@@ -12,10 +12,10 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<MainPage/>}></Route>
-                <Route path="/my_music" element={<MyMusic />}></Route>
-                <Route path="/tracks" element={<Tracks />}></Route>
-                <Route path="/creators" element={<Creators />}></Route>
-                <Route path="/other" element={<Other />}></Route>
+                <Route path="/my_music" element={<MyMusic/>}></Route>
+                <Route path="/tracks" element={<Tracks/>}></Route>
+                <Route path="/creators" element={<Creators/>}></Route>
+                <Route path="/other" element={<Other/>}></Route>
             </Routes>
         </BrowserRouter>
     </div>
