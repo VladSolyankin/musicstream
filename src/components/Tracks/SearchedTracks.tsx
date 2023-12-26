@@ -1,5 +1,6 @@
 import React from 'react';
 import {Track} from "../../interfaces";
+import useStore from "../../store/store.js";
 
 
 const SearchedTracks = ({tracks, onLikeClick, likedTracksIds}) => {
@@ -11,9 +12,12 @@ const SearchedTracks = ({tracks, onLikeClick, likedTracksIds}) => {
 						<img src={track.album.images[2].url} alt="" className="basis-1/8"/>
 						<span className="text-center text-white basis-1/4">{track.name + " - " + track.artists[0].name}</span>
 						<audio controls src={track.preview_url} className="bg-white basis-2/4"/>
-						<img onClick={() => onLikeClick(track.id)} src={
-							likedTracksIds.includes(track.id) ? "src/assets/liked.png" : "src/assets/unliked.png"
-						} alt="" className="w-8 h-7"/>
+						<button onClick={() => onLikeClick(track.id)}>
+							<img src={likedTracksIds.includes(track.id) ? "src/assets/liked.png" : "src/assets/unliked.png"} alt="" className="w-8 h-7"/>
+						</button>
+						<button onClick={() => onLikeClick(track.id)}>
+							<img src="src/assets/add_track.png" alt="" className="w-8 h-7 bg-white"/>
+						</button>
 					</li>
 				))}
 			</ol>

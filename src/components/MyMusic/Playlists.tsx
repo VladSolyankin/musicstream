@@ -23,15 +23,16 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
     };
 
     return (
-        <div className="flex flex-col justify-center items-center border-2 border-white max-w-5xl mx-auto my-10 py-10 rounded-xl bg-gray-12 p-10">
-            <div className="flex justify-between">
-                <div className="relative">
-                    <img src="src/assets/grid_icon.png" alt="Add new playlist button" className="w-8 h-8 mr-5"/>
-                </div>
-                <h2 className="text-2xl font-bold mb-4 text-white">
-                Ваши плейлисты
-                </h2>
-                <div onClick={addPlaylist} className="relative left-80 bottom-5">
+        <div className="flex flex-col justify-center items-center border-2 border-white max-w-5xl mx-auto my-10 py-10 rounded-xl bg-gray-12 p-10 gap-3">
+            <div className="flex items-center justify-between w-full">
+                <div className="flex">
+                    <div className="relative">
+                        <img src="src/assets/grid_icon.png" alt="Add new playlist button" className="w-8 h-8 mr-5"/>
+                    </div>
+                    <h2 className="text-2xl font-bold text-white">
+                        Ваши плейлисты
+                    </h2></div>
+                <div onClick={addPlaylist} className="">
                     <img src="src/assets/add_playlist_button.png" alt="Add new playlist button" className="w-12 h-12"/>
                 </div>
             </div>
@@ -39,10 +40,10 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
                 {playlists.map(playlist => (
                     <div key={playlist.id}>
                         <div className="bg-gray-100 p-2 rounded flex items-center">
-                            <img className="w-44 h-44 rounded mr-2 hover:scale-90 duration-150"
-                                 src={playlist.imgPath} alt={playlist.name}
-                                 onClick = {() => onPlaylistSelect(playlist.imgPath, playlist.name)}
-                            />
+                            <button onClick = {() => onPlaylistSelect(playlist.imgPath, playlist.name)}>
+                                <img className="w-44 h-44 rounded mr-2 hover:scale-90 duration-150"
+                                    src={playlist.imgPath} alt={playlist.name}/>
+                            </button>
                         </div>
                         <h2 className="text-white text-xl text-center">
                             {playlist.name}

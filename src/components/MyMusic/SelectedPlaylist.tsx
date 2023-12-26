@@ -29,7 +29,7 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, imagePath
 				</div>
 
 				<button className="flex justify-center min-w-full">
-					<img src="./src/assets/playlist_play_button.png" alt="" className="w-20 h-20"/>
+					<img src="src/assets/playlist_play_button.png" alt="" className="w-20 h-20"/>
 				</button>
 
 				<ol className="list-disc">
