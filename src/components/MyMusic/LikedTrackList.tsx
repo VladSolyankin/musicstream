@@ -1,14 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import useStore from "../../store/store.js";
 import {getSearchedTracks} from "../../js/spotifyAPI";
+import Track from "../../interfaces";
 
 const LikedTrackList: React.FC = () => {
 	const {likedTracksIds} = useStore()
 	const [likedTracks, setLikedTracks] = useState([])
-
 	const onLikedTrackRender = async () => {
-		const searchedLikedTracks = await getSearchedTracks(likedTracksIds)
+		const searchedLikedTracks = await getSearchedTracks(likedTracksIds.join(','))
 		setLikedTracks(searchedLikedTracks)
+	}
+
+	const onUnlikeTrack = (id: string) => {
+		setLikedTracks(likedTracks.filter((track: Track) => track.id !== id))
 	}
 
 	useEffect(() => {
@@ -17,13 +21,15 @@ const LikedTrackList: React.FC = () => {
 
 	return (
 		<div className="flex flex-col">
-			{likedTracks.map(track => (
+			{likedTracks.map((track: Track) => (
 				<li key={track.id} className="border p-4 mb-4 text-white flex items-center justify-between gap-10">
 					<img src={track.album.images[2].url} alt="" className="basis-1/8"/>
 					<span className="text-center text-white basis-1/4">{track.name + " - " + track.artists[0].name}</span>
 					<audio controls src={track.preview_url} className="bg-white basis-2/4"/>
 					{/* Todo: make liked track deletion*/}
-					<img onClick={() => console.log("")} src={""} alt="" className="w-8 h-7"/>
+					<button onClick={() => onUnlikeTrack(track.id)}>
+						<img className="w-8 h-7" src="src/assets/unlike.png" alt="Delete liked track icon"/>
+					</button>
 				</li>
 			))}
 		</div>
