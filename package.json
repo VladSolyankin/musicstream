@@ -17,6 +17,7 @@
     "@heroicons/react": "^2.0.18",
     "@mui/icons-material": "^5.14.19",
     "@mui/material": "^5.14.19",
+    "@react-icons/all-files": "^4.1.0",
     "axios": "^1.6.2",
     "firebase": "^10.7.0",
     "i": "^0.3.7",

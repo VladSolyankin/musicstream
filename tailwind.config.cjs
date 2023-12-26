@@ -17,7 +17,8 @@ module.exports = {
           },
           gridTemplateColumns: {
               'playlistsWrap': 'repeat(auto-fit, minmax(176px)'
-          }
+          },
+
       },
       colors: {
           "gray-12": '#121212',

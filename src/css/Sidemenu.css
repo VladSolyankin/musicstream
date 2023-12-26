@@ -23,6 +23,7 @@
   width: 35%;
   background: lightslategray;
   border: 2px solid white;
+  padding: 3dvh;
 }
 
 .menu__background {
