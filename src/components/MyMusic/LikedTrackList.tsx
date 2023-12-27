@@ -16,7 +16,7 @@ const LikedTrackList: React.FC = () => {
 	}
 
 	useEffect(() => {
-		onLikedTrackRender()
+		if (likedTracks.length) onLikedTrackRender()
 	}, [likedTracksIds])
 
 	return (
