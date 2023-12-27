@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Dialog, DialogContent, DialogContentText, DialogTitle, TextField} from "@mui/material";
 
 interface Playlist {
     id: number,
@@ -12,18 +13,35 @@ interface PlaylistsProps {
 
 const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
+    const [newPlaylistTitle, setNewPlaylistTitle] = useState('')
+    const [previewImage, setPreviewImage] = useState<string | null>(null);
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-    const addPlaylist = () => {
+    const addPlaylist = () => setIsDialogOpen(true)
+
+    const onDialogClose = () => {
+        setIsDialogOpen(false)
         const newPlaylist: Playlist = {
             id: playlists.length + 1,
-            name: 'Новый плейлист',
-            imgPath: "src/assets/carousel1.jpg"
+            name: newPlaylistTitle,
+            imgPath: previewImage || 'src/assets/liked.png'
         };
         setPlaylists([...playlists, newPlaylist]);
+    }
+
+    const onLoadPlaylistPreview = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreviewImage(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
     };
 
     return (
-        <div className="flex flex-col justify-center items-center border-2 border-white max-w-5xl mx-auto my-10 py-10 rounded-xl bg-gray-12 p-10 gap-3">
+        <div className="flex flex-col justify-center items-center border-2 min-h-32dvh min-w-full max-w-5xl mx-auto my-10 py-10 rounded-xl bg-gray-12 p-10 gap-3">
             <div className="flex items-center justify-between w-full">
                 <div className="flex">
                     <div className="relative">
@@ -51,6 +69,28 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
                     </div>
                 ))}
             </div>
+            <Dialog open={isDialogOpen} onClose={onDialogClose}>
+                <DialogTitle>Добавить новый плейлист</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>Выберите обложку и название:</DialogContentText>
+                    {previewImage && <img
+                        src={previewImage}
+                        alt="Preview"
+                        className="w-12 h-12 rounded-full mb-2"
+                    />}
+                    <input type="file" onChange={onLoadPlaylistPreview}/>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="title"
+                        label="Название плейлиста"
+                        type="input"
+                        fullWidth
+                        variant="standard"
+                        onChange={e => setNewPlaylistTitle(e.target.value)}
+                    />
+                </DialogContent>
+            </Dialog>
         </div>
     );
 };
