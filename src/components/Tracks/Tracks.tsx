@@ -1,4 +1,4 @@
-import Header from "./Header.tsx";
+import Header from "../Header.tsx";
 import Footer from "../Footer.tsx";
 import TracksList from "./TracksList.tsx";
 
