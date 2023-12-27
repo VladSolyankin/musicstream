@@ -18,7 +18,10 @@ module.exports = {
           gridTemplateColumns: {
               'playlistsWrap': 'repeat(auto-fit, minmax(176px)'
           },
-
+          minHeight: {
+              '32dvh': '32dvh',
+              '100vh': '100vh'
+          }
       },
       colors: {
           "gray-12": '#121212',

@@ -9,6 +9,7 @@ const rapidApiHeaders = {
 const rapidApiRequests = {
 	"search": 'https://spotify23.p.rapidapi.com/search/',
 	"tracks": 'https://spotify23.p.rapidapi.com/tracks/',
+	"artists": 'https://spotify28.p.rapidapi.com/artists/'
 }
 
 export const getIdsByName = async (query: string, offset: string) => {
@@ -18,7 +19,7 @@ export const getIdsByName = async (query: string, offset: string) => {
 			url: rapidApiRequests.search,
 			params: {
 				q: query,
-				type: 'multi',
+				type: 'track',
 				offset: offset,
 				limit: '10',
 				numberOfTopResults: '5'
@@ -48,3 +49,40 @@ export const getSearchedTracks = async (trackIds: Array<string>): Promise<Track[
 		throw error;
 	}
 };
+
+export const getArtistsIdsByLetter = async (query) => {
+	try {
+		const response = await axios.request({
+			method: 'GET',
+			url: rapidApiRequests.search,
+			params: {
+				q: query,
+				type: 'artist',
+				limit: '10',
+				numberOfTopResults: '5'
+			},
+			headers: rapidApiHeaders
+		});
+		return response.data.artists.items.map(elem => elem.data.uri.split(':')[2])
+	} catch (error: any) {
+		console.error('Error searching tracks by ID:', error.message);
+		throw error;
+	}
+}
+
+export const getArtistById = async (artistIds) => {
+	try {
+		const response = await axios.request({
+			method: 'GET',
+			url: rapidApiRequests.artists,
+			params: {
+				ids: artistIds.join(',')
+			},
+			headers: rapidApiHeaders
+		});
+		console.log(response.data)
+	} catch (error: any) {
+		console.error('Error searching tracks by ID:', error.message);
+		throw error;
+	}
+}
