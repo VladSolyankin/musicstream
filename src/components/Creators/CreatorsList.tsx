@@ -1,5 +1,4 @@
 import React from 'react';
-import {getArtistById, getArtistsIdsByLetter} from "../../js/spotifyAPI";
 
 const CreatorsList: React.FC = () => {
 
@@ -15,7 +14,6 @@ const CreatorsList: React.FC = () => {
 		return alphabet
 	}
 
-	//console.log(getArtistsIdsByLetter('a'))
 
 	return (
 		<div className="flex flex-col items-center gap-10">
