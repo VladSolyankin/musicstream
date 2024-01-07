@@ -1,15 +1,15 @@
 import Header from "../Header";
 import Footer from "../Footer";
-import CreatorsList from "./CreatorsList";
+import ArtistList from "./ArtistList.tsx";
 
-const Creators = () => {
+const Artists = () => {
     return (
         <div className="flex flex-col justify-between min-h-screen">
             <Header />
-            <CreatorsList />
+            <ArtistList />
             <Footer />
         </div>
     );
 };
 
-export default Creators;
+export default Artists;
