@@ -18,13 +18,9 @@ export const TracksList = () => {
         setIsFunctionExecuted,
         setLikedTracksIds } = useStore();
 
-    console.log(useStore())
-
-
     const onTrackSearch = async (): Promise<void> => {
         try {
             const tracksIds = await getIdsByName(query, (page * 10).toString())
-            console.log(tracksIds)
             const searchedTracks = await getSearchedTracks(tracksIds)
             setTracks(searchedTracks)
             setIsFunctionExecuted(true)
@@ -42,8 +38,6 @@ export const TracksList = () => {
 
     const onPageChange = (currentPage: number) => {
         setPage(currentPage)
-        console.log(query)
-        console.log(page)
     }
 
     useEffect(() => {

@@ -1,8 +1,15 @@
 import React, {useEffect, useState} from 'react';
+import {Dialog, DialogContent, DialogTitle} from "@mui/material";
+import SearchedTracks from "../Tracks/SearchedTracks.tsx";
+import useStore from "../../store/store.js";
 
 const ArtistList: React.FC = () => {
 
+	const { likedTrackIds } = useStore()
+
 	const [artistList, setArtistList] = useState<string[]>([]);
+	const [topArtistTracks, setTopArtistTracks] = useState({})
+	const [isDialogOpen, setIsDialogOpen] = useState(false)
 
 	const getAlphabetLetters = () => {
 		const alphabet = [];
@@ -20,12 +27,24 @@ const ArtistList: React.FC = () => {
 		try {
 			const response = await fetch(`/getArtists?q=${query}`);
 			const data = await response.json();
-			return data.artists.items.map((artist: any) => ({ name: artist.name, image: artist.images[0].url }));
+			return data.artists.items.map((artist: any) => ({ name: artist.name, image: artist.images[0].url || artist.images[1] || artist.images[2] }));
 		} catch (error) {
 			console.error('Error fetching artists:', error.message);
 			return [];
 		}
 	};
+
+	const getArtistTopTracks = async (artist: string) => {
+		try {
+			const response = await fetch(`/getTracks?q=${artist}`)
+			const data = await response.json()
+			console.log(data)
+			setTopArtistTracks(data)
+		} catch (error) {
+			console.error('Error fetching tracks: ', error.message)
+			return []
+		}
+	}
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -35,33 +54,48 @@ const ArtistList: React.FC = () => {
 					return { letter, artists: artistsForLetter };
 				})
 			);
-
-			console.log(result)
-
 			setArtistList(result);
 		};
 
 		fetchData();
 	}, []);
 
+	const onArtistShow = async (artist: string) => {
+		await getArtistTopTracks(artist)
+		setIsDialogOpen(true)
+	}
+
+	const onDialogClose = () => {
+		setIsDialogOpen(false)
+	}
+
 	return (
-		<div className="flex flex-col items-center gap-10">
-			<ul>
+		<div className="flex flex-col items-center gap-20 my-20">
+			<>
 				{artistList.map((item, index) => (
-					<li key={index} className="text-white">
-						<span>{item.letter}:</span>
-						{
-							item.artists.map((artist, index) => (
-								<li key={index} className="flex flex-col items-center">
-									<img className="w-32 h-32" src={artist.image} alt="Artist image"/>
-									<span>{artist.name}</span>
-								</li>
-							))
-						}
-					</li>
+					<div className="flex flex-col gap-3" key={item.toString() + index.toString()}>
+						<span className="text-white text-5xl font-jost">{item.letter}:</span>
+						<div key={index} className="flex text-white gap-5">
+							{
+								item.artists.map((artist, index) => (
+									<div key={index} className="flex flex-col items-center gap-2">
+										<button onClick={() => onArtistShow(artist.name)}>
+											<img className="w-64 h-64 rounded-xl hover:scale-105" src={artist.image || ""} alt="Artist image"/>
+										</button>
+										<span className="text-2xl font-jost">{artist.name}</span>
+									</div>
+								))
+							}
+						</div>
+					</div>
 				))}
-				<br/>
-			</ul>
+			</>
+			<Dialog open={isDialogOpen} onClose={onDialogClose} maxWidth={"lg"}>
+				<DialogTitle className="text-center">Лучшие треки исполнителя</DialogTitle>
+				<DialogContent className="bg-gray-12">
+					<SearchedTracks tracks={topArtistTracks.tracks} likedTracksIds={likedTrackIds} onLikeClick={() => {}}/>
+				</DialogContent>
+			</Dialog>
 		</div>
 	);
 };

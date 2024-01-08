@@ -8,6 +8,10 @@ export default defineConfig({
       "/getArtists": {
         target: "http://localhost:3001",
         secure: false,
+      },
+      "/getTracks": {
+        target: "http://localhost:3001",
+        secure: false,
       }
     }
   },
