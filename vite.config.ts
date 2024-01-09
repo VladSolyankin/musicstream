@@ -12,6 +12,14 @@ export default defineConfig({
       "/getTracks": {
         target: "http://localhost:3001",
         secure: false,
+      },
+      "/getSearchedTracks": {
+        target: "http://localhost:3001",
+        secure: false,
+      },
+      "/getTracksByIds": {
+        target: "http://localhost:3001",
+        secure: false,
       }
     }
   },

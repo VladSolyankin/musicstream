@@ -4,19 +4,22 @@ import {getSearchedTracks} from "../../js/spotifyAPI";
 import Track from "../../interfaces";
 
 const LikedTrackList: React.FC = () => {
-	const {likedTracksIds} = useStore()
+	let {likedTracksIds} = useStore()
 	const [likedTracks, setLikedTracks] = useState([])
 	const onLikedTrackRender = async () => {
-		const searchedLikedTracks = await getSearchedTracks(likedTracksIds.join(','))
-		setLikedTracks(searchedLikedTracks)
+		const likedTracks = await fetch(`/getTracksByIds?ids=${likedTracksIds.join('%2C')}`)
+			.then(res => res.json())
+		setLikedTracks(likedTracks.tracks)
 	}
 
 	const onUnlikeTrack = (id: string) => {
 		setLikedTracks(likedTracks.filter((track: Track) => track.id !== id))
+		console.log(likedTracksIds)
 	}
 
 	useEffect(() => {
-		if (likedTracks.length) onLikedTrackRender()
+		if (likedTracksIds.length)
+			onLikedTrackRender()
 	}, [likedTracksIds])
 
 	return (

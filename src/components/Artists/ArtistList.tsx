@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Dialog, DialogContent, DialogTitle} from "@mui/material";
 import SearchedTracks from "../Tracks/SearchedTracks.tsx";
 import useStore from "../../store/store.js";
+import {ConfigProvider, Select, Space} from "antd";
 
 const ArtistList: React.FC = () => {
 
@@ -10,6 +11,7 @@ const ArtistList: React.FC = () => {
 	const [artistList, setArtistList] = useState<string[]>([]);
 	const [topArtistTracks, setTopArtistTracks] = useState({})
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
+	const [currentSorting, setCurrentSorting] = useState(false)
 
 	const getAlphabetLetters = () => {
 		const alphabet = [];
@@ -69,8 +71,45 @@ const ArtistList: React.FC = () => {
 		setIsDialogOpen(false)
 	}
 
+	const changeSortingOrder = (order: string) => {
+		if (!currentSorting && order === "desc" || currentSorting && order === "asc") {
+			setArtistList(artistList.slice().reverse())
+			setCurrentSorting(!currentSorting)
+		}
+	}
+
 	return (
 		<div className="flex flex-col items-center gap-20 my-20">
+			<ConfigProvider theme={
+				{
+					components: {
+						Select: {
+							optionFontSize: 24
+						}
+					}
+				}
+			}>
+				<Space wrap>
+					<Select
+						defaultValue="Сортировка"
+						size="large"
+						style={{width: 180, height: 60}}
+						onChange={() => {
+						}}
+						onSelect={changeSortingOrder}
+					>
+						<Select.Option value="sort" disabled>
+							Сортировка
+						</Select.Option>
+						<Select.Option value="asc">
+							A-Z
+						</Select.Option>
+						<Select.Option value="desc">
+							Z-A
+						</Select.Option>
+					</Select>
+				</Space>
+			</ConfigProvider>
 			<>
 				{artistList.map((item, index) => (
 					<div className="flex flex-col gap-3" key={item.toString() + index.toString()}>
@@ -91,7 +130,7 @@ const ArtistList: React.FC = () => {
 				))}
 			</>
 			<Dialog open={isDialogOpen} onClose={onDialogClose} maxWidth={"lg"}>
-				<DialogTitle className="text-center">Лучшие треки исполнителя</DialogTitle>
+				<DialogTitle className="text-center">Популярные треки исполнителя</DialogTitle>
 				<DialogContent className="bg-gray-12">
 					<SearchedTracks tracks={topArtistTracks.tracks} likedTracksIds={likedTrackIds} onLikeClick={() => {}}/>
 				</DialogContent>

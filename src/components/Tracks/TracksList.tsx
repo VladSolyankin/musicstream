@@ -20,9 +20,8 @@ export const TracksList = () => {
 
     const onTrackSearch = async (): Promise<void> => {
         try {
-            const tracksIds = await getIdsByName(query, (page * 10).toString())
-            const searchedTracks = await getSearchedTracks(tracksIds)
-            setTracks(searchedTracks)
+            const result = await fetch(`/getSearchedTracks?q=${query}&offset=${page*10}`).then(res => res.json())
+            setTracks(result.tracks.items)
             setIsFunctionExecuted(true)
         } catch (error: any) {
             console.error('Error searching tracks:', error.message);
@@ -31,9 +30,11 @@ export const TracksList = () => {
 
     const onLikeClick = (trackId: string) => {
         likedTracksIds.includes(trackId) ?
-            setLikedTracksIds(likedTracksIds.filter(id => id !== trackId))
+            setLikedTracksIds(likedTracksIds.filter((id: string) => id !== trackId))
             :
             setLikedTracksIds([...likedTracksIds, trackId])
+
+        console.log(likedTracksIds)
     }
 
     const onPageChange = (currentPage: number) => {
