@@ -1,6 +1,6 @@
-import Header from "../Header";
-import Footer from "../Footer";
-import ArtistList from "./ArtistList.tsx";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import ArtistList from "../components/Artists/ArtistList.tsx";
 
 const Artists = () => {
     return (

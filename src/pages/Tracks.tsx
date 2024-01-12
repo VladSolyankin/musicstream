@@ -1,6 +1,6 @@
-import Header from "../Header.tsx";
-import Footer from "../Footer.tsx";
-import TracksList from "./TracksList.tsx";
+import Header from "../components/Header.tsx";
+import Footer from "../components/Footer.tsx";
+import TracksList from "../components/Tracks/TracksList.tsx";
 
 const Tracks = () => {
     return (

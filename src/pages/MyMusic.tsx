@@ -1,9 +1,9 @@
-import Footer from "../Footer.tsx";
-import Playlists from "./Playlists.tsx";
-import LikedTracks from "./LikedTracks.tsx";
-import SelectedPlaylist from "./SelectedPlaylist.tsx";
+import Footer from "../components/Footer.tsx";
+import Playlists from "../components/MyMusic/Playlists.tsx";
+import LikedTracks from "../components/MyMusic/LikedTracks.tsx";
+import SelectedPlaylist from "../components/MyMusic/SelectedPlaylist.tsx";
 import {useState} from "react";
-import Header from "../Header";
+import Header from "../components/Header";
 
 const MyMusic: React.FC = () => {
     const [isPlaylistSelected, setIsPlaylistSelected] = useState<boolean>(false)
