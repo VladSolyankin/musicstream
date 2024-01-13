@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
+import Spline from '@splinetool/react-spline';
+import {useNavigate} from "react-router-dom";
 
 const onFinish = (values: any) => {
 	console.log('Success:', values);
@@ -15,7 +17,11 @@ type FieldType = {
 	remember?: string;
 };
 
+
+
 const SignIn = () => {
+	const navigate = useNavigate()
+
 	return (
 		<div className="flex">
 			<Form
@@ -29,39 +35,47 @@ const SignIn = () => {
 			autoComplete="off"
 			className="h-screen w-1/2 bg-white flex flex-col justify-center items-center basis-1/3"
 		>
+				<div className="text-2xl mb-5 font-bold">Вход</div>
 				<Form.Item<FieldType>
-					label="Username"
+					label="Email"
 					name="username"
-					rules={[{required: true, message: 'Please input your username!'}]}
+					rules={[{required: true, message: 'Введите вашу почту!'}]}
+					style={{width: "360px"}}
 				>
-					<Input/>
+					<Input style={{width: "180px"}}/>
 				</Form.Item>
 
 				<Form.Item<FieldType>
-					label="Password"
+					label="Пароль"
 					name="password"
-					rules={[{required: true, message: 'Please input your password!'}]}
+					rules={[{required: true, message: 'Введите ваш пароль!'}]}
+					style={{width: "360px"}}
 				>
-					<Input.Password/>
+					<Input.Password style={{width: "180px"}}/>
 				</Form.Item>
 
 				<Form.Item<FieldType>
 					name="remember"
 					valuePropName="checked"
 					wrapperCol={{offset: 8, span: 16}}
+					style={{width: "360px"}}
 				>
-					<Checkbox>Remember me</Checkbox>
+					<Checkbox>Запомнить меня</Checkbox>
 				</Form.Item>
 
-				<Form.Item wrapperCol={{offset: 8, span: 16}}>
-					<Button type="primary" htmlType="submit">
-						Submit
+				<Form.Item wrapperCol={{offset: 0, span: 16}}>
+					<Button type="default" htmlType="submit">
+						Войти
+					</Button>
+				</Form.Item>
+
+				<Form.Item wrapperCol={{offset: 0, span: 16}}>
+					<Button type="link" htmlType="submit" onClick={() => navigate("/register")}>
+						Ещё нет аккаунта? Регистрация
 					</Button>
 				</Form.Item>
 			</Form>
-			<div className="basis-2/3 flex flex-col items-center justify-center">
-				<img className="h-10" src="./src/assets/logo-transparent.png" alt=""/>
-			</div>
+			<Spline className="p-20" scene="https://prod.spline.design/NIhvxJXCoZPUn8iT/scene.splinecode" />
 		</div>
 	);
 };
