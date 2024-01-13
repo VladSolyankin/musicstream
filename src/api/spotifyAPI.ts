@@ -1,5 +1,5 @@
 import axios from "axios";
-import {Track} from "../interfaces";
+import {Track} from "../types";
 
 const rapidApiHeaders = {
 	'X-RapidAPI-Key': 'ce85377694mshd0b7c2f5e54523dp1325b4jsn354dbf9bda58',

@@ -1,4 +1,4 @@
-interface Track {
+export interface Track {
     id: string,
     album: Album,
     name: string,
@@ -19,4 +19,10 @@ interface Image {
     url: string
 }
 
-export default Track
+export type FieldType = {
+    username?: string;
+    password?: string;
+    remember?: string;
+};
+
+export type NotificationType = 'success' | 'warning' | 'info' | 'error'

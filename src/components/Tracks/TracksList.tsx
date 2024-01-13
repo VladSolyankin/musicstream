@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {getIdsByName, getSearchedTracks} from "../../js/spotifyAPI.ts"
+import {getIdsByName, getSearchedTracks} from "../../api/spotifyAPI.ts"
 import SearchBar from "./SearchBar";
 import SearchedTracks from "./SearchedTracks";
 import TracksPagination from "./TracksPagination";

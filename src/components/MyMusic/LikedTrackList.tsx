@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import useStore from "../../store/store.js";
-import {getSearchedTracks} from "../../js/spotifyAPI";
-import Track from "../../interfaces";
+import {getSearchedTracks} from "../../api/spotifyAPI";
+import Track from "../../types";
 
 const LikedTrackList: React.FC = () => {
 	let {likedTracksIds} = useStore()
