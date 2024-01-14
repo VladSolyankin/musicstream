@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
 import {Dialog, DialogContent, DialogContentText, DialogTitle, TextField} from "@mui/material";
+import {getFirestore, setDoc, doc} from 'firebase/firestore'
+import {app} from '../../../firebase/index.cjs'
+import useStore from "../../store/store.js";
 
 interface Playlist {
     id: number,
@@ -16,6 +19,7 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
     const [newPlaylistTitle, setNewPlaylistTitle] = useState('')
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false)
+    const {currentUser} = useStore()
 
     const addPlaylist = () => setIsDialogOpen(true)
 
@@ -27,6 +31,10 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
             imgPath: previewImage || 'src/assets/liked.png'
         };
         setPlaylists([...playlists, newPlaylist]);
+
+        // setDoc(doc(getFirestore(app), `users.Zzp8sIC72jHLfmWP3w6j.playlists`, `${newPlaylistTitle}`),
+        //     { title: newPlaylistTitle }
+        // ).then(() => console.log("playlist added"))
     }
 
     const onLoadPlaylistPreview = (e: React.ChangeEvent<HTMLInputElement>) => {

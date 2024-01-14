@@ -11,6 +11,7 @@ const useStore = create((set) => ({
 	setTracks: (tracks) => set({ tracks }),
 	setIsFunctionExecuted: (isFunctionExecuted) => set({ isFunctionExecuted }),
 	setLikedTracksIds: (likedTracksIds) => set({ likedTracksIds }),
+	currentUser: ''
 }));
 
 export default useStore

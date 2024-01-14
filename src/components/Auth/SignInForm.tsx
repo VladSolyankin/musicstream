@@ -3,10 +3,12 @@ import {useNavigate} from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import {auth} from '../../../firebase/index.cjs';
 import {FieldType, NotificationType} from "../../ts/types";
+import useStore from "../../store/store.js";
 
 const SignInForm = () => {
     const [api, contextHolder] = notification.useNotification();
     const navigate = useNavigate()
+    let { currentUser } = useStore()
 
     const onSignIn = async (values: FieldType) => {
         //navigate("/")
@@ -16,9 +18,9 @@ const SignInForm = () => {
                 await signInWithEmailAndPassword(auth, username, password)
                     .then((userCredential) => {
                         // Signed in
-                        const user = userCredential.user;
+                        currentUser = userCredential.user.uid;
                         navigate('/')
-                        console.log(user)
+                        console.log(currentUser)
                     })
                     .catch((error) => {
                         const errorCode = error.code;
