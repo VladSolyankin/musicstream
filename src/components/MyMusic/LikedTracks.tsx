@@ -1,4 +1,3 @@
-import React from "react";
 import LikedTrackList from "./LikedTrackList.tsx";
 
 const LikedTracks = () => {

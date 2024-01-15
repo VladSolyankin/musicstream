@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import useStore from "../../store/store.js";
-import {getSearchedTracks} from "../../api/spotifyAPI";
 import Track from "../../types";
 
 const LikedTrackList: React.FC = () => {
-	let {likedTracksIds} = useStore()
+	const {likedTracksIds} = useStore()
 	const [likedTracks, setLikedTracks] = useState([])
 	const onLikedTrackRender = async () => {
 		const likedTracks = await fetch(`/getTracksByIds?ids=${likedTracksIds.join('%2C')}`)

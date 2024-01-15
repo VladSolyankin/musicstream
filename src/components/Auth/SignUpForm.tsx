@@ -1,9 +1,9 @@
-import React from 'react';
 import {Button, Checkbox, Form, Input, InputNumber, notification, Space} from "antd";
 import {useNavigate} from "react-router-dom";
 import {createUserWithEmailAndPassword} from "firebase/auth";
-import {auth} from "../../../firebase/index.cjs";
+import {auth} from "../../../firebase/config.cjs";
 import {FieldType, NotificationType} from "../../ts/types";
+import { addNewUser } from "../../../firebase/index.cjs";
 
 const SignUpForm = () => {
     const [api, contextHolder] = notification.useNotification();
@@ -17,6 +17,7 @@ const SignUpForm = () => {
                 await createUserWithEmailAndPassword(auth, username, password)
                     .then((userCredential) => {
                         const user = userCredential.user;
+                        addNewUser(user.uid, user.email)
                         console.log(user)
                         navigate('/')
                     })
