@@ -1,14 +1,11 @@
-import Header from "../components/Header.tsx";
-import Footer from "../components/Footer.tsx";
 import TracksList from "../components/Tracks/TracksList.tsx";
+import PageLayout from "../components/Layout/PageLayout.tsx";
 
 const Tracks = () => {
     return (
-        <div>
-            <Header />
+        <PageLayout>
             <TracksList />
-            <Footer />
-        </div>
+        </PageLayout>
     );
 };
 

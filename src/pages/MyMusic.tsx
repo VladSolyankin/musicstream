@@ -1,9 +1,8 @@
-import Footer from "../components/Footer.tsx";
 import Playlists from "../components/MyMusic/Playlists.tsx";
 import LikedTracks from "../components/MyMusic/LikedTracks.tsx";
 import SelectedPlaylist from "../components/MyMusic/SelectedPlaylist.tsx";
 import {useState} from "react";
-import Header from "../components/Header";
+import PageLayout from "../components/Layout/PageLayout.tsx";
 
 const MyMusic: React.FC = () => {
     const [isPlaylistSelected, setIsPlaylistSelected] = useState<boolean>(false)
@@ -24,18 +23,18 @@ const MyMusic: React.FC = () => {
     }
 
     return (
-        <div className="flex flex-col min-h-full">
-            <Header />
+        <PageLayout>
             <Playlists onPlaylistSelect={onPlaylistSelect}/>
             <LikedTracks />
-            <Footer />
-            {isPlaylistSelected &&
+            {
+                isPlaylistSelected &&
                 <SelectedPlaylist isVisible={isPlaylistSelected}
                                   onPlaylistClosed={onPlaylistClosed}
                                   imagePath={selectedPlaylistImage}
                                   title={selectedPlaylistTitle}
-                />}
-        </div>
+                />
+            }
+        </PageLayout>
     );
 };
 

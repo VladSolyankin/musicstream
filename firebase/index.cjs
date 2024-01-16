@@ -15,7 +15,6 @@ export const addNewUser = async (uid, email) => {
     // addDoc(ref, path: string, pathSegments: string[])
     await addDoc(collection(doc(db, "users", uid), "playlists"), {})
     await setDoc(doc(db, `users/${uid}`), newUser)
-
 }
 
 export const addNewPlaylist = async (uid, title, imagePath) => {

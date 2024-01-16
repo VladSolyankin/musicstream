@@ -1,12 +1,11 @@
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import PageLayout from "../components/Layout/PageLayout.tsx";
+import Socials from "../components/Other/Socials.tsx";
 
 const Other = () => {
     return (
-        <div className="flex flex-col justify-between min-h-screen">
-            <Header />
-            <Footer />
-        </div>
+        <PageLayout>
+            <Socials />
+        </PageLayout>
     );
 };
 
