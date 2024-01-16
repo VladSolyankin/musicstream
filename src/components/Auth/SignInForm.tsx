@@ -1,29 +1,21 @@
 import {Button, Checkbox, Form, Input, notification} from "antd";
 import {useNavigate} from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {signInWithEmailAndPassword} from "firebase/auth";
 import {auth} from '../../../firebase/config.cjs';
 import {FieldType, NotificationType} from "../../ts/types";
-import useStore from "../../store/store.js";
 
 const SignInForm = () => {
     const [api, contextHolder] = notification.useNotification();
     const navigate = useNavigate()
-    let { currentUser } = useStore()
 
     const onSignIn = async (values: FieldType) => {
-        //navigate("/")
         const {username, password} = values
         if (typeof username === "string") {
             if (password != null) {
                 await signInWithEmailAndPassword(auth, username, password)
                     .then((userCredential) => {
-                        // Signed in
-                        //currentUser = userCredential.user.uid;
-
                         localStorage.setItem('currentUserId', userCredential.user.uid)
-
-                        navigate('/')
-                        console.log(currentUser)
+                        navigate('/main')
                     })
                     .catch((error) => {
                         const errorCode = error.code;
@@ -84,13 +76,13 @@ const SignInForm = () => {
                     <Checkbox>Запомнить меня</Checkbox>
                 </Form.Item>
 
-                <Form.Item wrapperCol={{offset: 0, span: 16}}>
+                <Form.Item wrapperCol={{offset: 2, span: 16}}>
                     <Button type="default" htmlType="submit">
                         Войти
                     </Button>
                 </Form.Item>
 
-                <Form.Item wrapperCol={{offset: 0, span: 16}}>
+                <Form.Item wrapperCol={{offset: 1, span: 16}}>
                     <Button type="link" htmlType="submit" onClick={() => navigate('/register')}>
                         Ещё нет аккаунта? Регистрация
                     </Button>

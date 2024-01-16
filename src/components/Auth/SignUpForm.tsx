@@ -10,7 +10,6 @@ const SignUpForm = () => {
     const navigate = useNavigate()
 
     const onSignUp = async (values: FieldType) => {
-        //navigate('/login')
         const {username, password} = values
         if (typeof username === "string") {
             if (password != null) {
@@ -52,7 +51,7 @@ const SignUpForm = () => {
                 autoComplete="off"
                 className="h-screen w-1/2 bg-white flex flex-col justify-center items-center basis-1/3"
             >
-                <div className="text-2xl mb-5 font-bold">Регистрация</div>
+                <div className="text-2xl mb-5 ml-10 font-bold">Регистрация</div>
                 <Form.Item<FieldType>
                     label="Email"
                     name="username"
@@ -89,14 +88,14 @@ const SignUpForm = () => {
                     <Checkbox style={{width: "180px"}}>Запомнить меня</Checkbox>
                 </Form.Item>
 
-                <Form.Item wrapperCol={{offset: 1, span: 16}}>
+                <Form.Item wrapperCol={{offset: 0, span: 16}}>
                     <Button type="default" htmlType="submit">
                         Зарегистрироваться
                     </Button>
                 </Form.Item>
 
-                <Form.Item wrapperCol={{offset: 1, span: 16}}>
-                    <Button type="link" onClick={() => navigate('/login')}>
+                <Form.Item wrapperCol={{offset: 0, span: 16}}>
+                    <Button type="link" onClick={() => navigate('/')}>
                         Уже есть аккаунт? Войти
                     </Button>
                 </Form.Item>

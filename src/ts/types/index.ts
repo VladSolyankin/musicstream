@@ -4,10 +4,10 @@ export type Track = {
     name: string,
     message: string,
     preview_url?: string,
-    artists: Array<Artist>
+    artists: Array<TrackArtist>
 }
 
-interface Artist {
+interface TrackArtist {
     name: string
 }
 
@@ -35,4 +35,9 @@ export type Playlist = {
 
 export type PlaylistsProps = {
     onPlaylistSelect: (imagePath: string, playlistTitle: string) => void;
+}
+
+export type Artist = {
+    letter: string,
+    artists: any
 }

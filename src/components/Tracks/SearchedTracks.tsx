@@ -1,6 +1,4 @@
-import React from 'react';
 import {Track} from "../../types";
-import useStore from "../../store/store.js";
 
 
 const SearchedTracks = ({tracks, onLikeClick, likedTracksIds}) => {
