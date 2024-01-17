@@ -16,7 +16,11 @@ module.exports = {
               'trending': "url('src/assets/trending.png')",
           },
           gridTemplateColumns: {
-              'playlistsWrap': 'repeat(auto-fit, minmax(176px)'
+              'playlistsWrap-2xl': 'repeat(5, 1fr)',
+              'playlistsWrap-xl': 'repeat(4, 1fr)',
+              'playlistsWrap-lg': 'repeat(3, 1fr)',
+              'playlistsWrap-md': 'repeat(2, 1fr)',
+              'playlistsWrap-sm': 'repeat(1, 1fr)',
           },
           minHeight: {
               '32dvh': '32dvh',

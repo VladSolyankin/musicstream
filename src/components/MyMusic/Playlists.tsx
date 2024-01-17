@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Dialog, DialogContent, DialogContentText, DialogTitle, TextField} from "@mui/material";
-import {addNewPlaylist} from "../../../firebase/index.cjs"
-import {Playlist, PlaylistsProps} from "../../ts/types";
+import {addNewPlaylist, getUserPlaylists} from "../../../firebase/index.cjs"
+import {Playlist, PlaylistsProps} from "@types/index.ts";
+
+const currentUserId = localStorage.getItem("currentUserId")
 
 const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
@@ -15,12 +17,10 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
         setIsDialogOpen(false)
         const newPlaylist: Playlist = {
             id: playlists.length + 1,
-            name: newPlaylistTitle,
-            imgPath: previewImage || 'src/assets/liked.png'
+            title: newPlaylistTitle,
+            imagePath: previewImage || 'src/assets/liked.png'
         };
         setPlaylists([...playlists, newPlaylist]);
-
-        const currentUserId = localStorage.getItem("currentUserId")
 
         addNewPlaylist(currentUserId, newPlaylistTitle, previewImage)
             .then(() => console.log("New playlist added to database"))
@@ -37,6 +37,15 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
         }
     };
 
+    useEffect(() => {
+        const fetchPlaylists = async () => {
+            const response = await getUserPlaylists(currentUserId)
+            const userPlaylists = response.map(newPlaylist => newPlaylist)
+            setPlaylists(playlists => [...playlists, ...userPlaylists])
+        }
+        fetchPlaylists()
+    }, [])
+
     return (
         <div className="flex flex-col justify-center items-center border-2 min-h-32dvh min-w-full max-w-5xl mx-auto my-10 py-10 rounded-xl bg-gray-12 p-10 gap-3">
             <div className="flex items-center justify-between w-full">
@@ -46,46 +55,49 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
                     </div>
                     <h2 className="text-2xl font-bold text-white">
                         Ваши плейлисты
-                    </h2></div>
+                    </h2>
+                </div>
                 <div onClick={addPlaylist} className="">
                     <img src="src/assets/add_playlist_button.png" alt="Add new playlist button" className="w-12 h-12"/>
                 </div>
             </div>
-            <div className="grid grid-cols-3 gap-20">
-                {playlists.map(playlist => (
+            <div className="grid gap-20 2xl:grid-cols-playlistsWrap-2xl xl:grid-cols-playlistsWrap-xl lg:grid-cols-playlistsWrap-lg md:grid-cols-playlistsWrap-md sm:grid-cols-playlistsWrap-sm">
+                {playlists && playlists.map((playlist: Playlist) => (
                     <div key={playlist.id}>
                         <div className="bg-gray-100 p-2 rounded flex items-center">
-                            <button onClick = {() => onPlaylistSelect(playlist.imgPath, playlist.name)}>
+                            <button onClick = {() => onPlaylistSelect(playlist.imagePath, playlist.title)}>
                                 <img className="w-44 h-44 rounded mr-2 hover:scale-90 duration-150"
-                                    src={playlist.imgPath} alt={playlist.name}/>
+                                    src={playlist.imagePath} alt={playlist.title}/>
                             </button>
                         </div>
                         <h2 className="text-white text-xl text-center">
-                            {playlist.name}
+                            {playlist.title}
                         </h2>
                     </div>
                 ))}
             </div>
-            <Dialog open={isDialogOpen} onClose={onDialogClose}>
+            <Dialog open={isDialogOpen} onClose={onDialogClose} >
                 <DialogTitle>Добавить новый плейлист</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>Выберите обложку и название:</DialogContentText>
-                    {previewImage && <img
-                        src={previewImage}
-                        alt="Preview"
-                        className="w-12 h-12 rounded-full mb-2"
-                    />}
-                    <input type="file" onChange={onLoadPlaylistPreview}/>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="title"
-                        label="Название плейлиста"
-                        type="input"
-                        fullWidth
-                        variant="standard"
-                        onChange={e => setNewPlaylistTitle(e.target.value)}
-                    />
+                    <div className="flex flex-col gap-5 w-96">
+                        <DialogContentText>Выберите обложку и название:</DialogContentText>
+                        {previewImage && <img
+                            src={previewImage}
+                            alt="Preview"
+                            className="w-16 h-16 mb-2"
+                        />}
+                        <input type="file" onChange={onLoadPlaylistPreview}/>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="title"
+                            label="Название плейлиста"
+                            type="input"
+                            fullWidth
+                            variant="standard"
+                            onChange={e => setNewPlaylistTitle(e.target.value)}
+                        />
+                    </div>
                 </DialogContent>
             </Dialog>
         </div>
