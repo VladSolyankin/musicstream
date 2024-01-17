@@ -5,7 +5,11 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-
+    "baseUrl": "./src",
+    "paths": {
+      "@store/*": ["./store/store.js"],
+      "@types/*": ["./ts/types/*"]
+    },
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -21,6 +25,12 @@
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "../../../../Program Files/JetBrains/WebStorm 2022.2.3/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts",
+    "../../../../Program Files/JetBrains/WebStorm 2022.2.3/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts",
+    "../../../../Program Files/JetBrains/WebStorm 2022.2.3/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts",
+    "../../../../Program Files/JetBrains/WebStorm 2022.2.3/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
