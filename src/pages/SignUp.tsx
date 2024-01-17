@@ -1,6 +1,4 @@
-import {Button, Checkbox, Form, Input, InputNumber, Space} from 'antd';
 import Spline from '@splinetool/react-spline';
-import {useNavigate} from "react-router-dom";
 import SignUpForm from "../components/Auth/SignUpForm.tsx";
 
 const SignUp = () => {

@@ -1,7 +1,7 @@
 import "./css/App.css"
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import MainPage from "./components/MainPage/MainPage.tsx";
 import MyMusic from "./pages/MyMusic.tsx";
+import Main from "./pages/Main.tsx";
 import Tracks from "./pages/Tracks.tsx";
 import Artists from "./pages/Artists.tsx";
 import Other from "./pages/Other.tsx";
@@ -13,8 +13,8 @@ function App() {
     <div>
         <BrowserRouter>
             <Routes>
-                <Route path="/login" element={<SignIn/>}></Route>
-                <Route path="/" element={<MainPage/>}></Route>
+                <Route path="/" element={<SignIn/>}></Route>
+                <Route path="/main" element={<Main/>}></Route>
                 <Route path="/my_music" element={<MyMusic/>}></Route>
                 <Route path="/tracks" element={<Tracks/>}></Route>
                 <Route path="/creators" element={<Artists/>}></Route>

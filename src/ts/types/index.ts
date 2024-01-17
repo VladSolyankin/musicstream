@@ -1,13 +1,13 @@
-export interface Track {
+export type Track = {
     id: string,
     album: Album,
     name: string,
     message: string,
     preview_url?: string,
-    artists: Array<Artist>
+    artists: Array<TrackArtist>
 }
 
-interface Artist {
+interface TrackArtist {
     name: string
 }
 
@@ -26,3 +26,18 @@ export type FieldType = {
 };
 
 export type NotificationType = 'success' | 'warning' | 'info' | 'error'
+
+export type Playlist = {
+    id: number,
+    name: string,
+    imgPath: string
+}
+
+export type PlaylistsProps = {
+    onPlaylistSelect: (imagePath: string, playlistTitle: string) => void;
+}
+
+export type Artist = {
+    letter: string,
+    artists: any
+}

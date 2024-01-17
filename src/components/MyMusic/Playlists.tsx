@@ -1,25 +1,13 @@
 import React, {useState} from 'react';
 import {Dialog, DialogContent, DialogContentText, DialogTitle, TextField} from "@mui/material";
-import {getFirestore, setDoc, doc} from 'firebase/firestore'
-import {app} from '../../../firebase/index.cjs'
-import useStore from "../../store/store.js";
-
-interface Playlist {
-    id: number,
-    name: string,
-    imgPath: string
-}
-
-interface PlaylistsProps {
-    onPlaylistSelect: (imagePath: string, playlistTitle: string) => void;
-}
+import {addNewPlaylist} from "../../../firebase/index.cjs"
+import {Playlist, PlaylistsProps} from "../../ts/types";
 
 const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
     const [newPlaylistTitle, setNewPlaylistTitle] = useState('')
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false)
-    const {currentUser} = useStore()
 
     const addPlaylist = () => setIsDialogOpen(true)
 
@@ -32,9 +20,10 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
         };
         setPlaylists([...playlists, newPlaylist]);
 
-        // setDoc(doc(getFirestore(app), `users.Zzp8sIC72jHLfmWP3w6j.playlists`, `${newPlaylistTitle}`),
-        //     { title: newPlaylistTitle }
-        // ).then(() => console.log("playlist added"))
+        const currentUserId = localStorage.getItem("currentUserId")
+
+        addNewPlaylist(currentUserId, newPlaylistTitle, previewImage)
+            .then(() => console.log("New playlist added to database"))
     }
 
     const onLoadPlaylistPreview = (e: React.ChangeEvent<HTMLInputElement>) => {
