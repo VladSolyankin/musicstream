@@ -21,20 +21,24 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, imagePath
 			<div className="menu__background" onClick={onMenuClosed}></div>
 			<div className="menu__opened">
 				<div className="flex justify-between">
-					<div>
-						<h2>ПЛЕЙЛИСТ</h2>
-						<h3>{title}</h3>
+					<div className="flex flex-col justify-start">
+						<span className="text-3xl font-jost font-bold">ПЛЕЙЛИСТ</span>
+						<span className="text-2xl">{title}</span>
 					</div>
-					<img src={imagePath} alt="Playlist image" className="h-12 w-12"/>
+					<img src={imagePath} alt="Playlist image" className="h-36 w-36"/>
 				</div>
 
 				<button className="flex justify-center min-w-full">
 					<img src="src/assets/playlist_play_button.png" alt="" className="w-20 h-20"/>
 				</button>
 
-				<ol className="list-disc">
-					<li>hello</li>
-				</ol>
+				<ul>
+					{
+						[1,2,3].map(elem => {
+
+						})
+					}
+				</ul>
 			</div>
 		</div>
 	);

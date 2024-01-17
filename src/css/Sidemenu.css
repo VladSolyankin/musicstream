@@ -4,7 +4,7 @@
 }
 
 .wrapper {
-  position: absolute;
+  position: fixed;
   height: 100%;
   width: 100%;
   display: flex;
@@ -17,12 +17,11 @@
 
 .menu__opened {
   visibility: visible;
-  left: 65%;
-  height: 100%;
+  min-height: 100dvh;
   float: right;
   width: 35%;
-  background: lightslategray;
-  border: 2px solid white;
+  background: #CCCCCC;
+  border: 2px double black;
   padding: 3dvh;
 }
 

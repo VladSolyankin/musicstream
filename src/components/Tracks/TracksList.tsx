@@ -22,7 +22,7 @@ export const TracksList = () => {
             const result = await fetch(`/getSearchedTracks?q=${query}&offset=${page*10}`).then(res => res.json())
             setTracks(result.tracks.items)
             setIsFunctionExecuted(true)
-        } catch (error: any) {
+        } catch (error: Error) {
             console.error('Error searching tracks:', error.message);
         }
     };
@@ -48,9 +48,7 @@ export const TracksList = () => {
 
     return (
         <div className="max-w-5xl mx-auto mb-52 min-h-screen">
-            {/* Search Bar */}
             <SearchBar setQuery={setQuery} onTrackSearch={onTrackSearch} />
-            {/* Track list */}
             {
                 isFunctionExecuted ?
                     <SearchedTracks likedTracksIds={likedTracksIds} tracks={tracks} onLikeClick={onLikeClick}></SearchedTracks>
@@ -59,7 +57,6 @@ export const TracksList = () => {
                         <b>Тут будут ваши треки...</b>
                     </div>
             }
-            {/* Pagination */}
             <TracksPagination onPageChange={onPageChange} />
         </div>
     );

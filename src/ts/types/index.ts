@@ -29,8 +29,8 @@ export type NotificationType = 'success' | 'warning' | 'info' | 'error'
 
 export type Playlist = {
     id: number,
-    name: string,
-    imgPath: string
+    title: string,
+    imagePath: string
 }
 
 export type PlaylistsProps = {

@@ -1,4 +1,4 @@
-import {Track} from "../../types";
+import {Track} from '@types/index.ts'
 
 
 const SearchedTracks = ({tracks, onLikeClick, likedTracksIds}) => {

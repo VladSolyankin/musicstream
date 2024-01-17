@@ -30,7 +30,7 @@ const ArtistList: React.FC = () => {
 		try {
 			const response = await fetch(`/getArtists?q=${query}`);
 			const data = await response.json();
-			return data.artists.items.map((artist: any) => ({ name: artist.name, image: artist.images[0].url || artist.images[1] || artist.images[2] }));
+			return data.artists.items.map((artist: any) => ({ title: artist.name, image: artist.images[0].url || artist.images[1] || artist.images[2] }));
 		} catch (error) {
 			console.error('Error fetching artists:', error.message);
 			return [];
