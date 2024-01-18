@@ -1,6 +1,16 @@
 import {Track} from "../../types";
+import PlaylistPicker from "./PlaylistPicker.tsx";
+import {useState} from "react";
 
 const TopSearchedTracks = ({tracks, onLikeClick, likedTracksIds}) => {
+	const [isPickerOpen, setPickerOpen] = useState(false)
+	const [selectedTrackId, setSelectedTrackId] = useState("")
+	const onPickerShow = (id: string) => {
+		setPickerOpen(true)
+		setSelectedTrackId(id)
+	}
+	console.log(tracks)
+	const onPickerClose = () => setPickerOpen(false)
 	return (
 		<div className="my-5">
 			<ol className="flex-col">
@@ -12,12 +22,13 @@ const TopSearchedTracks = ({tracks, onLikeClick, likedTracksIds}) => {
 						<button onClick={() => onLikeClick(topTrack.id)}>
 							<img src={1 ? "src/assets/liked.png" : "src/assets/unliked.png"} alt="" className="w-8 h-7"/>
 						</button>
-						<button onClick={() => onLikeClick(topTrack.id)}>
+						<button onClick={() => onPickerShow(topTrack.id)}>
 							<img src="src/assets/add_track.png" alt="" className="w-8 h-7 bg-white"/>
 						</button>
 					</li>
 				))}
 			</ol>
+			<PlaylistPicker isPickerOpen={isPickerOpen} onPickerClose={onPickerClose} trackId={selectedTrackId}/>
 		</div>
 	);
 };

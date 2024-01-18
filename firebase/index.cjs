@@ -1,5 +1,5 @@
 import {db, storage} from './config.cjs'
-import {addDoc, collection, doc, setDoc, getDocs} from 'firebase/firestore'
+import {addDoc, collection, doc, setDoc, getDocs, updateDoc, arrayUnion, query, where} from 'firebase/firestore'
 import {getDownloadURL, ref} from 'firebase/storage'
 import {nanoid} from 'nanoid'
 
@@ -17,15 +17,29 @@ export const addNewUser = async (uid, email) => {
     await setDoc(doc(db, `users/${uid}`), newUser)
 }
 
-export const addNewPlaylist = async (uid, title, imagePath) => {
+export const addNewPlaylist = async (uid, playlistId, title, imagePath) => {
 
     const newPlaylist = {
-        id: nanoid(),
+        id: playlistId,
         title: title,
-        imagePath: imagePath
+        imagePath: imagePath,
+        tracks: []
     }
 
     await addDoc(collection(db, `users/${uid}/playlists`), newPlaylist)
+}
+
+export const addNewPlaylistTrack = async (uid, playlistId, trackId) => {
+
+    const q =
+        query(collection(db, `users/${uid}/playlists`),
+        where('id', '==', playlistId))
+    const getSelectedDoc = await getDocs(q)
+
+    getSelectedDoc.forEach( (doc) => {
+        updateDoc(doc.ref, { tracks: arrayUnion(trackId) })
+    })
+
 }
 
 export const getUserPlaylists = async (uid) => {

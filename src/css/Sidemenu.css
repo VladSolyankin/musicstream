@@ -18,8 +18,9 @@
 .menu__opened {
   visibility: visible;
   min-height: 100dvh;
-  float: right;
+  min-width: 65dvh;
   width: 35%;
+  float: right;
   background: #CCCCCC;
   border: 2px double black;
   padding: 3dvh;

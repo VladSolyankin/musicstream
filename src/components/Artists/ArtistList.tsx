@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Dialog, DialogContent, DialogTitle} from "@mui/material";
 import useStore from "../../store/store.js";
-import {ConfigProvider, Select, Space} from "antd";
 import {Artist} from "../../ts/types";
 import TopSearchedTracks from "./TopSearchedTracks.tsx";
+import SortSelect from "../UI/SortSelect.tsx";
+import ArtistTopTracksDialog from "../UI/PopularTracksDialog.tsx";
+import PlaylistPicker from "./PlaylistPicker.tsx";
 
 const ArtistList: React.FC = () => {
 
@@ -30,7 +32,7 @@ const ArtistList: React.FC = () => {
 		try {
 			const response = await fetch(`/getArtists?q=${query}`);
 			const data = await response.json();
-			return data.artists.items.map((artist: any) => ({ title: artist.name, image: artist.images[0].url || artist.images[1] || artist.images[2] }));
+			return data.artists.items.map((artist) => ({ name: artist.name, image: artist.images[0].url || artist.images[1] || artist.images[2] }));
 		} catch (error) {
 			console.error('Error fetching artists:', error.message);
 			return [];
@@ -61,6 +63,7 @@ const ArtistList: React.FC = () => {
 		};
 
 		fetchData();
+		console.log(artistList)
 	}, []);
 
 	const onArtistShow = async (artist: string) => {
@@ -79,38 +82,15 @@ const ArtistList: React.FC = () => {
 		}
 	}
 
+	const onPickerOpen = () => setPickerVisible(true)
+
 	return (
 		<div>
-			<ConfigProvider theme={
-				{
-					components: {
-						Select: {
-							optionFontSize: 24
-						}
-					}
-				}
-			}>
-				<Space align="end" direction="vertical" className="w-full px-32 my-5">
-					<Select
-						defaultValue="Сортировка"
-						size="large"
-						style={{width: 180, height: 60}}
-						onChange={() => {
-						}}
-						onSelect={changeSortingOrder}
-					>
-						<Select.Option value="sort" disabled>
-							Сортировка
-						</Select.Option>
-						<Select.Option value="asc">
-							A-Z
-						</Select.Option>
-						<Select.Option value="desc">
-							Z-A
-						</Select.Option>
-					</Select>
-				</Space>
-			</ConfigProvider>
+			<SortSelect
+				defaultValue="Сортировка"
+				onChange={() => {}}
+				onSelect={changeSortingOrder}
+			/>
 			<div className="flex flex-col items-center gap-20 my-10">
 				<>
 					{artistList.map((item, index) => (
@@ -118,12 +98,12 @@ const ArtistList: React.FC = () => {
 							<span className="text-white text-5xl font-jost">{item.letter}:</span>
 							<div key={index} className="flex text-white gap-5">
 								{
-									item.artists.map((artist, index) => (
+									item.artists.map((artist: Artist, index: number) => (
 										<div key={index} className="flex flex-col items-center gap-2">
 											<button onClick={() => onArtistShow(artist.name)}>
 												<img className="w-64 h-64 rounded-xl hover:scale-105" src={artist.image || ""} alt="Artist image"/>
 											</button>
-											<span className="text-2xl font-jost">{artist.name}</span>
+											<span className="text-2xl text-white">{artist.name}</span>
 										</div>
 									))
 								}
@@ -131,14 +111,13 @@ const ArtistList: React.FC = () => {
 						</div>
 					))}
 				</>
-				<Dialog open={isDialogOpen} onClose={onDialogClose} maxWidth={"lg"}>
-					<DialogTitle className="text-center">Популярные треки исполнителя</DialogTitle>
-					<DialogContent className="bg-gray-12">
-						<TopSearchedTracks tracks={topArtistTracks.tracks} likedTracksIds={likedTrackIds}
-										onLikeClick={() => {
-										}}/>
-					</DialogContent>
-				</Dialog>
+				<ArtistTopTracksDialog
+					isDialogOpen={isDialogOpen}
+					onDialogClose={onDialogClose}
+					topArtistTracks={topArtistTracks}
+					likedTrackIds={likedTrackIds}
+					onLikeClick={() => {}}
+				/>
 			</div>
 		</div>
 	);

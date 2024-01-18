@@ -1,7 +1,10 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Dialog, DialogContent, DialogContentText, DialogTitle, TextField} from "@mui/material";
-import {addNewPlaylist, getUserPlaylists} from "../../../firebase/index.cjs"
+import React, {useState} from 'react';
+import {addNewPlaylist} from "../../../firebase/index.cjs"
 import {Playlist, PlaylistsProps} from "@types/index.ts";
+import {useUserPlaylists} from "../../hooks/hooks.ts";
+import PlaylistItem from "./PlaylistItem.tsx";
+import AddPlaylistDialog from "../UI/AddPlaylistDialog.tsx";
+import {nanoid} from "nanoid";
 
 const currentUserId = localStorage.getItem("currentUserId")
 
@@ -16,13 +19,13 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
     const onDialogClose = () => {
         setIsDialogOpen(false)
         const newPlaylist: Playlist = {
-            id: playlists.length + 1,
+            id: nanoid(),
             title: newPlaylistTitle,
             imagePath: previewImage || 'src/assets/liked.png'
         };
         setPlaylists([...playlists, newPlaylist]);
 
-        addNewPlaylist(currentUserId, newPlaylistTitle, previewImage)
+        addNewPlaylist(currentUserId, newPlaylist.id, newPlaylistTitle, previewImage)
             .then(() => console.log("New playlist added to database"))
     }
 
@@ -37,14 +40,7 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
         }
     };
 
-    useEffect(() => {
-        const fetchPlaylists = async () => {
-            const response = await getUserPlaylists(currentUserId)
-            const userPlaylists = response.map(newPlaylist => newPlaylist)
-            setPlaylists(playlists => [...playlists, ...userPlaylists])
-        }
-        fetchPlaylists()
-    }, [])
+    useUserPlaylists(setPlaylists, currentUserId)
 
     return (
         <div className="flex flex-col justify-center items-center border-2 min-h-32dvh min-w-full max-w-5xl mx-auto my-10 py-10 rounded-xl bg-gray-12 p-10 gap-3">
@@ -62,44 +58,20 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
                 </div>
             </div>
             <div className="grid gap-20 2xl:grid-cols-playlistsWrap-2xl xl:grid-cols-playlistsWrap-xl lg:grid-cols-playlistsWrap-lg md:grid-cols-playlistsWrap-md sm:grid-cols-playlistsWrap-sm">
-                {playlists && playlists.map((playlist: Playlist) => (
-                    <div key={playlist.id}>
-                        <div className="bg-gray-100 p-2 rounded flex items-center">
-                            <button onClick = {() => onPlaylistSelect(playlist.imagePath, playlist.title)}>
-                                <img className="w-44 h-44 rounded mr-2 hover:scale-90 duration-150"
-                                    src={playlist.imagePath} alt={playlist.title}/>
-                            </button>
-                        </div>
-                        <h2 className="text-white text-xl text-center">
-                            {playlist.title}
-                        </h2>
-                    </div>
-                ))}
+                {
+                    playlists &&
+                    playlists.map((playlist) => (
+                        <PlaylistItem key={playlist.id} playlist={playlist} onPlaylistSelect={onPlaylistSelect} />
+                    ))
+                }
             </div>
-            <Dialog open={isDialogOpen} onClose={onDialogClose} >
-                <DialogTitle>Добавить новый плейлист</DialogTitle>
-                <DialogContent>
-                    <div className="flex flex-col gap-5 w-96">
-                        <DialogContentText>Выберите обложку и название:</DialogContentText>
-                        {previewImage && <img
-                            src={previewImage}
-                            alt="Preview"
-                            className="w-16 h-16 mb-2"
-                        />}
-                        <input type="file" onChange={onLoadPlaylistPreview}/>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="title"
-                            label="Название плейлиста"
-                            type="input"
-                            fullWidth
-                            variant="standard"
-                            onChange={e => setNewPlaylistTitle(e.target.value)}
-                        />
-                    </div>
-                </DialogContent>
-            </Dialog>
+            <AddPlaylistDialog
+                isOpen={isDialogOpen}
+                onClose={onDialogClose}
+                onLoadPlaylistPreview={onLoadPlaylistPreview}
+                previewImage={previewImage}
+                setNewPlaylistTitle={setNewPlaylistTitle}
+            />
         </div>
     );
 };

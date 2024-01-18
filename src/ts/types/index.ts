@@ -1,3 +1,5 @@
+import React, {Dispatch, SetStateAction} from "react";
+
 export type Track = {
     id: string,
     album: Album,
@@ -28,7 +30,7 @@ export type FieldType = {
 export type NotificationType = 'success' | 'warning' | 'info' | 'error'
 
 export type Playlist = {
-    id: number,
+    id: string,
     title: string,
     imagePath: string
 }
@@ -38,6 +40,42 @@ export type PlaylistsProps = {
 }
 
 export type Artist = {
-    letter: string,
-    artists: any
+    letter?: string,
+    artists?: any,
+    name: string,
+    image: string
 }
+
+export type PlaylistItemProps = {
+    playlist: Playlist,
+    onPlaylistSelect: (imagePath: string, title: string) => void,
+}
+
+export type PickerPlaylistItemProps = {
+    playlist: Playlist,
+    onPlaylistSelect: (imagePath: string, title: string) => void,
+    trackId: string
+}
+
+export type AddPlaylistDialogProps = {
+    isOpen: boolean,
+    onClose: () => void,
+    onLoadPlaylistPreview: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    previewImage: string | null,
+    setNewPlaylistTitle: Dispatch<SetStateAction<string>>
+}
+
+export type SortSelectProps = {
+    defaultValue: string;
+    onChange: () => void;
+    onSelect: (value: string) => void;
+};
+
+export type ArtistTopTracksDialogProps = {
+    isDialogOpen: boolean,
+    onDialogClose: () => void,
+    topArtistTracks: { tracks: any[] },
+    likedTrackIds: string[],
+    onLikeClick: () => void
+}
+
