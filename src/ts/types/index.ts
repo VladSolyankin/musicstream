@@ -5,7 +5,7 @@ export type Track = {
     album: Album,
     name: string,
     message: string,
-    preview_url?: string,
+    preview_url: string,
     artists: Array<TrackArtist>
 }
 
@@ -36,7 +36,7 @@ export type Playlist = {
 }
 
 export type PlaylistsProps = {
-    onPlaylistSelect: (imagePath: string, playlistTitle: string) => void;
+    onPlaylistSelect: (playlist: Playlist) => void;
 }
 
 export type Artist = {
@@ -48,12 +48,12 @@ export type Artist = {
 
 export type PlaylistItemProps = {
     playlist: Playlist,
-    onPlaylistSelect: (imagePath: string, title: string) => void,
+    onPlaylistSelect: (playlist: Playlist) => void,
 }
 
 export type PickerPlaylistItemProps = {
     playlist: Playlist,
-    onPlaylistSelect: (imagePath: string, title: string) => void,
+    onPlaylistSelect: (playlist: Playlist) => void,
     trackId: string
 }
 
@@ -79,3 +79,8 @@ export type ArtistTopTracksDialogProps = {
     onLikeClick: () => void
 }
 
+export type SelectedPlaylistProps = {
+    isVisible: boolean,
+    selectedPlaylist: Playlist,
+    onPlaylistClosed: () => void,
+}

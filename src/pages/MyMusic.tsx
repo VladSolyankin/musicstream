@@ -3,16 +3,15 @@ import LikedTracks from "../components/MyMusic/LikedTracks.tsx";
 import SelectedPlaylist from "../components/MyMusic/SelectedPlaylist.tsx";
 import {useState} from "react";
 import PageLayout from "../components/Layout/PageLayout.tsx";
+import {Playlist} from "@types/index";
 
 const MyMusic: React.FC = () => {
     const [isPlaylistSelected, setIsPlaylistSelected] = useState<boolean>(false)
-    const [selectedPlaylistImage, setSelectedPlaylistImage] = useState<string>("")
-    const [selectedPlaylistTitle, setSelectedPlaylistTitle] = useState<string>("")
+    const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist>({})
 
-    const onPlaylistSelect = (imagePath: string, playlistTitle: string): void => {
+    const onPlaylistSelect = (playlist: Playlist) => {
         setIsPlaylistSelected(true)
-        setSelectedPlaylistTitle(playlistTitle)
-        setSelectedPlaylistImage(imagePath)
+        setSelectedPlaylist(playlist)
 
         document.body.style.overflow = 'hidden'
     }
@@ -30,8 +29,7 @@ const MyMusic: React.FC = () => {
                 isPlaylistSelected &&
                 <SelectedPlaylist isVisible={isPlaylistSelected}
                                   onPlaylistClosed={onPlaylistClosed}
-                                  imagePath={selectedPlaylistImage}
-                                  title={selectedPlaylistTitle}
+                                  selectedPlaylist={selectedPlaylist}
                 />
             }
         </PageLayout>

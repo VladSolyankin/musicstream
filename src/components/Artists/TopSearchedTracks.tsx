@@ -1,6 +1,7 @@
 import {Track} from "../../types";
 import PlaylistPicker from "./PlaylistPicker.tsx";
 import {useState} from "react";
+import {IoAddSharp} from "@react-icons/all-files/io5/IoAddSharp";
 
 const TopSearchedTracks = ({tracks, onLikeClick, likedTracksIds}) => {
 	const [isPickerOpen, setPickerOpen] = useState(false)
@@ -23,7 +24,7 @@ const TopSearchedTracks = ({tracks, onLikeClick, likedTracksIds}) => {
 							<img src={1 ? "src/assets/liked.png" : "src/assets/unliked.png"} alt="" className="w-8 h-7"/>
 						</button>
 						<button onClick={() => onPickerShow(topTrack.id)}>
-							<img src="src/assets/add_track.png" alt="" className="w-8 h-7 bg-white"/>
+							<IoAddSharp className="w-12 h-12"/>
 						</button>
 					</li>
 				))}

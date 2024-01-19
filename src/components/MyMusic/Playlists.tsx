@@ -61,7 +61,7 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
                 {
                     playlists &&
                     playlists.map((playlist) => (
-                        <PlaylistItem key={playlist.id} playlist={playlist} onPlaylistSelect={onPlaylistSelect} />
+                        <PlaylistItem key={playlist.id} playlist={playlist} onPlaylistSelect={() => onPlaylistSelect(playlist)} />
                     ))
                 }
             </div>

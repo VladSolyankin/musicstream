@@ -1,7 +1,9 @@
 import "../../css/Colors.css";
 import {useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {ReactNode, useState} from "react";
 import ProfilePopover from "../UI/ProfilePopover.tsx";
+import { IoMdMenu } from "react-icons/io";
+import NavigationMenu from "../UI/NavigationMenu";
 
 const Header = () => {
 	const [isProfileOpen, setProfileOpen] = useState(false)
@@ -26,6 +28,10 @@ const Header = () => {
 						<img src="src/assets/sign_in_icon.png" alt="User profile button" className="cursor-pointer w-16 h-16 object-fill"/>
 					</div>
 				</ProfilePopover>
+
+				<NavigationMenu>
+					<IoMdMenu className="text-white w-16 h-16 lg:block xl:hidden cursor-pointer"/>
+				</NavigationMenu>
 			</div>
 		</div>
 	);

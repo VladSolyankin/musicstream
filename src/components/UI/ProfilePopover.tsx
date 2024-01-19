@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, Popover} from "antd";
+import {useNavigate} from 'react-router-dom'
 import {useFirebaseStorage} from "../../hooks/hooks.ts";
 
 const ProfilePopover = ({children, isProfileOpen, onProfileOpen}) => {
@@ -16,8 +17,13 @@ const ProfilePopover = ({children, isProfileOpen, onProfileOpen}) => {
 };
 
 const Profile = () => {
-
+    const navigate = useNavigate()
     const profilePicture = useFirebaseStorage('example.jpg')
+
+    const onExitClick = () => {
+        navigate('/')
+        localStorage.clear()
+    }
 
     return (
         <div className="flex flex-col justify-center items-center text-lg gap-3">
@@ -33,7 +39,7 @@ const Profile = () => {
             </div>
 
             <Button size="large">Сменить почту</Button>
-            <Button size="middle" type="primary" danger={true}>Выйти</Button>
+            <Button size="middle" type="primary" danger={true} onClick={() => onExitClick()}>Выйти</Button>
         </div>
     )
 }

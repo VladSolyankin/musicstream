@@ -1,6 +1,6 @@
 import {Button, Checkbox, Form, Input, notification} from "antd";
 import {useNavigate} from "react-router-dom";
-import {signInWithEmailAndPassword} from "firebase/auth";
+import {signInWithEmailAndPassword, RecaptchaVerifier} from "firebase/auth";
 import {auth} from '../../../firebase/config.cjs';
 import {FieldType, NotificationType} from "../../ts/types";
 

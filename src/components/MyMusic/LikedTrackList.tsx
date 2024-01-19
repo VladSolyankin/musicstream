@@ -28,7 +28,6 @@ const LikedTrackList: React.FC = () => {
 					<img src={track.album.images[2].url} alt="" className="basis-1/8"/>
 					<span className="text-center text-white basis-1/4">{track.name + " - " + track.artists[0].name}</span>
 					<audio controls src={track.preview_url} className="bg-white basis-2/4"/>
-					{/* Todo: make liked track deletion*/}
 					<button onClick={() => onUnlikeTrack(track.id)}>
 						<img className="w-8 h-7" src="src/assets/unlike.png" alt="Delete liked track icon"/>
 					</button>

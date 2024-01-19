@@ -5,7 +5,7 @@ const PlaylistItem: React.FC<PlaylistItemProps> = ({ playlist, onPlaylistSelect 
     return (
         <div key={playlist.id}>
             <div className="bg-gray-100 p-2 rounded flex items-center">
-                <button onClick={() => onPlaylistSelect(playlist.imagePath, playlist.title)}>
+                <button onClick={() => onPlaylistSelect(playlist)}>
                     <img className="w-44 h-44 rounded mr-2 hover:scale-90 duration-150"
                          src={playlist.imagePath} alt={playlist.title} />
                 </button>
