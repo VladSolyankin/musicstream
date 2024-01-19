@@ -52,6 +52,18 @@ export const getUserPlaylists = async (uid) => {
     return userPlaylists
 }
 
+export const getPlaylistTracks = async (uid, playlistId) => {
+    let userPlaylistTrackIds = []
+    const q =
+        query(collection(db, `users/${uid}/playlists`),
+            where('id', '==', playlistId))
+    const getSelectedDoc = await getDocs(q)
+
+    getSelectedDoc.forEach( (doc) => userPlaylistTrackIds = doc.data()["tracks"])
+
+    return userPlaylistTrackIds
+}
+
 export const getStorageImage = async (path) => {
     const imageRef = ref(storage, path)
 
