@@ -38,16 +38,19 @@ const SignInForm = () => {
     return (
         <>
             {contextHolder}
+
             <Form
                 name="basic"
                 labelCol={{span: 8}}
                 wrapperCol={{span: 16}}
-                style={{maxWidth: 600}}
                 initialValues={{remember: true}}
                 onFinish={onSignIn}
                 autoComplete="off"
-                className="h-screen w-1/2 bg-white flex flex-col justify-center items-center basis-1/3"
+                className="h-screen bg-white flex flex-col justify-center items-center"
             >
+                <div className="flex justify-center items-center w-screen lg:hidden">
+                    <img src="src/assets/logo-transparent.png" alt="Logo"/>
+                </div>
                 <div className="text-2xl mb-5 font-bold">Вход</div>
                 <Form.Item<FieldType>
                     label="Email"

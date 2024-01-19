@@ -2,14 +2,14 @@ import React from 'react';
 import {PickerPlaylistItemProps} from "@types/index.ts";
 import {addNewPlaylistTrack} from "../../../firebase/index.cjs";
 
-const PickerPlaylistItem: React.FC<PickerPlaylistItemProps> = ({ playlist, trackId }) => {
+const PickerPlaylistItem: React.FC<PickerPlaylistItemProps> = ({ playlist, trackId, previewUrl }) => {
 
     const userId = localStorage.getItem("currentUserId")
 
     return (
         <div key={playlist.id}>
             <div className="bg-gray-100 p-2 rounded flex items-center">
-                <button onClick={() => addNewPlaylistTrack(userId, playlist.id, trackId)}>
+                <button onClick={() => addNewPlaylistTrack(userId, playlist.id, previewUrl, trackId)}>
                     <img className="w-44 h-44 rounded mr-2 hover:scale-90 duration-150"
                          src={playlist.imagePath} alt={playlist.title} />
                 </button>

@@ -29,7 +29,7 @@ export const addNewPlaylist = async (uid, playlistId, title, imagePath) => {
     await addDoc(collection(db, `users/${uid}/playlists`), newPlaylist)
 }
 
-export const addNewPlaylistTrack = async (uid, playlistId, trackId) => {
+export const addNewPlaylistTrack = async (uid, playlistId, playlistPreview, trackId) => {
 
     const q =
         query(collection(db, `users/${uid}/playlists`),
@@ -37,7 +37,7 @@ export const addNewPlaylistTrack = async (uid, playlistId, trackId) => {
     const getSelectedDoc = await getDocs(q)
 
     getSelectedDoc.forEach( (doc) => {
-        updateDoc(doc.ref, { tracks: arrayUnion(trackId) })
+        updateDoc(doc.ref, { tracks: arrayUnion({trackIds: trackId, preview_url: playlistPreview}) })
     })
 
 }

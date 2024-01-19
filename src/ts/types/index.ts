@@ -54,7 +54,8 @@ export type PlaylistItemProps = {
 export type PickerPlaylistItemProps = {
     playlist: Playlist,
     onPlaylistSelect: (playlist: Playlist) => void,
-    trackId: string
+    trackId: string,
+    previewUrl: string
 }
 
 export type AddPlaylistDialogProps = {
