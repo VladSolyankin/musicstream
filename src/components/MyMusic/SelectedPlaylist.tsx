@@ -2,12 +2,13 @@ import React, {useEffect, useState} from 'react';
 import '../../css/Sidemenu.css'
 import {SelectedPlaylistProps, Track} from "@types/index";
 import {nanoid} from "nanoid";
-import {getPlaylistTracks} from "../../../firebase/index.cjs";
+import {deletePlaylistTrack, getPlaylistTracks} from "../../../firebase/index.cjs";
 import { RxCrossCircled } from "react-icons/rx";
 
 const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, selectedPlaylist, onPlaylistClosed}) => {
 	const [playlistTrackIds, setPlaylistTrackIds] = useState<object[]>([])
 	const [playlistTracks, setPlaylistTracks] = useState<Track[]>([])
+	const userId = localStorage.getItem("currentUserId")
 
 	const onMenuClosed = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.stopPropagation()
@@ -16,7 +17,13 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, selectedP
 		onPlaylistClosed()
 	}
 
-	const onDeleteTrack = () => { console.log("Playlist deleted")}
+	const onDeleteTrack = (trackId) => {
+		deletePlaylistTrack(userId, selectedPlaylist.id, trackId)
+			.then(() => {
+				setPlaylistTracks(tracks => tracks.filter(track => track.id !== trackId))
+			})
+
+	}
 
 	useEffect(() => {
 		const fetchPlaylistTrackIds = async () => {
@@ -29,7 +36,7 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, selectedP
 	useEffect(() => {
 		const fetchPlaylistTrack = async () => {
 			if (playlistTrackIds.length > 0) {
-				const {tracks} = await fetch(`/getTracksByIds?ids=${playlistTrackIds.map(elem => elem.trackIds).join('%2C')}`).then(res => res.json());
+				const {tracks} = await fetch(`/getTracksByIds?ids=${playlistTrackIds.map(elem => elem.trackId).join('%2C')}`).then(res => res.json());
 				setPlaylistTracks(tracks)
 			}
 		};
@@ -58,7 +65,7 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, selectedP
 						playlistTracks.map((track: Track, index) => {
 							return <li key={nanoid()}
 								className="border border-gray-12 p-4 mb-4 text-white flex items-center justify-between gap-10">
-								<img src={track.album.images[2].url} alt="" className="basis-1/8"/>
+								<img src={track.album.images[2].url.length ? track.album.images[2].url : ""} alt="" className="basis-1/8"/>
 								<span
 									className="text-center text-[#000000] text-lg basis-1/4">{track.name + " - " + track.artists[0].name}</span>
 								{playlistTrackIds[index] !== undefined && playlistTrackIds[index].preview_url !== null ? (
@@ -68,7 +75,7 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, selectedP
 										Слушать на Spotify
 									</a>
 								)}
-								<button onClick={() => onDeleteTrack()}>
+								<button onClick={() => onDeleteTrack(track.id)}>
 									<RxCrossCircled className="w-8 h-7 text-[#FF0000]" alt="Delete liked track icon"/>
 								</button>
 							</li>

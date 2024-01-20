@@ -19,7 +19,7 @@ const SortSelect: React.FC<SortSelectProps & SelectProps<string>> =
                 },
             }}
         >
-            <Space align="end" direction="vertical" className="w-full px-32 my-5">
+            <Space align="end" direction="vertical" className="w-full my-5">
                 <Select
                     defaultValue={defaultValue}
                     size="large"

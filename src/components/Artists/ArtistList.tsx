@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import useStore from "../../store/store.js";
-import {Artist} from "../../ts/types";
+import {Artist} from "@types/index";
 import SortSelect from "../UI/SortSelect.tsx";
 import ArtistTopTracksDialog from "../UI/PopularTracksDialog.tsx";
 import LoadingSpinner from "../UI/LoadingSpinner";
@@ -91,25 +91,24 @@ const ArtistList: React.FC = () => {
 	return (
 		<div className="flex justify-center">
 			{!spinning &&
-				<div><SortSelect
+				<div>
+					<SortSelect
 					defaultValue="Сортировка"
 					onChange={() => {
 					}}
 					onSelect={changeSortingOrder}
-				/>
+					/>
 					<div className="flex flex-col items-center gap-20 my-10">
 						<div>
 							{artistList.map((item, index) => (
 								<div className="flex flex-col gap-3" key={item.toString() + index.toString()}>
 									<span className="text-white text-5xl font-jost">{item.letter}:</span>
-									<div key={index}
-										 className="grid gap-20 2xl:grid-cols-playlistsWrap-2xl xl:grid-cols-playlistsWrap-xl lg:grid-cols-playlistsWrap-lg md:grid-cols-playlistsWrap-md sm:grid-cols-playlistsWrap-sm text-white gap-5">
+									<div key={index} className="grid gap-20 2xl:grid-cols-playlistsWrap-2xl xl:grid-cols-playlistsWrap-xl lg:grid-cols-playlistsWrap-lg md:grid-cols-playlistsWrap-md sm:grid-cols-playlistsWrap-sm text-white gap-5">
 										{
 											item.artists.map((artist: Artist, index: number) => (
 												<div key={index} className="flex flex-col items-center gap-2">
 													<button onClick={() => onArtistShow(artist.name)}>
-														<img className="w-64 h-64 rounded-xl hover:scale-105"
-															 src={artist.image || ""} alt="Artist image"/>
+														<img className="w-64 h-64 rounded-xl hover:scale-105" src={artist.image || ""} alt="Artist image"/>
 													</button>
 													<span
 														className="text-2xl text-white w-48 text-center">{artist.name}</span>

@@ -1,5 +1,5 @@
 import {db, storage} from './config.cjs'
-import {addDoc, collection, doc, setDoc, getDocs, updateDoc, arrayUnion, query, where} from 'firebase/firestore'
+import {addDoc, collection, doc, setDoc, getDocs, getDoc, updateDoc, arrayUnion, query, where} from 'firebase/firestore'
 import {getDownloadURL, ref} from 'firebase/storage'
 import {nanoid} from 'nanoid'
 
@@ -37,9 +37,26 @@ export const addNewPlaylistTrack = async (uid, playlistId, playlistPreview, trac
     const getSelectedDoc = await getDocs(q)
 
     getSelectedDoc.forEach( (doc) => {
-        updateDoc(doc.ref, { tracks: arrayUnion({trackIds: trackId, preview_url: playlistPreview}) })
+        updateDoc(doc.ref, { tracks: arrayUnion({trackId: trackId, preview_url: playlistPreview}) })
     })
 
+}
+
+export const deletePlaylistTrack = async (uid, playlistId, trackId) => {
+    const q = query(collection(db, `users/${uid}/playlists`), where('id', '==', playlistId))
+
+    const deletePlaylist = await getDocs(q)
+
+    deletePlaylist.forEach( playlist => {
+        const playlistData = playlist.data()
+        if (playlist && playlistData) {
+            let playlistTracks = playlistData.tracks
+            const updatedTracks = playlistTracks.filter(track => track.trackId !== trackId)
+
+            const playlistDoc = doc(db, `users/${uid}/playlists/${playlist.id}`)
+            updateDoc(playlistDoc, {tracks: updatedTracks})
+        }
+    })
 }
 
 export const getUserPlaylists = async (uid) => {
@@ -57,6 +74,7 @@ export const getPlaylistTracks = async (uid, playlistId) => {
     const q =
         query(collection(db, `users/${uid}/playlists`),
             where('id', '==', playlistId))
+
     const getSelectedDoc = await getDocs(q)
 
     getSelectedDoc.forEach( (doc) => userPlaylistTrackIds = doc.data()["tracks"])

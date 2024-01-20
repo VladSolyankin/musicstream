@@ -53,7 +53,7 @@ export type PlaylistItemProps = {
 
 export type PickerPlaylistItemProps = {
     playlist: Playlist,
-    onPlaylistSelect: (playlist: Playlist) => void,
+    onPlaylistSelect: () => void,
     trackId: string,
     previewUrl: string
 }

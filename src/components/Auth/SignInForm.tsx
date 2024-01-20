@@ -1,12 +1,15 @@
-import {Button, Checkbox, Form, Input, notification} from "antd";
+import {Button, Checkbox, Form, Input} from "antd";
 import {useNavigate} from "react-router-dom";
-import {signInWithEmailAndPassword, RecaptchaVerifier} from "firebase/auth";
+import {signInWithEmailAndPassword} from "firebase/auth";
 import {auth} from '../../../firebase/config.cjs';
-import {FieldType, NotificationType} from "../../ts/types";
+import {FieldType} from "../../ts/types";
+import MyNotification from "../UI/MyNotification";
+import {useState} from "react";
+import {signInWarning} from "../../ts/constants";
 
 const SignInForm = () => {
-    const [api, contextHolder] = notification.useNotification();
     const navigate = useNavigate()
+    const [isErrorOpened, setIsErrorOpened] = useState(false)
 
     const onSignIn = async (values: FieldType) => {
         const {username, password} = values
@@ -20,25 +23,17 @@ const SignInForm = () => {
                     .catch((error) => {
                         const errorCode = error.code;
                         const errorMessage = error.message;
-                        openNotification('warning', errorMessage)
+                        setIsErrorOpened(true)
                         console.log(`${errorCode}: ${errorMessage}`)
                     });
             }
         }
     }
 
-    const openNotification = (type: NotificationType, error: string) => {
-        api[type]({
-            message: 'Вход не удался',
-            description: error,
-            duration: 5,
-        });
-    };
 
     return (
         <>
-            {contextHolder}
-
+            <MyNotification isOpened={isErrorOpened} params={signInWarning}/>
             <Form
                 name="basic"
                 labelCol={{span: 8}}

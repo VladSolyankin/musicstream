@@ -13,10 +13,10 @@ const PlaylistPicker = ({isPickerOpen, onPickerClose, trackId, previewUrl}) => {
     return (
         <Dialog open={isPickerOpen} onClose={onPickerClose} maxWidth={"lg"}>
             <DialogTitle className="text-center">Выберите плейлист для добавления</DialogTitle>
-            <DialogContent className="grid grid-cols-3 bg-gray-12">
+            <DialogContent className="grid grid-cols-5 bg-gray-12">
                 {
                     playlists.map(playlist => (
-                        <PickerPlaylistItem key={nanoid()} playlist={playlist} trackId={trackId} previewUrl={previewUrl} onPlaylistSelect={() => {}}/>
+                        <PickerPlaylistItem key={nanoid()} playlist={playlist} trackId={trackId} previewUrl={previewUrl} onPlaylistSelect={() => onPickerClose()}/>
                     ))
                 }
             </DialogContent>
