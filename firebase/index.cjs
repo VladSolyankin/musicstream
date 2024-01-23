@@ -1,13 +1,9 @@
 import {db, storage} from './config.cjs'
-import {addDoc, collection, doc, setDoc, getDocs, getDoc, updateDoc, arrayUnion, query, where} from 'firebase/firestore'
+import {addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where} from 'firebase/firestore'
 import {getDownloadURL, ref} from 'firebase/storage'
-import {nanoid} from 'nanoid'
 
 
 export const addNewUser = async (uid, email) => {
-
-    await addDoc(collection(db, `users`), {uid})
-
     const newUser = {
         likedTracks: [],
         email: email
@@ -39,7 +35,18 @@ export const addNewPlaylistTrack = async (uid, playlistId, playlistPreview, trac
     getSelectedDoc.forEach( (doc) => {
         updateDoc(doc.ref, { tracks: arrayUnion({trackId: trackId, preview_url: playlistPreview}) })
     })
+}
 
+export const addLikedUserTrack = async (uid, trackId) => {
+    const userDocRef = doc(db, `users/${uid}`)
+    const userDoc = await getDoc(userDocRef)
+    const userLikedTracks = userDoc.data().likedTracks
+    if (!userLikedTracks.includes(trackId)) {
+        await updateDoc(userDocRef, { likedTracks: [...userLikedTracks, trackId] })
+    }
+    else {
+        console.log("Трек уже добавлен")
+    }
 }
 
 export const deletePlaylistTrack = async (uid, playlistId, trackId) => {
@@ -80,6 +87,11 @@ export const getPlaylistTracks = async (uid, playlistId) => {
     getSelectedDoc.forEach( (doc) => userPlaylistTrackIds = doc.data()["tracks"])
 
     return userPlaylistTrackIds
+}
+
+export const getUserLikedTracks = async (uid) => {
+    const userDoc = await getDoc(doc(db, `users/${uid}`))
+    return userDoc.data().likedTracks
 }
 
 export const getStorageImage = async (path) => {
