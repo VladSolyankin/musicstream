@@ -1,25 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import useStore from "../../store/store.js";
-import Track from "../../types";
+import {Track} from "@types/index.ts";
+import {getUserLikedTracks} from "../../../firebase/index.cjs";
 
 const LikedTrackList: React.FC = () => {
-	const {likedTracksIds} = useStore()
+	const userId = localStorage.getItem("currentUserId")
 	const [likedTracks, setLikedTracks] = useState([])
 	const onLikedTrackRender = async () => {
-		const likedTracks = await fetch(`/getTracksByIds?ids=${likedTracksIds.join('%2C')}`)
+		const userLikedTrackIds = await getUserLikedTracks(userId)
+		const likedTracks = await fetch(`/getTracksByIds?ids=${userLikedTrackIds.join('%2C')}`)
 			.then(res => res.json())
 		setLikedTracks(likedTracks.tracks)
 	}
 
 	const onUnlikeTrack = (id: string) => {
 		setLikedTracks(likedTracks.filter((track: Track) => track.id !== id))
-		console.log(likedTracksIds)
 	}
 
 	useEffect(() => {
-		if (likedTracksIds.length)
-			onLikedTrackRender()
-	}, [likedTracksIds])
+		onLikedTrackRender()
+	}, [])
 
 	return (
 		<div className="flex flex-col">

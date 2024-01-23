@@ -11,19 +11,19 @@ const NavigationMenu = ({children}) => {
 			key: '0',
 		},
 		{
-			label: <div className="text-2xl sm:hidden block transition duration-300 hover:-translate-y-1 hover:font-bold" onClick={() => navigator('/tracks')}>Треки</div>,
+			label: <div className="text-2xl md:hidden flex transition duration-300 hover:-translate-y-1 hover:font-bold" onClick={() => navigator('/tracks')}>Треки</div>,
 			key: '1',
 		},
 		{
-			label: <div className="text-2xl md:hidden block transition duration-300 hover:-translate-y-1 hover:font-bold" onClick={() => navigator('/creators')}>Исполнители</div>,
+			label: <div className="text-2xl lg:hidden flex transition duration-300 hover:-translate-y-1 hover:font-bold" onClick={() => navigator('/creators')}>Исполнители</div>,
 			key: '2',
 		},
 		{
-			label: <div className="text-2xl lg:hidden block transition duration-300 hover:-translate-y-1 hover:font-bold" onClick={() => navigator('/my_music')}>Моя музыка</div>,
+			label: <div className="text-2xl xl:hidden flex transition duration-300 hover:-translate-y-1 hover:font-bold" onClick={() => navigator('/my_music')}>Моя музыка</div>,
 			key: '3',
 		},
 		{
-			label: <div className="text-2xl xl:hidden block transition duration-300 hover:-translate-y-1 hover:font-bold" onClick={() => navigator('/other')}>Прочее</div>,
+			label: <div className="text-2xl xl:hidden flex transition duration-300 hover:-translate-y-1 hover:font-bold" onClick={() => navigator('/other')}>Прочее</div>,
 			key: '4',
 		},
 	];

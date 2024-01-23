@@ -11,13 +11,13 @@ const Header = () => {
 
 	const onProfileOpen = () => setProfileOpen(!isProfileOpen)
 	return (
-		<div className="flex justify-center items-center mx-auto w-full bg-gray-12">
+		<div className="flex justify-center items-center w-full bg-gray-12">
 			<div className="flex justify-start items-center h-32 mb-4 gap-20">
 				<ul className="flex items-center justify-between text-white text-3xl font-jost mx-auto gap-32">
 					<img onClick={() => navigator("/main")} src="src/assets/logo-transparent.png" className="w-52 cursor-pointer" alt="Musicstream logo"/>
-					<li className="cursor-pointer hidden sm:block" onClick={() => navigator("/tracks")}>Треки</li>
-					<li className="cursor-pointer hidden md:block" onClick={() => navigator("/creators")}>Исполнители</li>
-					<li className="cursor-pointer hidden lg:block" onClick={() => navigator("/my_music")}>Моя музыка</li>
+					<li className="cursor-pointer hidden md:block" onClick={() => navigator("/tracks")}>Треки</li>
+					<li className="cursor-pointer hidden lg:block" onClick={() => navigator("/creators")}>Исполнители</li>
+					<li className="cursor-pointer hidden xl:block" onClick={() => navigator("/my_music")}>Моя музыка</li>
 					<li className="cursor-pointer hidden xl:block" onClick={() => navigator("/other")}>Прочее</li>
 				</ul>
 				<ProfilePopover
