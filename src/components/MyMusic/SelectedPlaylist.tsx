@@ -4,6 +4,7 @@ import {SelectedPlaylistProps, Track} from "@types/index";
 import {nanoid} from "nanoid";
 import {deletePlaylistTrack, getPlaylistTracks} from "../../../firebase/index.cjs";
 import { RxCrossCircled } from "react-icons/rx";
+import MusicPlayer from "../UI/MusicPlayer";
 
 const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, selectedPlaylist, onPlaylistClosed}) => {
 	const [playlistTrackIds, setPlaylistTrackIds] = useState<object[]>([])
@@ -68,7 +69,7 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, selectedP
 								<img src={track.album.images[2].url.length ? track.album.images[2].url : ""} alt="" className="basis-1/8"/>
 								<span
 									className="text-center text-[#000000] text-lg basis-1/4">{track.name + " - " + track.artists[0].name}</span>
-								{playlistTrackIds[index] !== undefined && playlistTrackIds[index].preview_url !== null ? (
+								{playlistTrackIds[index].preview_url !== undefined && playlistTrackIds[index].preview_url !== null ? (
 									<audio controls src={playlistTrackIds[index].preview_url} className="bg-white basis-2/4" />
 								) : (
 									<a href={track.external_urls.spotify} className="text-lg text-[#000000] font-bold text-center basis-2/4">

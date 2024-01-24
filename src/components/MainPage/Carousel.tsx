@@ -11,8 +11,7 @@ const slideContainerStyle = {
 };
 
 const slideStyle = {
-    minWidth: "100%",
-    height: '100%'
+    minWidth: "100%"
 };
 
 const images = [
@@ -33,7 +32,7 @@ const Carousel = () => {
     };
 
     return (
-        <div className="frelative w-full max-w-screen-xl mx-auto overflow-hidden flex items-center py-20 gap-3">
+        <div className="relative max-w-6xl mx-auto overflow-hidden flex items-center py-20 gap-3">
             <svg onClick={prevSlide} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black" className="w-16 h-12 bg-white rounded-3xl">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
             </svg>
@@ -41,7 +40,7 @@ const Carousel = () => {
                 <div style={{ ...slideContainerStyle, transform: `translateX(-${currentSlide * 100}%)` }} >
                     {images.map((image, index) => (
                         <div key={index} style={slideStyle}>
-                            <img src={image} alt={`slide-${index}`} style={{ width: '100%' }} />
+                            <img src={image} alt={`slide-${index}`}/>
                         </div>
                     ))}
                 </div>

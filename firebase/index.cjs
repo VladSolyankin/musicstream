@@ -69,9 +69,9 @@ export const deletePlaylistTrack = async (uid, playlistId, trackId) => {
 export const deleteLikedTrack = async (uid, trackId) => {
     const userRef = doc(db, `users/${uid}`)
     const userDoc = await getDoc(userRef)
+    const userLikedTracks = userDoc.data().likedTracks || console.log(new Error("No tracks found"))
 
-    const userLikedTracks = userDoc.data().likedTracks || throw new Error("No tracks found")
-    await updateDoc(userRef, { likedTracks: []}) //TODO: delete track
+    await updateDoc(userRef, { likedTracks: userLikedTracks.filter(id => id !== trackId) })
 }
 
 export const getUserPlaylists = async (uid) => {

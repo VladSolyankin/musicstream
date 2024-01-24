@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import useStore from "../../store/store.js";
 import {Track} from "@types/index.ts";
-import {getUserLikedTracks} from "../../../firebase/index.cjs";
+import {deleteLikedTrack, getUserLikedTracks} from "../../../firebase/index.cjs";
+import {RxCrossCircled} from "react-icons/rx";
 
 const LikedTrackList: React.FC = () => {
 	const userId = localStorage.getItem("currentUserId")
@@ -13,8 +13,9 @@ const LikedTrackList: React.FC = () => {
 		setLikedTracks(likedTracks.tracks)
 	}
 
-	const onUnlikeTrack = (id: string) => {
-		setLikedTracks(likedTracks.filter((track: Track) => track.id !== id))
+	const onUnlikeTrack = async (trackId: string) => {
+		await deleteLikedTrack(userId, trackId)
+		setLikedTracks(likedTracks.filter((track: Track) => track.id !== trackId))
 	}
 
 	useEffect(() => {
@@ -29,7 +30,7 @@ const LikedTrackList: React.FC = () => {
 					<span className="text-center text-white basis-1/4">{track.name + " - " + track.artists[0].name}</span>
 					<audio controls src={track.preview_url} className="bg-white basis-2/4"/>
 					<button onClick={() => onUnlikeTrack(track.id)}>
-						<img className="w-8 h-7" src="src/assets/unlike.png" alt="Delete liked track icon"/>
+						<RxCrossCircled className="w-8 h-7 text-[#FF0000]" alt="Delete liked track icon"/>
 					</button>
 				</li>
 			))}
