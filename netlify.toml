@@ -12,7 +12,7 @@
 # that handle routing internally.
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/src/main.tsx"
   status = 200
   force = true
 
