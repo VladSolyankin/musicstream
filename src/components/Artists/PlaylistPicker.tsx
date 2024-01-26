@@ -4,11 +4,12 @@ import {Playlist} from "@types/index.ts";
 import {useUserPlaylists} from "../../hooks/hooks.ts";
 import PickerPlaylistItem from "../MyMusic/PickerPlaylistItem.tsx";
 import {nanoid} from "nanoid";
+import {userId} from "../../ts/constants";
 
 const PlaylistPicker = ({isPickerOpen, onPickerClose, trackId, previewUrl}) => {
     const [playlists, setPlaylists] = useState<Playlist[]>([])
 
-    useUserPlaylists(setPlaylists, localStorage.getItem("currentUserId"))
+    useUserPlaylists(setPlaylists, userId)
 
     return (
         <Dialog open={isPickerOpen} onClose={onPickerClose} maxWidth={"lg"}>

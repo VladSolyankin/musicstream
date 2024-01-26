@@ -1,6 +1,6 @@
 {
   "name": "music_streaming_service",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -25,6 +25,7 @@
     "axios": "^1.6.2",
     "express": "^4.18.2",
     "firebase": "^10.7.1",
+    "firebase-admin": "^12.0.0",
     "i": "^0.3.7",
     "nanoid": "^5.0.4",
     "npm": "^10.2.4",

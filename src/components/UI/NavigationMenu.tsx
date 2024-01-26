@@ -1,36 +1,41 @@
 import React from 'react';
-import { DownOutlined } from '@ant-design/icons';
-import {Dropdown, MenuProps, Space} from 'antd';
-import {useNavigate} from "react-router-dom";
+import {Dropdown, MenuProps} from 'antd';
+import {useNavigate} from 'react-router-dom';
 
+const NavigationMenu = ({ children }) => {
+	const navigator = useNavigate();
 
-const NavigationMenu = ({children}) => {
-	const items: MenuProps['items'] = [
+	const createNavItem = (text, path, breakpoint) => (
+		<div className={`text-2xl ${breakpoint ? `${breakpoint}:hidden` : ''} flex transition duration-300 hover:-translate-y-1 hover:font-bold`} onClick={() => navigator(path)}>
+			{text}
+		</div>
+	);
+
+	const menuItems: MenuProps['items'] = [
 		{
 			label: <div className="text-3xl font-bold flex justify-center">Навигация</div>,
 			key: '0',
 		},
 		{
-			label: <div className="text-2xl md:hidden flex transition duration-300 hover:-translate-y-1 hover:font-bold" onClick={() => navigator('/tracks')}>Треки</div>,
+			label: createNavItem('Треки', '/tracks', 'md'),
 			key: '1',
 		},
 		{
-			label: <div className="text-2xl lg:hidden flex transition duration-300 hover:-translate-y-1 hover:font-bold" onClick={() => navigator('/creators')}>Исполнители</div>,
+			label: createNavItem('Исполнители', '/creators', 'lg'),
 			key: '2',
 		},
 		{
-			label: <div className="text-2xl xl:hidden flex transition duration-300 hover:-translate-y-1 hover:font-bold" onClick={() => navigator('/my_music')}>Моя музыка</div>,
+			label: createNavItem('Моя музыка', '/my_music', 'xl'),
 			key: '3',
 		},
 		{
-			label: <div className="text-2xl xl:hidden flex transition duration-300 hover:-translate-y-1 hover:font-bold" onClick={() => navigator('/other')}>Прочее</div>,
+			label: createNavItem('Библиотека', '/library', 'xl'),
 			key: '4',
 		},
 	];
 
-	const navigator = useNavigate()
 	return (
-		<Dropdown className="xl:hidden" menu={{ items }} trigger={['click']} placement="bottomRight" arrow={{pointAtCenter: true}}>
+		<Dropdown className="xl:hidden" menu={{ items: menuItems }} trigger={['click']} placement="bottomRight" arrow={{ pointAtCenter: true }}>
 			{children}
 		</Dropdown>
 	);

@@ -8,3 +8,5 @@ export const playlistTrackAddSuccess = {
 	description: 'Обновлённый плейлист в "Моя музыка"',
 	message: 'Плейлист добавлен'
 }
+
+export const userId = localStorage.getItem("currentUserId")

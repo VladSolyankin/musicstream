@@ -1,8 +1,8 @@
 import "../../css/Colors.css";
 import {useNavigate} from "react-router-dom";
-import {ReactNode, useState} from "react";
+import {useState} from "react";
 import ProfilePopover from "../UI/ProfilePopover.tsx";
-import { IoMdMenu } from "react-icons/io";
+import {IoMdMenu} from "react-icons/io";
 import NavigationMenu from "../UI/NavigationMenu";
 
 const Header = () => {
@@ -18,7 +18,7 @@ const Header = () => {
 					<li className="cursor-pointer hidden md:block" onClick={() => navigator("/tracks")}>Треки</li>
 					<li className="cursor-pointer hidden lg:block" onClick={() => navigator("/creators")}>Исполнители</li>
 					<li className="cursor-pointer hidden xl:block" onClick={() => navigator("/my_music")}>Моя музыка</li>
-					<li className="cursor-pointer hidden xl:block" onClick={() => navigator("/other")}>Прочее</li>
+					<li className="cursor-pointer hidden xl:block" onClick={() => navigator("/other")}>Библиотека</li>
 				</ul>
 				<ProfilePopover
 					open={isProfileOpen}

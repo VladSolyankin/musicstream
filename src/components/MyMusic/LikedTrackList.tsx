@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {Track} from "@types/index.ts";
 import {deleteLikedTrack, getUserLikedTracks} from "../../../firebase/index.cjs";
 import {RxCrossCircled} from "react-icons/rx";
+import {userId} from "../../ts/constants";
 
 const LikedTrackList: React.FC = () => {
-	const userId = localStorage.getItem("currentUserId")
 	const [likedTracks, setLikedTracks] = useState([])
 	const onLikedTrackRender = async () => {
 		const userLikedTrackIds = await getUserLikedTracks(userId)

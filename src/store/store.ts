@@ -27,7 +27,7 @@ export const usePickerStore = create((set) => ({
 	})),
 
 	// Function to hide the Picker
-	hidePicker: () => set((state) => ({
+	hidePicker: () => set(() => ({
 		isPickerOpen: false,
 		selectedTrackId: "",
 		selectedTrackPreview: "",
@@ -38,7 +38,7 @@ export const useArtistDialogStore = create((set) => ({
 	isDialogOpen: false,
 	topArtistTracks: {},
 	likedTrackIds: [],
-	onLikeClick: () => {}, // Заглушка, замените на логику обработки клика на лайк
+	onLikeClick: () => {},
 
 	openDialog: () => set({ isDialogOpen: true }),
 	closeDialog: () => set({ isDialogOpen: false }),

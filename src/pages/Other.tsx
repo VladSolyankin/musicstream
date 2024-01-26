@@ -1,10 +1,10 @@
 import PageLayout from "../components/Layout/PageLayout.tsx";
-import Socials from "../components/Other/Socials.tsx";
+import TrackLibrary from "../components/Other/TrackLibrary.tsx";
 
 const Other = () => {
     return (
         <PageLayout>
-            <Socials />
+            <TrackLibrary />
         </PageLayout>
     );
 };

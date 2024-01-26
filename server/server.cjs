@@ -2,6 +2,8 @@ const express = require('express');
 const axios = require('axios');
 const {request} = require("axios");
 const getSpotifyToken = require("./spotifyToken.cjs");
+const {getTracksFromStorage} = require("../firebase/admin.cjs");
+const {userId} = require("../src/ts/constants/index.js");
 
 const app = express();
 const PORT = 3001;
@@ -99,6 +101,17 @@ app.get('/getTracksByIds', async (req, res) => {
         res.status(error.response ? error.response.status : 500).json({ error: 'Internal Server Error' });
     }
 });
+
+app.get('/getTrackUrls', async (req, res) => {
+    try {
+        const result = await getTracksFromStorage(userId)
+        res.json(result)
+    } catch (error) {
+        console.error('Error:', error.response ? error.response.data : error.message);
+        res.status(error.response ? error.response.status : 500).json({ error: 'Internal Server Error' });
+    }
+
+})
 
 app.listen(PORT, () => {
     console.log(`Сервер запущен по адресу http://localhost:${PORT}`);

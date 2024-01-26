@@ -3,13 +3,12 @@ import '../../css/Sidemenu.css'
 import {SelectedPlaylistProps, Track} from "@types/index";
 import {nanoid} from "nanoid";
 import {deletePlaylistTrack, getPlaylistTracks} from "../../../firebase/index.cjs";
-import { RxCrossCircled } from "react-icons/rx";
-import MusicPlayer from "../UI/MusicPlayer";
+import {RxCrossCircled} from "react-icons/rx";
+import {userId} from "../../ts/constants";
 
 const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, selectedPlaylist, onPlaylistClosed}) => {
 	const [playlistTrackIds, setPlaylistTrackIds] = useState<object[]>([])
 	const [playlistTracks, setPlaylistTracks] = useState<Track[]>([])
-	const userId = localStorage.getItem("currentUserId")
 
 	const onMenuClosed = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.stopPropagation()
@@ -28,7 +27,7 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, selectedP
 
 	useEffect(() => {
 		const fetchPlaylistTrackIds = async () => {
-			const trackIds = await getPlaylistTracks(localStorage.getItem("currentUserId"), selectedPlaylist.id)
+			const trackIds = await getPlaylistTracks(userId, selectedPlaylist.id)
 			setPlaylistTrackIds(trackIds)
 		}
 		fetchPlaylistTrackIds()

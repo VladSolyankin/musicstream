@@ -5,8 +5,7 @@ import {useUserPlaylists} from "../../hooks/hooks.ts";
 import PlaylistItem from "./PlaylistItem.tsx";
 import AddPlaylistDialog from "../UI/AddPlaylistDialog.tsx";
 import {nanoid} from "nanoid";
-
-const currentUserId = localStorage.getItem("currentUserId")
+import {userId} from "../../ts/constants";
 
 const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
@@ -25,12 +24,12 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
         };
         setPlaylists([...playlists, newPlaylist]);
 
-        addNewPlaylist(currentUserId, newPlaylist.id, newPlaylistTitle, previewImage)
+        addNewPlaylist(userId, newPlaylist.id, newPlaylistTitle, previewImage)
             .then(() => console.log("New playlist added to database"))
     }
 
     const onLoadPlaylistPreview = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files && e.target.files[0];
+        const file = e.target.files && e.target.files[0]
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -40,7 +39,7 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
         }
     };
 
-    useUserPlaylists(setPlaylists, currentUserId)
+    useUserPlaylists(setPlaylists, userId)
 
     return (
         <div className="flex flex-col justify-center items-center border-2 min-h-32dvh min-w-full max-w-5xl mx-auto my-10 py-10 rounded-xl bg-gray-12 p-10 gap-3">

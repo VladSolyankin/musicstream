@@ -1,10 +1,9 @@
 import {Track} from '@types/index.ts'
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {addLikedUserTrack, getUserLikedTracks} from "../../../firebase/index.cjs";
-
+import {userId} from "../../ts/constants";
 
 const SearchedTracks = ({tracks, onLikeClick}) => {
-	const userId = localStorage.getItem("currentUserId")
 	const [likedTracks, setLikedTracks] = useState<string[]>([])
 
 
@@ -29,7 +28,13 @@ const SearchedTracks = ({tracks, onLikeClick}) => {
 					<li key={track.id} className="border p-4 mb-4 text-white flex items-center justify-between gap-10 bg-gray-12">
 						<img src={track.album.images[2].url} alt="" className="basis-1/8"/>
 						<span className="text-center text-white basis-1/4">{track.name + " - " + track.artists[0].name}</span>
-						<audio controls src={track.preview_url} className="bg-black basis-2/4"/>
+						{track.preview_url ?
+							<audio controls src={track.preview_url} className="bg-black basis-2/4"/>
+							:
+							<a href={track.external_urls.spotify} className="text-lg text-[white] font-bold text-center basis-2/4">
+								Слушать на Spotify
+							</a>
+						}
 						<button onClick={() => addNewLikedTrack(track.id)}>
 							<img src={likedTracks.includes(track.id) ? "src/assets/liked.png" : "src/assets/unliked.png"} alt="" className="w-8 h-7"/>
 						</button>
