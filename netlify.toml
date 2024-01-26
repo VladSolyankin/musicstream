@@ -6,7 +6,7 @@
   # If not set, defaults to the root directory.
   base = "/"
   command = "npm run build"
-  publish = "/dist"
+  publish = "dist/"
 
 # The following redirect is intended for use with most SPAs
 # that handle routing internally.
