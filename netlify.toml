@@ -9,9 +9,46 @@
 # The following redirect is intended for use with most SPAs
 # that handle routing internally.
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+from = "/main/*"
+to = "/main/*"
+status = 200
+force = true
+
+[[redirects]]
+from = "/my_music/*"
+to = "/my_music/*"
+status = 200
+force = true
+
+[[redirects]]
+from = "/tracks/*"
+to = "/tracks/*"
+status = 200
+force = true
+
+[[redirects]]
+from = "/creators/*"
+to = "/creators/*"
+status = 200
+force = true
+
+[[redirects]]
+from = "/other/*"
+to = "/other/*"
+status = 200
+force = true
+
+[[redirects]]
+from = "/register/*"
+to = "/register/*"
+status = 200
+force = true
+
+[[redirects]]
+from = "/*"
+to = "/"
+status = 200
+force = true
 
 [dev]
   command = "npm run dev"
