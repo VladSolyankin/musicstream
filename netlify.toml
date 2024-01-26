@@ -19,5 +19,5 @@
 [dev]
   command = "npm run dev"
   port = 5173
-  publish = "dist"
+  publish = "dist/"
 
