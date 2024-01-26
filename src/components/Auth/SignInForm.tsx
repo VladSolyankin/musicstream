@@ -1,7 +1,7 @@
 import {Button, Checkbox, Form, Input} from "antd";
 import {useNavigate} from "react-router-dom";
 import {signInWithEmailAndPassword} from "firebase/auth";
-import {auth} from '../../../firebase/config.cjs';
+import {auth} from '../../api/firebase/config.js';
 import {FieldType} from "../../ts/types";
 import MyNotification from "../UI/MyNotification";
 import {useState} from "react";
@@ -44,7 +44,7 @@ const SignInForm = () => {
                 className="h-screen bg-white flex flex-col justify-center items-center"
             >
                 <div className="flex justify-center items-center w-screen lg:hidden">
-                    <img src="src/assets/logo-transparent.png" alt="Logo"/>
+                    <img src="/assets/logo-transparent.png" alt="Logo"/>
                 </div>
                 <div className="text-2xl mb-5 font-bold">Вход</div>
                 <Form.Item<FieldType>

@@ -14,7 +14,7 @@ const SignIn = () => {
 			<SignInForm />
 			<Spline className="hidden 2xl:block" scene="https://prod.spline.design/NIhvxJXCoZPUn8iT/scene.splinecode" style={splineStyles}/>
 			<div className="hidden justify-center items-center w-screen lg:flex 2xl:hidden">
-				<img src="src/assets/logo-transparent.png" alt="Logo"/>
+				<img src="/assets/logo-transparent.png" alt="Logo"/>
 			</div>
 		</div>
 	);

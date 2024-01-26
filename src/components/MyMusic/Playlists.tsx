@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {addNewPlaylist} from "../../../firebase/index.cjs"
+import {addNewPlaylist} from "../../api/firebase/index.js"
 import {Playlist, PlaylistsProps} from "@types/index.ts";
 import {useUserPlaylists} from "../../hooks/hooks.ts";
 import PlaylistItem from "./PlaylistItem.tsx";
@@ -20,7 +20,7 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
         const newPlaylist: Playlist = {
             id: nanoid(),
             title: newPlaylistTitle,
-            imagePath: previewImage || 'src/assets/liked.png'
+            imagePath: previewImage || '/assets/liked.png'
         };
         setPlaylists([...playlists, newPlaylist]);
 
@@ -46,14 +46,14 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
             <div className="flex items-center justify-between w-full">
                 <div className="flex">
                     <div className="relative">
-                        <img src="src/assets/grid_icon.png" alt="Add new playlist button" className="w-8 h-8 mr-5"/>
+                        <img src="/assets/grid_icon.png" alt="Add new playlist button" className="w-8 h-8 mr-5"/>
                     </div>
                     <h2 className="text-2xl font-bold text-white">
                         Ваши плейлисты
                     </h2>
                 </div>
                 <div onClick={addPlaylist} className="">
-                    <img src="src/assets/add_playlist_button.png" alt="Add new playlist button" className="w-12 h-12"/>
+                    <img src="/assets/add_playlist_button.png" alt="Add new playlist button" className="w-12 h-12"/>
                 </div>
             </div>
             <div className="grid gap-20 2xl:grid-cols-playlistsWrap-2xl xl:grid-cols-playlistsWrap-xl lg:grid-cols-playlistsWrap-lg md:grid-cols-playlistsWrap-md sm:grid-cols-playlistsWrap-sm">

@@ -17,7 +17,7 @@ const NavigationMenu = ({ children }) => {
 			key: '0',
 		},
 		{
-			label: createNavItem('Треки', '/tracks', 'md'),
+			label: createNavItem('Треки', '/tracks', 'lg'),
 			key: '1',
 		},
 		{

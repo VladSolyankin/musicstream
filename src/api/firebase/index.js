@@ -1,4 +1,4 @@
-import {db, storage} from './config.cjs'
+import {db, storage} from './config.js'
 import {addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where} from 'firebase/firestore'
 import {getDownloadURL, ref} from 'firebase/storage'
 

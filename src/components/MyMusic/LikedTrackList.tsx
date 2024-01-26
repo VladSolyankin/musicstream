@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Track} from "@types/index.ts";
-import {deleteLikedTrack, getUserLikedTracks} from "../../../firebase/index.cjs";
+import {deleteLikedTrack, getUserLikedTracks} from "../../api/firebase/index.js";
 import {RxCrossCircled} from "react-icons/rx";
 import {userId} from "../../ts/constants";
 
@@ -30,7 +30,7 @@ const LikedTrackList: React.FC = () => {
 					<span className="text-center text-white basis-1/4">{track.name + " - " + track.artists[0].name}</span>
 					<audio controls src={track.preview_url} className="bg-white basis-2/4"/>
 					<button onClick={() => onUnlikeTrack(track.id)}>
-						<RxCrossCircled className="w-8 h-7 text-[#FF0000]" alt="Delete liked track icon"/>
+						<RxCrossCircled className="w-8 h-7 text-[#FF0000]"/>
 					</button>
 				</li>
 			))}

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import '../../css/Sidemenu.css'
 import {SelectedPlaylistProps, Track} from "@types/index";
 import {nanoid} from "nanoid";
-import {deletePlaylistTrack, getPlaylistTracks} from "../../../firebase/index.cjs";
+import {deletePlaylistTrack, getPlaylistTracks} from "../../api/firebase/index.js";
 import {RxCrossCircled} from "react-icons/rx";
 import {userId} from "../../ts/constants";
 
@@ -56,7 +56,7 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, selectedP
 				</div>
 
 				<button className="flex justify-center min-w-full my-5 hover:cursor-default">
-					<img src="src/assets/playlist_play_button.png" alt="" className="w-28 h-28 hover:cursor-pointer"/>
+					<img src="/assets/playlist_play_button.png" alt="" className="w-28 h-28 hover:cursor-pointer"/>
 				</button>
 
 				<ul>

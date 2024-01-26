@@ -1,6 +1,6 @@
 import {Track} from '@types/index.ts'
 import React, {useEffect, useState} from "react";
-import {addLikedUserTrack, getUserLikedTracks} from "../../../firebase/index.cjs";
+import {addLikedUserTrack, getUserLikedTracks} from "../../api/firebase/index.js";
 import {userId} from "../../ts/constants";
 
 const SearchedTracks = ({tracks, onLikeClick}) => {
@@ -36,10 +36,10 @@ const SearchedTracks = ({tracks, onLikeClick}) => {
 							</a>
 						}
 						<button onClick={() => addNewLikedTrack(track.id)}>
-							<img src={likedTracks.includes(track.id) ? "src/assets/liked.png" : "src/assets/unliked.png"} alt="" className="w-8 h-7"/>
+							<img src={likedTracks.includes(track.id) ? "/assets/liked.png" : "/assets/unliked.png"} alt="" className="w-8 h-7"/>
 						</button>
 						<button onClick={() => onLikeClick(track.id)}>
-							<img src="src/assets/add_playlist_button.png" alt="" className="w-8 h-7 bg-[#000000]"/>
+							<img src="/assets/add_playlist_button.png" alt="" className="w-8 h-7 bg-[#000000]"/>
 						</button>
 					</li>
 				))}

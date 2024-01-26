@@ -15,9 +15,9 @@ const slideStyle = {
 };
 
 const images = [
-    'src/assets/carousel1.jpg',
-    'src/assets/carousel2.jpg',
-    'src/assets/carousel3.jpg'
+    '/assets/carousel1.jpg',
+    '/assets/carousel2.jpg',
+    '/assets/carousel3.jpg'
 ];
 
 const Carousel = () => {

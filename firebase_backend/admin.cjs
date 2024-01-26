@@ -1,5 +1,5 @@
-import {getDownloadURL, ref} from 'firebase/storage'
-import {storage} from './config.cjs'
+const {getDownloadURL, ref} = require('firebase/storage')
+const { storage } = import('../src/api/firebase/config.js');
 const admin = require("firebase-admin");
 
 const serviceAccount = require("C:\\Users\\79117\\admin-config.json");
@@ -11,7 +11,7 @@ admin.initializeApp({
 
 const bucket = admin.storage().bucket();
 
-export const getTracksFromStorage = async (uid) => {
+const getTracksFromStorage = async (uid) => {
 	const result = []
 	const [files] = await bucket.getFiles({ prefix: `users/${uid}` })
 

@@ -11,7 +11,7 @@ const PlaylistTracks = ({tracks}) => {
 						<span className="text-center text-white basis-1/4">{track.name + " - " + track.artists[0].name}</span>
 						<audio controls src={track.preview_url} className="bg-white basis-2/4"/>
 						<button onClick={() => 1}>
-							<img src="src/assets/add_track.png" alt="" className="w-8 h-7 bg-white"/>
+							<img src="/assets/add_track.png" alt="" className="w-8 h-7 bg-white"/>
 						</button>
 					</li>
 				))}

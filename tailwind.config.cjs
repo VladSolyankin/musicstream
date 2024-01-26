@@ -11,9 +11,9 @@ module.exports = {
               "jost": ["Jost", "sans-serif"]
           },
           backgroundImage: {
-              'new-tracks': "url('src/assets/new_tracks.png')",
-              'top-songs': "url('src/assets/top_songs.png')",
-              'trending': "url('src/assets/trending.png')",
+              'new-tracks': "url('/assets/new_tracks.png')",
+              'top-songs': "url('/assets/top_songs.png')",
+              'trending': "url('/assets/trending.png')",
           },
           gridTemplateColumns: {
               'playlistsWrap-2xl': 'repeat(5, 1fr)',

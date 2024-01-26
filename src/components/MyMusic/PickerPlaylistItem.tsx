@@ -1,6 +1,6 @@
 import React from 'react';
 import {PickerPlaylistItemProps} from "@types/index.ts";
-import {addNewPlaylistTrack} from "../../../firebase/index.cjs";
+import {addNewPlaylistTrack} from "../../api/firebase/index.js";
 import {userId} from "../../ts/constants";
 
 const PickerPlaylistItem: React.FC<PickerPlaylistItemProps> = ({ playlist, trackId, previewUrl, onPlaylistSelect }) => {

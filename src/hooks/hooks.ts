@@ -1,5 +1,5 @@
 import {Dispatch, SetStateAction, useEffect} from "react";
-import {getUserPlaylists} from "../../firebase/index.cjs";
+import {getUserPlaylists} from "../api/firebase/index.js";
 import {Playlist} from "@types/index.ts";
 
 export const useFirebaseStorage = () => {
