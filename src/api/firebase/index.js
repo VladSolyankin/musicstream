@@ -1,6 +1,7 @@
 import {db, storage} from './config.js'
-import {addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where} from 'firebase/firestore'
-import {getDownloadURL, ref} from 'firebase/storage'
+import {addDoc, arrayUnion, collection, doc, getDoc, getDocs, deleteDoc, query, setDoc, updateDoc, where} from 'firebase/firestore'
+import {getDownloadURL, listAll, ref, uploadBytes} from 'firebase/storage'
+import {userId} from "../../ts/constants/index.ts";
 
 
 export const addNewUser = async (uid, email) => {
@@ -47,6 +48,10 @@ export const addLikedUserTrack = async (uid, trackId) => {
     else {
         console.log("Трек уже добавлен")
     }
+}
+
+export const deletePlaylist = async (uid, playlistId) => {
+    await deleteDoc(doc(db,`users/${uid}/playlist/${playlistId}`))
 }
 
 export const deletePlaylistTrack = async (uid, playlistId, trackId) => {
@@ -106,4 +111,33 @@ export const getStorageImage = async (path) => {
     const imageRef = ref(storage, path)
 
     return await getDownloadURL(imageRef)
+}
+
+export const getAllTracks = async () => {
+    let userTracks = [];
+    const storageRef = ref(storage, `users/${userId}`);
+
+    try {
+        const result = await listAll(storageRef);
+
+        const promises = result.items.map(async (fileRef) => {
+            const url = await getDownloadURL(fileRef);
+            return {
+                name: fileRef.name,
+                src: url
+            };
+        });
+
+        userTracks = await Promise.all(promises);
+
+        return userTracks;
+    } catch (error) {
+        console.error('Error getting files from storage:', error);
+        return userTracks;
+    }
+};
+
+export const addStorageTrack = async (file) => {
+    const fileRef = ref(storage, `users/${userId}/1.mp3 `)
+    await uploadBytes(fileRef, file).then(snapshot => console.log(snapshot))
 }

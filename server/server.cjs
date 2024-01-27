@@ -101,17 +101,6 @@ app.get('/getTracksByIds', async (req, res) => {
     }
 });
 
-app.get('/getTrackUrls', async (req, res) => {
-    try {
-        const result = await getTracksFromStorage(userId)
-        res.json(result)
-    } catch (error) {
-        console.error('Error:', error.response ? error.response.data : error.message);
-        res.status(error.response ? error.response.status : 500).json({ error: 'Internal Server Error' });
-    }
-
-})
-
 app.listen(PORT, () => {
     console.log(`Сервер запущен по адресу http://localhost:${PORT}`);
 });

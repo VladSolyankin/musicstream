@@ -2,9 +2,11 @@ import React, {useEffect, useState} from 'react';
 import '../../css/Sidemenu.css'
 import {SelectedPlaylistProps, Track} from "@types/index";
 import {nanoid} from "nanoid";
-import {deletePlaylistTrack, getPlaylistTracks} from "../../api/firebase/index.js";
+import {deletePlaylist, deletePlaylistTrack, getPlaylistTracks} from "../../api/firebase/index.js";
 import {RxCrossCircled} from "react-icons/rx";
 import {userId} from "../../ts/constants";
+import CustomPopover from "../UI/CustomPopover";
+import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 
 const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, selectedPlaylist, onPlaylistClosed}) => {
 	const [playlistTrackIds, setPlaylistTrackIds] = useState<object[]>([])
@@ -22,7 +24,10 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, selectedP
 			.then(() => {
 				setPlaylistTracks(tracks => tracks.filter(track => track.id !== trackId))
 			})
+	}
 
+	const onDeletePlaylist = async () => {
+		await deletePlaylist(userId, selectedPlaylist.id)
 	}
 
 	useEffect(() => {
@@ -51,6 +56,9 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, selectedP
 					<div className="flex flex-col justify-start">
 						<span className="text-3xl font-jost font-bold">ПЛЕЙЛИСТ</span>
 						<span className="text-2xl">{selectedPlaylist.title}</span>
+						<CustomPopover>
+							<ArrowDropDownCircleIcon />
+						</CustomPopover>
 					</div>
 					<img src={selectedPlaylist.imagePath} alt="Playlist image" className="h-36 w-36"/>
 				</div>

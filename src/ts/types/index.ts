@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction} from "react";
+import React, {ChangeEvent, Dispatch, SetStateAction} from "react";
 
 export type Track = {
     id: string,
@@ -64,6 +64,11 @@ export type AddPlaylistDialogProps = {
     onLoadPlaylistPreview: (e: React.ChangeEvent<HTMLInputElement>) => void,
     previewImage: string | null,
     setNewPlaylistTitle: Dispatch<SetStateAction<string>>
+}
+export type AddTrackDialogProps = {
+    isOpen: boolean,
+    onClose: () => void,
+    onTrackLoaded: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 export type SortSelectProps = {

@@ -20,9 +20,7 @@ async function getSpotifyToken() {
         const response = await axios(authOptions);
 
         if (response.status === 200) {
-            const token = response.data.access_token;
-            console.log('Токен получен:', token);
-            return token;
+            return response.data.access_token;
         } else {
             console.error('Ошибка при получении токена доступа:', response.status, response.data);
             throw new Error('Ошибка при получении токена доступа');

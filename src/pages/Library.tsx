@@ -1,7 +1,7 @@
 import PageLayout from "../components/Layout/PageLayout.tsx";
 import TrackLibrary from "../components/Other/TrackLibrary.tsx";
 
-const Other = () => {
+const Library = () => {
     return (
         <PageLayout>
             <TrackLibrary />
@@ -9,4 +9,4 @@ const Other = () => {
     );
 };
 
-export default Other;
+export default Library;

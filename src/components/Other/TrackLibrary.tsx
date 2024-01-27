@@ -1,9 +1,41 @@
 import {Button} from "antd";
 import {Add, DownloadOutlined} from "@mui/icons-material";
-import {useFirebaseStorage} from "../../hooks/hooks";
+import React, {useEffect, useState} from "react";
+import {nanoid} from "nanoid";
+import {addStorageTrack, getAllTracks} from "../../api/firebase/index.js";
+import AddNewTrackDialog from "../UI/AddNewTrackDialog";
+import {RxCrossCircled} from "react-icons/rx";
 
 const TrackLibrary = () => {
-    console.log(useFirebaseStorage())
+    const [userStorageTracks, setUserStorageTracks] = useState<Array<{name: string, src: string}>>([])
+    const [selectedFile, setSelectedFile] = useState<File | null>(null)
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
+
+    useEffect(() => {
+        const fetchUrls = async () => {
+            const tracks = await getAllTracks().then(res => {
+                setUserStorageTracks(() => res)
+            })
+        }
+        fetchUrls()
+    }, [])
+
+    const onAddNewTrack = async () => {
+        setIsDialogOpen(false)
+        await addStorageTrack(selectedFile)
+    }
+
+    const onTrackLoaded = (e) => {
+        if (e.target.files.length > 0) {
+            const file = e.target.files[0];
+            setSelectedFile(file);
+        }
+    }
+
+    const onDeleteStorageTrack = (track) => {
+
+    }
+
     return (
         <div className="min-h-screen flex flex-col mx-auto w-[100dvw] max-w-6xl mt-10">
             <div className="flex items-center justify-between">
@@ -12,12 +44,24 @@ const TrackLibrary = () => {
                 </div>
                 <div className="flex flex-center items-center gap-5">
                     <Button className="border-white flex items-center" type="primary" shape="default" icon={<DownloadOutlined />} size="large">Скачать всё</Button>
-                    <Button className="border-white flex items-center" type="primary" shape="default" icon={<Add />} size="large">Новый трек</Button>
+                    <Button className="border-white flex items-center" type="primary" shape="default" icon={<Add />} size="large" onClick={() => setIsDialogOpen(true)}>Новый трек</Button>
                 </div>
             </div>
-            <div className="flex flex-col items-center justify-between">
-                <audio src=""></audio>
+            <div className="flex flex-col justify-between mt-10 gap-10">
+                {
+                    userStorageTracks.map((track, index) => (
+                        <div key={nanoid()} className="flex text-center justify-between items-center gap-20 text-white text-2xl border-2 p-5 bg-gray-12">
+                            <span className="font-bold basis-1/12">{index + 1}.</span>
+                            <span className="font-jost basis-2/6 max-w-[200px] break-all">{track.name}</span>
+                            <audio src={track.src} controls className="basis-3/6 min-w-[200px]"></audio>
+                            <button onClick={() => onDeleteStorageTrack(track.name)}>
+                                <RxCrossCircled className="basis-1/12 w-10 h-10 text-[#FF0000]" alt="Delete liked track icon"/>
+                            </button>
+                        </div>
+                    ))
+                }
             </div>
+            <AddNewTrackDialog isOpen={isDialogOpen} onClose={onAddNewTrack} onTrackLoaded={e => onTrackLoaded(e)}/>
         </div>
     );
 };
