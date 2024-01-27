@@ -24,6 +24,7 @@
   background: #CCCCCC;
   border: 2px double black;
   padding: 3dvh;
+  justify-content: space-between;
 }
 
 .menu__background {
@@ -33,3 +34,12 @@
   opacity: .4;
 }
 
+@media (max-width: 770px) {
+  .menu__opened {
+    width: 100%;
+    min-width: unset;
+  }
+  .menu__background {
+    width: 0;
+  }
+}

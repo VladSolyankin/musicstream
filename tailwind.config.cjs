@@ -30,11 +30,13 @@ module.exports = {
       colors: {
           "gray-12": '#121212',
           "white": '#FFFFFF',
-          "gray-600": "#666666"
+          "gray-600": "#666666",
+          "red": "#F00000"
       },
       boxShadow: {
           'cardShadow': '0px 0px 15px 3px rgba(0, 0, 0, 1)',
-          'playlist': '0px 0px 5px 3px rgba(0, 0, 0, 1)'
+          'playlist': '0px 0px 5px 3px rgba(0, 0, 0, 1)',
+          'profile': '0px 5px 5px -2px rgba(0, 0, 0, 1)'
       },
   },
   plugins: [],

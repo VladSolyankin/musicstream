@@ -2,7 +2,6 @@ const express = require('express');
 const axios = require('axios');
 const {request} = require("axios");
 const getSpotifyToken = require("./spotifyToken.cjs");
-const {getTracksFromStorage} = require("../firebase_backend/admin.cjs");
 
 const app = express();
 const PORT = 3001;

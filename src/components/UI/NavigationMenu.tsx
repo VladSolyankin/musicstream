@@ -35,7 +35,7 @@ const NavigationMenu = ({ children }) => {
 	];
 
 	return (
-		<Dropdown className="xl:hidden" menu={{ items: menuItems }} trigger={['click']} placement="bottomRight" arrow={{ pointAtCenter: true }}>
+		<Dropdown className="xl:block" menu={{ items: menuItems }} trigger={['click']} placement="bottomRight" arrow={{ pointAtCenter: true }}>
 			{children}
 		</Dropdown>
 	);
