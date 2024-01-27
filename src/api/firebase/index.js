@@ -1,6 +1,6 @@
 import {db, storage} from './config.js'
 import {addDoc, arrayUnion, collection, doc, getDoc, getDocs, deleteDoc, query, setDoc, updateDoc, where} from 'firebase/firestore'
-import {getDownloadURL, listAll, ref, uploadBytes} from 'firebase/storage'
+import {getDownloadURL, listAll, ref, uploadBytes, deleteObject} from 'firebase/storage'
 import {userId} from "../../ts/constants/index.ts";
 
 
@@ -138,6 +138,11 @@ export const getAllTracks = async () => {
 };
 
 export const addStorageTrack = async (file) => {
-    const fileRef = ref(storage, `users/${userId}/1.mp3 `)
-    await uploadBytes(fileRef, file).then(snapshot => console.log(snapshot))
+    const fileRef = ref(storage, `users/${userId}/${file?.name}`)
+    await uploadBytes(fileRef, file).then(() => console.log(`${file.name} added`))
+}
+
+export const deleteStorageTrack = async (fileName) => {
+    const fileRef = ref(storage, `users/${userId}/${fileName}`)
+    await deleteObject(fileRef).then(() => console.log(`${fileName} deleted`))
 }

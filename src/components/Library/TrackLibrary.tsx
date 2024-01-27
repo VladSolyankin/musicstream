@@ -1,8 +1,8 @@
 import {Button} from "antd";
 import {Add, DownloadOutlined} from "@mui/icons-material";
-import React, {useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {nanoid} from "nanoid";
-import {addStorageTrack, getAllTracks} from "../../api/firebase/index.js";
+import {addStorageTrack, deleteStorageTrack, getAllTracks} from "../../api/firebase/index.js";
 import AddNewTrackDialog from "../UI/AddNewTrackDialog";
 import {RxCrossCircled} from "react-icons/rx";
 
@@ -22,18 +22,29 @@ const TrackLibrary = () => {
 
     const onAddNewTrack = async () => {
         setIsDialogOpen(false)
-        await addStorageTrack(selectedFile)
+        if (selectedFile) {
+            await addStorageTrack(selectedFile)
+        }
+        else {
+            console.warn("No file selected")
+        }
     }
 
-    const onTrackLoaded = (e) => {
+    const onTrackLoaded = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files.length > 0) {
             const file = e.target.files[0];
             setSelectedFile(file);
         }
     }
 
-    const onDeleteStorageTrack = (track) => {
-
+    const onDeleteStorageTrack = async (trackName: string) => {
+        if (trackName.length) {
+            await deleteStorageTrack(trackName)
+            setUserStorageTracks(userStorageTracks.filter(elem => elem.name !== trackName))
+        }
+        else {
+            console.warn("Track not deleted")
+        }
     }
 
     return (
@@ -55,7 +66,7 @@ const TrackLibrary = () => {
                             <span className="font-jost basis-2/6 max-w-[200px] break-all">{track.name}</span>
                             <audio src={track.src} controls className="basis-3/6 min-w-[200px]"></audio>
                             <button onClick={() => onDeleteStorageTrack(track.name)}>
-                                <RxCrossCircled className="basis-1/12 w-10 h-10 text-[#FF0000]" alt="Delete liked track icon"/>
+                                <RxCrossCircled className="basis-1/12 w-10 h-10 text-[#FF0000]"/>
                             </button>
                         </div>
                     ))

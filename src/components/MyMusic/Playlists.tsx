@@ -22,10 +22,15 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
             title: newPlaylistTitle,
             imagePath: previewImage || '/assets/liked.png'
         };
-        setPlaylists([...playlists, newPlaylist]);
 
-        addNewPlaylist(userId, newPlaylist.id, newPlaylistTitle, previewImage)
-            .then(() => console.log("New playlist added to database"))
+        if (newPlaylist.title && newPlaylist.imagePath) {
+            setPlaylists([...playlists, newPlaylist]);
+            addNewPlaylist(userId, newPlaylist.id, newPlaylistTitle, previewImage)
+                .then(() => console.log("New playlist added to database"))
+        }
+        else {
+            console.warn("Playlist not added")
+        }
     }
 
     const onLoadPlaylistPreview = (e: React.ChangeEvent<HTMLInputElement>) => {

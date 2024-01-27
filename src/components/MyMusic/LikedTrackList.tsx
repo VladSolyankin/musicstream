@@ -8,9 +8,14 @@ const LikedTrackList: React.FC = () => {
 	const [likedTracks, setLikedTracks] = useState([])
 	const onLikedTrackRender = async () => {
 		const userLikedTrackIds = await getUserLikedTracks(userId)
-		const likedTracks = await fetch(`/getTracksByIds?ids=${userLikedTrackIds.join('%2C')}`)
-			.then(res => res.json())
-		setLikedTracks(likedTracks.tracks)
+		if (userLikedTrackIds.length) {
+			const likedTracks = await fetch(`/getTracksByIds?ids=${userLikedTrackIds.join('%2C')}`)
+				.then(res => res.json())
+			setLikedTracks(likedTracks.tracks)
+		}
+		else {
+			console.warn("No liked tracks")
+		}
 	}
 
 	const onUnlikeTrack = async (trackId: string) => {
@@ -24,7 +29,7 @@ const LikedTrackList: React.FC = () => {
 
 	return (
 		<div className="flex flex-col">
-			{likedTracks.map((track: Track) => (
+			{likedTracks.length && likedTracks.map((track: Track) => (
 				<li key={track.id} className="border p-4 mb-4 text-white flex items-center justify-between gap-10">
 					<img src={track.album.images[2].url} alt="" className="basis-1/8"/>
 					<span className="text-center text-white basis-1/4">{track.name + " - " + track.artists[0].name}</span>
