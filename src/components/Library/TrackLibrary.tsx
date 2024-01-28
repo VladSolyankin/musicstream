@@ -2,9 +2,10 @@ import {Button} from "antd";
 import {Add, DownloadOutlined} from "@mui/icons-material";
 import React, {ChangeEvent, useEffect, useState} from "react";
 import {nanoid} from "nanoid";
-import {addStorageTrack, deleteStorageTrack, getAllTracks} from "../../api/firebase/index.js";
+import {addStorageTrack, deleteStorageTrack, getAllTracks} from "@firebase/index.js";
 import AddNewTrackDialog from "../UI/AddNewTrackDialog";
 import {RxCrossCircled} from "react-icons/rx";
+import {auth} from "@firebase/config.js";
 
 const TrackLibrary = () => {
     const [userStorageTracks, setUserStorageTracks] = useState<Array<{name: string, src: string}>>([])
@@ -46,6 +47,8 @@ const TrackLibrary = () => {
             console.warn("Track not deleted")
         }
     }
+
+    console.log(auth)
 
     return (
         <div className="min-h-screen flex flex-col mx-auto w-[100dvw] max-w-6xl mt-10">

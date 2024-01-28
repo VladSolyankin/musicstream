@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import likedTracks from "../MyMusic/LikedTracks";
-import {Track} from "@types/index";
+import {Track} from "@types";
 
 const MusicPlayer = ({tracks}) => {
 	const [playingTrack, setPlayingTrack] = useState<Track>(tracks[0])

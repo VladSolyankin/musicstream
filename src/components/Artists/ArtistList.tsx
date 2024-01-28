@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import useStore from "../../store/store.js";
-import {Artist} from "@types/index";
+import useStore from "@store";
+import {Artist} from "@types";
 import SortSelect from "../UI/SortSelect.tsx";
 import ArtistTopTracksDialog from "../UI/PopularTracksDialog.tsx";
 import LoadingSpinner from "../UI/LoadingSpinner";

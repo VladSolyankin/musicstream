@@ -45,7 +45,7 @@ const Header = () => {
 				</ProfilePopover>
 
 				<NavigationMenu>
-					<IoMdMenu className="text-white w-16 h-16 block xl:hidden cursor-pointer"/>
+					<IoMdMenu className="text-white w-16 h-16 lg:block xl:hidden cursor-pointer"/>
 				</NavigationMenu>
 			</div>
 		</div>

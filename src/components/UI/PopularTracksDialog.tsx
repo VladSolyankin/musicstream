@@ -1,5 +1,5 @@
 import React from 'react';
-import {ArtistTopTracksDialogProps} from "@types/index.ts";
+import {ArtistTopTracksDialogProps} from "@types";
 import {Dialog, DialogContent, DialogTitle} from "@mui/material";
 import TopSearchedTracks from "../Artists/TopSearchedTracks.tsx";
 

@@ -1,7 +1,7 @@
-import {Track} from '@types/index.ts'
+import {Track} from '@types'
 import React, {useEffect, useState} from "react";
-import {addLikedUserTrack, getUserLikedTracks} from "../../api/firebase/index.js";
-import {userId} from "../../ts/constants";
+import {addLikedUserTrack, getUserLikedTracks} from "@firebase/index.js";
+import {userId} from "@constants";
 
 const SearchedTracks = ({tracks, onLikeClick}) => {
 	const [likedTracks, setLikedTracks] = useState<string[]>([])

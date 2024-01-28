@@ -1,6 +1,8 @@
 import React from 'react';
 import {Button, Popover} from "antd";
 import {useNavigate} from 'react-router-dom'
+import {auth} from "@firebase/config.js";
+import {signOut} from "firebase/auth"
 
 const ProfilePopover = ({children, isProfileOpen, onProfileOpen}) => {
     return (
@@ -21,6 +23,7 @@ const Profile = () => {
     const onExitClick = () => {
         navigate('/')
         localStorage.clear()
+        signOut(auth).then(() => console.log(`User ${auth.name} signed out`))
     }
 
     return (

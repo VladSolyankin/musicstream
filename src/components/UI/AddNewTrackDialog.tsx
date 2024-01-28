@@ -1,5 +1,5 @@
 import {Dialog, DialogContent, DialogContentText, DialogTitle} from '@mui/material';
-import {AddTrackDialogProps} from "@types/index.ts";
+import {AddTrackDialogProps} from "@types";
 import React from "react";
 
 const AddNewTrackDialog: React.FC<AddTrackDialogProps> =

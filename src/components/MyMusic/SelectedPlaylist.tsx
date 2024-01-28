@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import '../../css/Sidemenu.css'
-import {SelectedPlaylistProps, Track} from "@types/index";
-import {nanoid} from "nanoid";
-import {deletePlaylist, deletePlaylistTrack, getPlaylistTracks} from "../../api/firebase/index.js";
-import {RxCrossCircled} from "react-icons/rx";
-import {userId} from "../../ts/constants";
+import {deletePlaylist, deletePlaylistTrack, getPlaylistTracks} from "@firebase/index.js";
+import {SelectedPlaylistProps, Track} from "@types";
+import {userId} from "@constants";
 import CustomPopover from "../UI/CustomPopover";
-import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 import SelectedPlaylistMenu from "../UI/SelectedPlaylistMenu.tsx";
+import {nanoid} from "nanoid";
+import '../../css/Sidemenu.css'
+import {RxCrossCircled} from "react-icons/rx";
+import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 
 const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, selectedPlaylist, onPlaylistClosed}) => {
 	const [playlistTrackIds, setPlaylistTrackIds] = useState<object[]>([])

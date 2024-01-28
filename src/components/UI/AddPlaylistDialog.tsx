@@ -1,5 +1,5 @@
 import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField } from '@mui/material';
-import {AddPlaylistDialogProps} from "@types/index.ts";
+import {AddPlaylistDialogProps} from "@types";
 import React from "react";
 
 const AddPlaylistDialog: React.FC<AddPlaylistDialogProps> =

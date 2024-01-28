@@ -1,6 +1,6 @@
 import React from 'react';
 import {ConfigProvider, Select, SelectProps, Space} from "antd";
-import {SortSelectProps} from "@types/index.ts";
+import {SortSelectProps} from "@types";
 
 const SortSelect: React.FC<SortSelectProps & SelectProps<string>> =
     ({

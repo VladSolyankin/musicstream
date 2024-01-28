@@ -1,4 +1,4 @@
-import {Track} from "@types/index";
+import {Track} from "@types";
 import PlaylistPicker from "./PlaylistPicker.tsx";
 import {useState} from "react";
 import {IoAddSharp} from "@react-icons/all-files/io5/IoAddSharp";

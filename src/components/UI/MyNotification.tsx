@@ -1,5 +1,5 @@
 import React from 'react';
-import {NotificationType} from "@types/index";
+import {NotificationType} from "@types";
 import {notification} from "antd";
 
 const MyNotification = ({isOpened, params}) => {

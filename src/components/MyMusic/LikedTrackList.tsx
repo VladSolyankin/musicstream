@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Track} from "@types/index.ts";
 import {deleteLikedTrack, getUserLikedTracks} from "../../api/firebase/index.js";
 import {RxCrossCircled} from "react-icons/rx";
-import {userId} from "../../ts/constants";
+import {userId} from "@constants";
 
 const LikedTrackList: React.FC = () => {
 	const [likedTracks, setLikedTracks] = useState([])

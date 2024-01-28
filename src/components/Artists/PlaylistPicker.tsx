@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {Dialog, DialogContent, DialogTitle} from "@mui/material";
-import {Playlist} from "@types/index.ts";
-import {useUserPlaylists} from "../../hooks/hooks.ts";
+import {Playlist} from "@types";
+import {useUserPlaylists} from "@hooks";
 import PickerPlaylistItem from "../MyMusic/PickerPlaylistItem.tsx";
 import {nanoid} from "nanoid";
-import {userId} from "../../ts/constants";
+import {userId} from "@constants";
 
 const PlaylistPicker = ({isPickerOpen, onPickerClose, trackId, previewUrl}) => {
     const [playlists, setPlaylists] = useState<Playlist[]>([])

@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import {addNewPlaylist} from "../../api/firebase/index.js"
-import {Playlist, PlaylistsProps} from "@types/index.ts";
-import {useUserPlaylists} from "../../hooks/hooks.ts";
+import {addNewPlaylist} from "@firebase/index.js"
+import {Playlist, PlaylistsProps} from "@types";
+import {useUserPlaylists} from "@hooks";
 import PlaylistItem from "./PlaylistItem.tsx";
 import AddPlaylistDialog from "../UI/AddPlaylistDialog.tsx";
 import {nanoid} from "nanoid";
-import {userId} from "../../ts/constants";
+import {userId} from "@constants";
 
 const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
     const [playlists, setPlaylists] = useState<Playlist[]>([]);

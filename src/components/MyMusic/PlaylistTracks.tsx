@@ -1,5 +1,5 @@
 import React from 'react';
-import {Track} from "@types/index";
+import {Track} from "@types";
 
 const PlaylistTracks = ({tracks}) => {
 	return (

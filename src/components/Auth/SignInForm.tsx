@@ -1,11 +1,11 @@
 import {Button, Checkbox, ConfigProvider, Form, Input} from "antd";
 import {useNavigate} from "react-router-dom";
 import {signInWithEmailAndPassword} from "firebase/auth";
-import {auth} from '../../api/firebase/config.js';
-import {FieldType} from "../../ts/types";
+import {auth} from '@firebase/config.js';
+import {FieldType} from "@types";
 import MyNotification from "../UI/MyNotification";
 import {useState} from "react";
-import {signInWarning} from "../../ts/constants";
+import {signInWarning} from "@constants";
 
 const SignInForm = () => {
     const navigate = useNavigate()

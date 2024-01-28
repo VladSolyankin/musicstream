@@ -30,7 +30,12 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@components": path.resolve(__dirname, './src/components')
+      "@types": path.resolve(__dirname, './src/ts/types/index.ts'),
+      "@constants": path.resolve(__dirname, './src/ts/constants/index.ts'),
+      "@store": path.resolve(__dirname, './src/store/store.js'),
+      "@hooks": path.resolve(__dirname, './src/hooks/hooks.ts'),
+      "@firebase/config.js": path.resolve(__dirname, './src/api/firebase/config.js'),
+      "@firebase/index.js": path.resolve(__dirname, './src/api/firebase/index.js')
     }
   },
   base: "./"

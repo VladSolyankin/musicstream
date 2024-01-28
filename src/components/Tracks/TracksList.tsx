@@ -2,7 +2,7 @@ import {useEffect} from "react";
 import SearchBar from "./SearchBar";
 import SearchedTracks from "./SearchedTracks";
 import TracksPagination from "./TracksPagination";
-import useStore from "../../store/store.js";
+import useStore from "@store";
 
 export const TracksList = () => {
     const {
