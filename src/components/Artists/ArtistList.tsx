@@ -48,7 +48,6 @@ const ArtistList: React.FC = () => {
 		try {
 			const response = await fetch(`/getTracks?q=${artist}`)
 			const data = await response.json()
-			console.log(data)
 			setTopArtistTracks(data)
 		} catch (error) {
 			console.error('Error fetching tracks: ', error.message)
@@ -69,7 +68,6 @@ const ArtistList: React.FC = () => {
 		};
 
 		fetchData();
-		console.log(artistList)
 	}, []);
 
 	const onArtistShow = async (artist: string) => {
@@ -94,8 +92,7 @@ const ArtistList: React.FC = () => {
 				<div>
 					<SortSelect
 					defaultValue="Сортировка"
-					onChange={() => {
-					}}
+					onChange={() => {}}
 					onSelect={changeSortingOrder}
 					/>
 					<div className="flex flex-col items-center gap-20 my-10">

@@ -13,7 +13,7 @@ const TrackLibrary = () => {
 
     useEffect(() => {
         const fetchUrls = async () => {
-            const tracks = await getAllTracks().then(res => {
+            await getAllTracks().then(res => {
                 setUserStorageTracks(() => res)
             })
         }
