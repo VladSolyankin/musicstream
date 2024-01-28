@@ -23,7 +23,7 @@ const Profile = () => {
     const onExitClick = () => {
         navigate('/')
         localStorage.clear()
-        signOut(auth).then(() => console.log(`User ${auth.name} signed out`))
+        signOut(auth).then(() => console.log(`User ${auth.currentUser?.uid} signed out`))
     }
 
     return (
@@ -34,8 +34,8 @@ const Profile = () => {
                     <img src={""} alt="" className="w-10 h-10 rounded-3xl"/>
                 </div>
                 <div className="flex flex-col">
-                    <span>Email: vlad.solyankin@mail.ru</span>
-                    <span>Phone: +7911111111</span>
+                    <span>Email: {auth.currentUser?.email}</span>
+                    <span>Phone: {auth.currentUser?.phoneNumber}</span>
                 </div>
             </div>
 
