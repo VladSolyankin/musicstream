@@ -32,8 +32,6 @@ export const TracksList = () => {
             setLikedTracksIds(likedTracksIds.filter((id: string) => id !== trackId))
             :
             setLikedTracksIds([...likedTracksIds, trackId])
-
-        console.log(likedTracksIds)
     }
 
     const onPageChange = (currentPage: number) => {
@@ -58,6 +56,7 @@ export const TracksList = () => {
                     </div>
             }
             <TracksPagination onPageChange={onPageChange} />
+
         </div>
     );
 };

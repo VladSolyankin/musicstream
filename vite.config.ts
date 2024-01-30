@@ -30,7 +30,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@types": path.resolve(__dirname, './src/ts/types/index.ts'),
+      "@types": path.resolve(__dirname, './src/ts/types/index.js'),
       "@constants": path.resolve(__dirname, './src/ts/constants/index.ts'),
       "@store": path.resolve(__dirname, './src/store/store.js'),
       "@hooks": path.resolve(__dirname, './src/hooks/hooks.ts'),

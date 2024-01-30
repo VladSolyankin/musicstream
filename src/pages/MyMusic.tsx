@@ -3,7 +3,7 @@ import LikedTracks from "../components/MyMusic/LikedTracks.tsx";
 import SelectedPlaylist from "../components/MyMusic/SelectedPlaylist.tsx";
 import {useState} from "react";
 import PageLayout from "../components/Layout/PageLayout.tsx";
-import {Playlist} from "@types/index";
+import {Playlist} from "@types";
 
 const MyMusic: React.FC = () => {
     const [isPlaylistSelected, setIsPlaylistSelected] = useState<boolean>(false)

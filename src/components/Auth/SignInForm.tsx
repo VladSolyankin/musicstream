@@ -16,8 +16,7 @@ const SignInForm = () => {
         if (typeof username === "string") {
             if (password != null) {
                 await signInWithEmailAndPassword(auth, username, password)
-                    .then((userCredential) => {
-                        localStorage.setItem('currentUserId', userCredential.user.uid)
+                    .then(() => {
                         navigate('/main')
                     })
                     .catch((error) => {

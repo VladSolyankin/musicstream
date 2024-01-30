@@ -1,5 +1,5 @@
 import React from 'react';
-import {PlaylistItemProps} from "@types/index.ts";
+import {PlaylistItemProps} from "@types/index.js";
 
 const PlaylistItem: React.FC<PlaylistItemProps> = ({ playlist, onPlaylistSelect }) => {
     return (

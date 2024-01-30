@@ -1,7 +1,21 @@
 import {db, storage} from './config.js'
-import {addDoc, arrayUnion, collection, doc, getDoc, getDocs, deleteDoc, query, setDoc, updateDoc, where} from 'firebase/firestore'
-import {getDownloadURL, listAll, ref, uploadBytes, deleteObject} from 'firebase/storage'
-import {userId} from "../../ts/constants/index.ts";
+import {
+    addDoc,
+    arrayUnion,
+    collection,
+    deleteDoc,
+    doc,
+    getDoc,
+    getDocs,
+    query,
+    setDoc,
+    updateDoc,
+    where
+} from 'firebase/firestore'
+import {deleteObject, getDownloadURL, listAll, ref, uploadBytes} from 'firebase/storage'
+import {userId} from "@constants";
+import JSZip from 'JSZip'
+import {saveAs} from 'file-saver'
 
 
 export const addNewUser = async (uid, email) => {
@@ -51,7 +65,14 @@ export const addLikedUserTrack = async (uid, trackId) => {
 }
 
 export const deletePlaylist = async (uid, playlistId) => {
-    await deleteDoc(doc(db,`users/${uid}/playlist/${playlistId}`))
+    const playlistsCollectionRef = collection(db, `users/${uid}/playlists`);
+    const q = query(playlistsCollectionRef, where('id', '==', playlistId));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+        const playlistDocRef = doc(playlistsCollectionRef, querySnapshot.docs[0].id);
+        await deleteDoc(playlistDocRef);
+    }
 }
 
 export const deletePlaylistTrack = async (uid, playlistId, trackId) => {
@@ -145,4 +166,29 @@ export const addStorageTrack = async (file) => {
 export const deleteStorageTrack = async (fileName) => {
     const fileRef = ref(storage, `users/${userId}/${fileName}`)
     await deleteObject(fileRef).then(() => console.log(`${fileName} deleted`))
+}
+
+export const downloadAllStorageTracks = async () => {
+    const storageRef = ref(storage, `users/${userId}`)
+    const zip = new JSZip()
+
+    try {
+        const result = await listAll(storageRef);
+
+        const promises = result.items.map(async (fileRef) => {
+            const url = await getDownloadURL(fileRef);
+            const response = await fetch(url, { mode: 'no-cors' });
+            const blob = await response.blob();
+
+            zip.file(fileRef.name, blob);
+        });
+
+        await Promise.all(promises);
+
+        const zipBlob = await zip.generateAsync({ type: 'blob' });
+
+        saveAs(zipBlob, `${localStorage.getItem("currentUserId")}.zip`);
+    } catch (error) {
+        console.error('Error downloading files:', error);
+    }
 }

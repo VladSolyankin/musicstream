@@ -12,7 +12,7 @@ const PickerPlaylistItem: React.FC<PickerPlaylistItemProps> = ({ playlist, track
                     addNewPlaylistTrack(userId, playlist.id, previewUrl, trackId)
                     onPlaylistSelect()
                 }}>
-                    <img className="w-44 h-44 rounded mr-2 hover:scale-90 duration-150"
+                    <img className="w-44 h-44 rounded mr-2 duration-150"
                          src={playlist.imagePath} alt={playlist.title} />
                 </button>
             </div>

@@ -17,14 +17,11 @@ const SignUpForm = () => {
                     .then((userCredential) => {
                         const user = userCredential.user;
                         addNewUser(user.uid, user.email)
-                        console.log(user)
                         navigate('/')
                     })
                     .catch((error) => {
-                        const errorCode = error.code;
                         const errorMessage = error.message;
                         openNotification('warning', errorMessage)
-                        console.log(`${errorCode}: ${errorMessage}`)
                     });
             }
         }

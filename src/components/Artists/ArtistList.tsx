@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import useStore from "@store";
 import {Artist} from "@types";
 import SortSelect from "../UI/SortSelect.tsx";
 import ArtistTopTracksDialog from "../UI/PopularTracksDialog.tsx";
 import LoadingSpinner from "../UI/LoadingSpinner";
+import {addLikedUserTrack, getUserLikedTracks} from "@firebase/index.js";
+import {userId} from "@constants";
 
 const ArtistList: React.FC = () => {
 
-	const { likedTrackIds } = useStore()
+	const [likedTrackIds, setLikedTrackIds] = useState([])
 
 	const [artistList, setArtistList] = useState<Artist[]>([]);
 	const [topArtistTracks, setTopArtistTracks] = useState({})
@@ -47,8 +48,8 @@ const ArtistList: React.FC = () => {
 	const getArtistTopTracks = async (artist: string) => {
 		try {
 			const response = await fetch(`/getTracks?q=${artist}`)
-			const data = await response.json()
-			setTopArtistTracks(data)
+			const {tracks} = await response.json()
+			setTopArtistTracks(tracks)
 		} catch (error) {
 			console.error('Error fetching tracks: ', error.message)
 			return []
@@ -70,9 +71,17 @@ const ArtistList: React.FC = () => {
 		fetchData();
 	}, []);
 
+	useEffect(() => {
+		const getLikedTracks = async () => {
+			const result = await getUserLikedTracks(userId)
+			setLikedTrackIds(result)
+		}
+		getLikedTracks()
+	}, [likedTrackIds])
+
 	const onArtistShow = async (artist: string) => {
 		await getArtistTopTracks(artist)
-		setIsDialogOpen(true)
+		if (topArtistTracks) setIsDialogOpen(true)
 	}
 
 	const onDialogClose = () => {
@@ -121,8 +130,6 @@ const ArtistList: React.FC = () => {
 							onDialogClose={onDialogClose}
 							topArtistTracks={topArtistTracks}
 							likedTrackIds={likedTrackIds}
-							onLikeClick={() => {
-							}}
 						/>
 					</div>
 				</div>}

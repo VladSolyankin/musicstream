@@ -30,6 +30,7 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, selectedP
 
 	const onDeletePlaylist = async () => {
 		await deletePlaylist(userId, selectedPlaylist.id)
+		onPlaylistClosed()
 	}
 
 	const onPopoverHandle = () => {
@@ -55,18 +56,18 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, selectedP
 	}, [playlistTrackIds]);
 
 	return (
-		<div className={isVisible ? "wrapper" : "menu__closed overscroll-contain"}>
+		<div id="selectedPlaylist" className={isVisible ? "wrapper" : "menu__closed overscroll-contain"}>
 			<div className="menu__background" onClick={onMenuClosed}></div>
 			<div className="menu__opened overflow-y-auto relative">
 				<div className="flex justify-between items-center p-5 flex-col sm:flex-row">
 					<div className="flex flex-col justify-start">
 						<span className="text-3xl font-jost font-bold">ПЛЕЙЛИСТ</span>
 						<span className="text-2xl">{selectedPlaylist.title}</span>
-						<CustomPopover isOpen={isPopoverOpen} onOpen={onPopoverHandle} content={<SelectedPlaylistMenu />}>
+						<CustomPopover isOpen={isPopoverOpen} onOpen={onPopoverHandle} content={<SelectedPlaylistMenu onDeletePlaylist={onDeletePlaylist}/>}>
 							<ArrowDropDownCircleIcon className="my-3 hover:cursor-pointer hover:transition hover:duration-300 hover:-translate-y-[-3px]" fontSize="large" color="secondary"/>
 						</CustomPopover>
 					</div>
-					<img src={selectedPlaylist.imagePath} alt="Playlist image" className="h-36 w-36"/>
+					<img src={selectedPlaylist.imagePath} alt="Playlist image" className="h-36 w-36 rounded-md"/>
 				</div>
 
 				<button className="absolute top-0 right-0 p-2" onClick={() => {}}>
@@ -94,6 +95,9 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({isVisible, selectedP
 										Слушать на Spotify
 									</a>
 								)}
+								<button onClick={() => onDeleteTrack(track.id)}>
+									<RxCrossCircled className="basis-1/12 w-10 h-10 text-[#FF0000]"/>
+								</button>
 							</li>
 						})
 					}

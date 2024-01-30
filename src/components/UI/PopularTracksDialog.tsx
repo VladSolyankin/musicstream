@@ -8,8 +8,7 @@ const ArtistTopTracksDialog: React.FC<ArtistTopTracksDialogProps> =
          isDialogOpen,
          onDialogClose,
          topArtistTracks,
-         likedTrackIds,
-         onLikeClick,
+         likedTrackIds
      }) => {
 
 
@@ -19,9 +18,8 @@ const ArtistTopTracksDialog: React.FC<ArtistTopTracksDialogProps> =
             <DialogTitle className="text-center">Популярные треки исполнителя</DialogTitle>
             <DialogContent className="bg-gray-12">
                 <TopSearchedTracks
-                    tracks={topArtistTracks.tracks}
+                    tracks={topArtistTracks}
                     likedTracksIds={likedTrackIds}
-                    onLikeClick={onLikeClick}
                 />
             </DialogContent>
         </Dialog>

@@ -2,8 +2,10 @@ import {Track} from "@types";
 import PlaylistPicker from "./PlaylistPicker.tsx";
 import {useState} from "react";
 import {IoAddSharp} from "@react-icons/all-files/io5/IoAddSharp";
+import {addLikedUserTrack} from "@firebase/index.js";
+import {userId} from "@constants";
 
-const TopSearchedTracks = ({tracks, onLikeClick, likedTracksIds}) => {
+const TopSearchedTracks = ({tracks, likedTracksIds}) => {
 	const [isPickerOpen, setPickerOpen] = useState(false)
 	const [selectedTrackId, setSelectedTrackId] = useState("")
 	const [selectedTrackPreview, setSelectedTrackPreview] = useState("")
@@ -12,6 +14,11 @@ const TopSearchedTracks = ({tracks, onLikeClick, likedTracksIds}) => {
 		setSelectedTrackId(id)
 		setSelectedTrackPreview(preview)
 	}
+
+	const onLikeArtistTopTrack = async (trackId) => {
+		await addLikedUserTrack(userId, trackId)
+	}
+
 
 	const onPickerClose = () => setPickerOpen(false)
 	return (
@@ -24,8 +31,8 @@ const TopSearchedTracks = ({tracks, onLikeClick, likedTracksIds}) => {
 						{topTrack.preview_url && <audio controls src={topTrack.preview_url} className="bg-white basis-2/4"/> ||
 							<a className="h-8 hover:font-bold text-center text-xl transform duration-150 basis-2/4" href={topTrack.external_urls.spotify}>Слушать на Spotify</a>
 						}
-						<button onClick={() => onLikeClick(topTrack.id)}>
-							<img src={1 ? "/assets/liked.png" : "/assets/unliked.png"} alt="" className="w-8 h-7"/>
+						<button onClick={() => onLikeArtistTopTrack(topTrack.id)}>
+							<img src={likedTracksIds.includes(topTrack.id) ? "/assets/liked.png" : "/assets/unliked.png"} alt="" className="w-8 h-7"/>
 						</button>
 						<button onClick={() => onPickerShow(topTrack.id, topTrack.preview_url)}>
 							<IoAddSharp className="w-12 h-12"/>

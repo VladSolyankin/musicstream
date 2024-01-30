@@ -46,4 +46,22 @@ export const useArtistDialogStore = create((set) => ({
 	setLikedTrackIds: (likedIds) => set({ likedTrackIds: likedIds }),
 }));
 
+export const usePlaylistStore = create((set) => ({
+	playlists: [],
+	setPlaylists: (playlists) => set({ playlists }),
+	newPlaylistTitle: '',
+	setNewPlaylistTitle: (title) => set({ newPlaylistTitle: title }),
+	previewImage: null,
+	setPreviewImage: (image) => set({ previewImage: image }),
+	isDialogOpen: false,
+	setIsDialogOpen: (isOpen) => set({ isDialogOpen: isOpen }),
+}));
+
+export const useMusicPlayerStore = create((set) => ({
+	isPlayerVisible: false,
+	setPlayerVisible: (isVisible) => set({isPlayerVisible: isVisible}),
+	tracksQueue: [],
+	setTracksQueue: (tracks) => set({tracks})
+}))
+
 export default useStore
