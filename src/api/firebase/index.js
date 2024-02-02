@@ -50,6 +50,8 @@ export const addNewPlaylistTrack = async (uid, playlistId, playlistPreview, trac
     getSelectedDoc.forEach( (doc) => {
         updateDoc(doc.ref, { tracks: arrayUnion({trackId: trackId, preview_url: playlistPreview}) })
     })
+
+    console.log("track added to playlist")
 }
 
 export const addLikedUserTrack = async (uid, trackId) => {

@@ -19,7 +19,6 @@ const TopSearchedTracks = ({tracks, likedTracksIds}) => {
 		await addLikedUserTrack(userId, trackId)
 	}
 
-
 	const onPickerClose = () => setPickerOpen(false)
 	return (
 		<div className="my-5">

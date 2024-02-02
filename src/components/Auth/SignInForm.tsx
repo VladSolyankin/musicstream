@@ -33,16 +33,6 @@ const SignInForm = () => {
     return (
         <>
             <MyNotification isOpened={isErrorOpened} params={signInWarning}/>
-            <ConfigProvider theme={
-                {components:
-                        {
-                            Form: {
-                                labelFontSize: 18,
-                                fontSize: 18
-                            },
-                        }
-                }
-            }>
                 <Form
                 name="basic"
                 labelCol={{span: 8}}
@@ -78,7 +68,7 @@ const SignInForm = () => {
                     <Form.Item<FieldType>
                         name="remember"
                         valuePropName="checked"
-                        wrapperCol={{offset: 7, span: 16}}
+                        wrapperCol={{offset: 8, span: 16}}
                         style={{width: "360px"}}
                     >
                         <Checkbox className="text">Запомнить меня</Checkbox>
@@ -96,7 +86,6 @@ const SignInForm = () => {
                         </Button>
                     </Form.Item>
                 </Form>
-            </ConfigProvider>
         </>
     );
 };

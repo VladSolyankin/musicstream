@@ -11,22 +11,20 @@ export const useStore = create((set) => ({
 	setTracks: (tracks) => set({ tracks }),
 	setIsFunctionExecuted: (isFunctionExecuted) => set({ isFunctionExecuted }),
 	setLikedTracksIds: (likedTracksIds) => set({ likedTracksIds }),
-	currentUser: ''
+	currentUser: '',
+	isPlaylistVisible: false,
+	setIsPlaylistVisible: (isVisible) => set({isPlaylistVisible: isVisible})
 }));
 
 export const usePickerStore = create((set) => ({
 	isPickerOpen: false,
 	selectedTrackId: "",
 	selectedTrackPreview: "",
-
-	// Function to show the Picker
 	showPicker: (id, preview) => set(() => ({
 		isPickerOpen: true,
 		selectedTrackId: id,
 		selectedTrackPreview: preview,
 	})),
-
-	// Function to hide the Picker
 	hidePicker: () => set(() => ({
 		isPickerOpen: false,
 		selectedTrackId: "",
@@ -61,7 +59,15 @@ export const useMusicPlayerStore = create((set) => ({
 	isPlayerVisible: false,
 	setPlayerVisible: (isVisible) => set({isPlayerVisible: isVisible}),
 	tracksQueue: [],
-	setTracksQueue: (tracks) => set({tracks})
+	setTracksQueue: (tracks) => set({tracksQueue: tracks}),
+	playingTrack: {},
+	setPlayingTrack: (track) => set({playingTrack: track}),
+	playingTrackPreview: {},
+	setPlayingTrackPreview: (preview) => set({playingTrackPreview: preview}),
+	isTrackPlaying: false,
+	setIsTrackPlaying: (isPlaying) => set({isTrackPlaying: isPlaying}),
+	playingTrackIndex: 0,
+	setPlayingTrackIndex: (index) => set({playingTrackIndex: index})
 }))
 
 export default useStore

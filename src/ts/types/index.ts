@@ -6,7 +6,8 @@ export type Track = {
     name: string,
     message: string,
     preview_url: string,
-    artists: Array<TrackArtist>
+    artists: Array<TrackArtist>,
+    external_urls: { spotify?: string}
 }
 
 interface TrackArtist {
