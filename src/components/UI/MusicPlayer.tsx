@@ -72,8 +72,8 @@ const MusicPlayer = () => {
 					</button>
 					<MdSkipNext className="w-12 h-12" onClick={() => playNextTrack()} />
 				</div>
-				<span className="font-bold text-lg text-center basis-1/4">{track.name + " - " + track.artists[0].name}</span>
-				<audio ref={audioRef} id="music-player" controls src={playingTrackPreview[playingTrackIndex].preview_url} className="bg-white" autoPlay />
+				<span className="font-bold text-lg text-center basis-1/4">{track.name + " - " + track.artists[0].name || ""}</span>
+				<audio ref={audioRef} id="music-player" controls src={playingTrackPreview[playingTrackIndex].preview_url || track?.src} className="bg-white" autoPlay />
 				<button onClick={() => onPlayerClose()} className="absolute top-0 right-0 p-2">
 					<RxCrossCircled className="basis-1/12 w-8 h-8 text-[#FF0000]" />
 				</button>

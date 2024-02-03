@@ -44,8 +44,13 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({ selectedPlaylist, o
 
 	const onDeletePlaylist = async () => {
 		await deletePlaylist(userId, selectedPlaylist.id);
+		setIsPopoverOpen(false)
 		onPlaylistClosed();
 	};
+
+	const onRenamePlaylist = async () => {
+		setIsPopoverOpen(false)
+	}
 
 	const onPopoverHandle = () => {
 		setIsPopoverOpen(!isPopoverOpen);
@@ -85,7 +90,7 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({ selectedPlaylist, o
 					<div className="flex flex-col justify-start">
 						<span className="text-3xl font-jost font-bold">ПЛЕЙЛИСТ</span>
 						<span className="text-2xl">{selectedPlaylist.title}</span>
-						<CustomPopover isOpen={isPopoverOpen} onOpen={onPopoverHandle} content={<SelectedPlaylistMenu onDeletePlaylist={onDeletePlaylist} />}>
+						<CustomPopover isOpen={isPopoverOpen} onOpen={onPopoverHandle} content={<SelectedPlaylistMenu onDeletePlaylist={onDeletePlaylist} onRenamePlaylist={onRenamePlaylist}/>}>
 							<ArrowDropDownCircleIcon className="my-3 hover:cursor-pointer hover:transition hover:duration-300 hover:-translate-y-[-3px]" fontSize="large" color="secondary" />
 						</CustomPopover>
 					</div>

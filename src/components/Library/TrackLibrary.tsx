@@ -5,11 +5,23 @@ import {nanoid} from "nanoid";
 import {addStorageTrack, deleteStorageTrack, downloadAllStorageTracks, getAllTracks} from "@firebase/index.js";
 import AddNewTrackDialog from "../UI/AddNewTrackDialog";
 import {RxCrossCircled} from "react-icons/rx";
+import {MdPlayCircleFilled} from "react-icons/md";
+import {useMusicPlayerStore} from "@store";
 
 const TrackLibrary = () => {
     const [userStorageTracks, setUserStorageTracks] = useState<Array<{name: string, src: string}>>([])
     const [selectedFile, setSelectedFile] = useState<File | null>(null)
     const [isDialogOpen, setIsDialogOpen] = useState(false)
+    const {
+        setPlayingTrack,
+        setPlayerVisible,
+        setPlayingTrackPreview,
+        setTracksQueue,
+        isTrackPlaying,
+        setIsTrackPlaying,
+        setPlayingTrackIndex,
+        isPlayerVisible
+    } = useMusicPlayerStore();
 
     useEffect(() => {
         const fetchUrls = async () => {
@@ -48,11 +60,11 @@ const TrackLibrary = () => {
     }
 
     const onPlayClick = async () => {
-
+        setPlayerVisible(!isPlayerVisible)
     }
 
     return (
-        <div className="min-h-screen flex flex-col mx-auto w-[100dvw] max-w-6xl mt-10">
+        <div className="min-h-screen flex flex-col mx-auto w-[100dvw] max-w-4xl mt-10">
             <div className="flex items-center justify-between">
                 <div>
                     <h2 className="text-white text-4xl">Библиотека треков</h2>
@@ -62,13 +74,15 @@ const TrackLibrary = () => {
                     <Button className="border-white flex items-center" type="primary" shape="default" icon={<Add />} size="large" onClick={() => setIsDialogOpen(true)}>Новый трек</Button>
                 </div>
             </div>
-            <div className="flex flex-col justify-between mt-10 gap-10">
+            <div className="flex flex-col justify-between mt-10 gap-10 my-12">
                 {
                     userStorageTracks.map((track, index) => (
                         <div key={nanoid()} className="flex text-center justify-between items-center gap-20 text-white text-2xl border-2 p-5 bg-gray-12">
                             <span className="font-bold basis-1/12">{index + 1}.</span>
-                            <span className="font-jost basis-2/6  max-w-[200px] break-all">{track.name}</span>
-                            <audio src={track.src} controls className="basis-3/6 min-w-[200px]" onPlay={() => onPlayClick}></audio>
+                            <span className="font-jost basis-2/6  max-w-[200px]">{track.name}</span>
+                            <button onClick={() => onPlayClick()}>
+                                <MdPlayCircleFilled className="w-12 h-12 basis-3/6" />
+                            </button>
                             <button onClick={() => onDeleteStorageTrack(track.name)}>
                                 <RxCrossCircled className="basis-1/12 w-10 h-10 text-[#FF0000]"/>
                             </button>

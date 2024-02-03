@@ -138,12 +138,16 @@ export const getStorageImage = async (path) => {
 
 export const getAllTracks = async () => {
     let userTracks = [];
-    const storageRef = ref(storage, `users/${userId}`);
+    const userStorageRef = ref(storage, `users/${userId}`);
+    const sharedStorageRef = ref(storage, `sharedTracks/`);
 
     try {
-        const result = await listAll(storageRef);
+        const [userResult, sharedResult] = await Promise.all([
+            listAll(userStorageRef),
+            listAll(sharedStorageRef)
+        ]);
 
-        const promises = result.items.map(async (fileRef) => {
+        const userPromises = userResult.items.map(async (fileRef) => {
             const url = await getDownloadURL(fileRef);
             return {
                 name: fileRef.name,
@@ -151,14 +155,31 @@ export const getAllTracks = async () => {
             };
         });
 
-        userTracks = await Promise.all(promises);
+        const sharedPromises = sharedResult.items.map(async (fileRef) => {
+            const url = await getDownloadURL(fileRef);
+            return {
+                name: fileRef.name,
+                src: url
+            };
+        });
 
-        return userTracks;
+        const [userTracks, sharedTracks] = await Promise.all([
+            Promise.all(userPromises),
+            Promise.all(sharedPromises)
+        ]);
+
+        return [...userTracks, ...sharedTracks];
     } catch (error) {
         console.error('Error getting files from storage:', error);
         return userTracks;
     }
 };
+
+export const getStorageTrack = async (title) => {
+    const storageRef = ref(storage, `users/${userId}/${title}`)
+
+    return getDownloadURL(storageRef)
+}
 
 export const addStorageTrack = async (file) => {
     const fileRef = ref(storage, `users/${userId}/${file?.name}`)
@@ -172,10 +193,11 @@ export const deleteStorageTrack = async (fileName) => {
 
 export const downloadAllStorageTracks = async () => {
     const storageRef = ref(storage, `users/${userId}`)
+    const sharedTracks = ref(storage, "sharedTracks")
     const zip = new JSZip()
 
     try {
-        const result = await listAll(storageRef);
+        const result = [...await listAll(storageRef), ...await listAll(sharedTracks)];
 
         const promises = result.items.map(async (fileRef) => {
             const url = await getDownloadURL(fileRef);
@@ -193,4 +215,8 @@ export const downloadAllStorageTracks = async () => {
     } catch (error) {
         console.error('Error downloading files:', error);
     }
+}
+
+export const renameUserPlaylist = async () => {
+
 }
