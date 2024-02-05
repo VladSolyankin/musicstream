@@ -97,7 +97,10 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({ selectedPlaylist, o
 					<img src={selectedPlaylist.imagePath} alt="Playlist image" className="h-36 w-36 rounded-md" />
 				</div>
 
-				<button className="absolute top-0 right-0 p-2" onClick={() => setIsPlaylistVisible(false)}>
+				<button className="absolute top-0 right-0 p-2" onClick={() => {
+					setIsPlaylistVisible(false)
+					document.body.style.overflow = ''
+				}}>
 					<RxCrossCircled className="basis-1/12 w-10 h-10 text-[#FF0000]" />
 				</button>
 

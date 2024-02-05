@@ -3,7 +3,7 @@ import {PickerPlaylistItemProps} from "@types";
 import {addNewPlaylistTrack} from "@firebase/index.js";
 import {userId} from "@constants";
 
-const PickerPlaylistItem: React.FC<PickerPlaylistItemProps> = ({ playlist, trackId, previewUrl, onPlaylistSelect }) => {
+const PlaylistItemPicker: React.FC<PickerPlaylistItemProps> = ({ playlist, trackId, previewUrl, onPlaylistSelect }) => {
 
     return (
         <div key={playlist.id}>
@@ -23,4 +23,4 @@ const PickerPlaylistItem: React.FC<PickerPlaylistItemProps> = ({ playlist, track
     );
 };
 
-export default PickerPlaylistItem;
+export default PlaylistItemPicker;

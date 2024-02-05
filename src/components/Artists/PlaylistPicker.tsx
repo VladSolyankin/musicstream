@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Dialog, DialogContent, DialogTitle} from "@mui/material";
 import {Playlist} from "@types";
 import {useUserPlaylists} from "@hooks";
-import PickerPlaylistItem from "../MyMusic/PickerPlaylistItem.tsx";
+import PlaylistItemPicker from "../MyMusic/PlaylistItemPicker.tsx";
 import {nanoid} from "nanoid";
 import {userId} from "@constants";
 
@@ -17,7 +17,7 @@ const PlaylistPicker = ({isPickerOpen, onPickerClose, trackId, previewUrl}) => {
             <DialogContent className="grid grid-cols-5 bg-gray-12">
                 {
                     playlists.map(playlist => (
-                        <PickerPlaylistItem key={nanoid()} playlist={playlist} trackId={trackId} previewUrl={previewUrl} onPlaylistSelect={() => onPickerClose()}/>
+                        <PlaylistItemPicker key={nanoid()} playlist={playlist} trackId={trackId} previewUrl={previewUrl} onPlaylistSelect={() => onPickerClose()}/>
                     ))
                 }
             </DialogContent>

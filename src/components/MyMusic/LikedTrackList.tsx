@@ -20,7 +20,7 @@ const LikedTrackList: React.FC = () => {
 
 	const onUnlikeTrack = async (trackId: string) => {
 		await deleteLikedTrack(userId, trackId)
-		setLikedTracks(likedTracks.filter((track: Track) => track.id !== trackId))
+		setLikedTracks(likedTracks.filter((track) => track.id !== trackId))
 	}
 
 	useEffect(() => {
@@ -28,11 +28,11 @@ const LikedTrackList: React.FC = () => {
 	}, [])
 
 	return (
-		<div className="flex flex-col">
+		<div className="flex flex-col gap-5">
 			{likedTracks.length && likedTracks.map((track: Track) => (
-				<li key={track.id} className="border p-4 mb-4 text-white flex items-center justify-between gap-10">
-					<img src={track.album.images[2].url} alt="" className="basis-1/8"/>
-					<span className="text-center text-white basis-1/4">{track.name + " - " + track.artists[0].name}</span>
+				<li key={track.id} className="bg-white border p-4 mb-4 text-white flex items-center justify-between gap-10 rounded-2xl shadow-gray-600 shadow-playlist">
+					<img src={track.album.images[2].url} alt="" className="basis-1/8 rounded-[50%] border-gray-12 border-2"/>
+					<span className="font-bold text-center text-[#000000] basis-1/4">{track.name + " - " + track.artists[0].name}</span>
 					<audio controls src={track.preview_url} className="bg-white basis-2/4"/>
 					<button onClick={() => onUnlikeTrack(track.id)}>
 						<RxCrossCircled className="w-8 h-7 text-[#FF0000]"/>

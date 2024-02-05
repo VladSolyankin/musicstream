@@ -54,12 +54,12 @@ export const addNewPlaylistTrack = async (uid, playlistId, playlistPreview, trac
     console.log("track added to playlist")
 }
 
-export const addLikedUserTrack = async (uid, trackId) => {
+export const addLikedUserTrack = async (uid, trackId, previewUrl) => {
     const userDocRef = doc(db, `users/${uid}`)
     const userDoc = await getDoc(userDocRef)
     const userLikedTracks = userDoc.data().likedTracks
-    if (!userLikedTracks.includes(trackId)) {
-        await updateDoc(userDocRef, { likedTracks: [...userLikedTracks, trackId] })
+    if (!userLikedTracks.some(track => track.id === trackId)) {
+        await updateDoc(userDocRef, { likedTracks: [...userLikedTracks, {id: trackId, url: previewUrl}] })
     }
     else {
         console.log("Трек уже добавлен")
@@ -192,26 +192,38 @@ export const deleteStorageTrack = async (fileName) => {
 }
 
 export const downloadAllStorageTracks = async () => {
-    const storageRef = ref(storage, `users/${userId}`)
-    const sharedTracks = ref(storage, "sharedTracks")
-    const zip = new JSZip()
+    const userId = localStorage.getItem("currentUserId");
+    const storageRef = ref(storage, `users/${userId}`);
+    const sharedTracksRef = ref(storage, "sharedTracks");
+    const zip = new JSZip();
 
     try {
-        const result = [...await listAll(storageRef), ...await listAll(sharedTracks)];
+        const [userResult, sharedResult] = await Promise.all([
+            listAll(storageRef),
+            listAll(sharedTracksRef)
+        ]);
 
-        const promises = result.items.map(async (fileRef) => {
+        const userPromises = userResult.items.map(async (fileRef) => {
             const url = await getDownloadURL(fileRef);
             const response = await fetch(url, { mode: 'no-cors' });
             const blob = await response.blob();
 
-            zip.file(fileRef.name, blob);
+            zip.file(fileRef.name, await blob.arrayBuffer());
         });
 
-        await Promise.all(promises);
+        const sharedPromises = sharedResult.items.map(async (fileRef) => {
+            const url = await getDownloadURL(fileRef);
+            const response = await fetch(url, { mode: 'no-cors' });
+            const blob = await response.blob();
+
+            zip.file(`shared_${fileRef.name}`, await blob.arrayBuffer());
+        });
+
+        await Promise.all([...userPromises, ...sharedPromises]);
 
         const zipBlob = await zip.generateAsync({ type: 'blob' });
 
-        saveAs(zipBlob, `${localStorage.getItem("currentUserId")}.zip`);
+        saveAs(zipBlob, `${userId}.zip`);
     } catch (error) {
         console.error('Error downloading files:', error);
     }
