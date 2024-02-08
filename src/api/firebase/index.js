@@ -14,7 +14,6 @@ import {
 } from 'firebase/firestore'
 import {deleteObject, getDownloadURL, listAll, ref, uploadBytes} from 'firebase/storage'
 import {userId} from "@constants";
-import JSZip from 'JSZip'
 import {saveAs} from 'file-saver'
 
 
@@ -191,43 +190,43 @@ export const deleteStorageTrack = async (fileName) => {
     await deleteObject(fileRef).then(() => console.log(`${fileName} deleted`))
 }
 
-export const downloadAllStorageTracks = async () => {
-    const userId = localStorage.getItem("currentUserId");
-    const storageRef = ref(storage, `users/${userId}`);
-    const sharedTracksRef = ref(storage, "sharedTracks");
-    const zip = new JSZip();
-
-    try {
-        const [userResult, sharedResult] = await Promise.all([
-            listAll(storageRef),
-            listAll(sharedTracksRef)
-        ]);
-
-        const userPromises = userResult.items.map(async (fileRef) => {
-            const url = await getDownloadURL(fileRef);
-            const response = await fetch(url, { mode: 'no-cors'});
-            const blob = await response.blob();
-
-            zip.file(fileRef.name, await blob.arrayBuffer());
-        });
-
-        const sharedPromises = sharedResult.items.map(async (fileRef) => {
-            const url = await getDownloadURL(fileRef);
-            const response = await fetch(url, { mode: 'no-cors' });
-            const blob = await response.blob();
-
-            zip.file(`shared_${fileRef.name}`, await blob.arrayBuffer());
-        });
-
-        await Promise.all([...userPromises, ...sharedPromises]);
-
-        const zipBlob = await zip.generateAsync({ type: 'blob' });
-
-        saveAs(zipBlob, `${userId}.zip`);
-    } catch (error) {
-        console.error('Error downloading files:', error);
-    }
-}
+// export const downloadAllStorageTracks = async () => {
+//     const userId = localStorage.getItem("currentUserId");
+//     const storageRef = ref(storage, `users/${userId}`);
+//     const sharedTracksRef = ref(storage, "sharedTracks");
+//     const zip = new JSZip();
+//
+//     try {
+//         const [userResult, sharedResult] = await Promise.all([
+//             listAll(storageRef),
+//             listAll(sharedTracksRef)
+//         ]);
+//
+//         const userPromises = userResult.items.map(async (fileRef) => {
+//             const url = await getDownloadURL(fileRef);
+//             const response = await fetch(url, { mode: 'no-cors'});
+//             const blob = await response.blob();
+//
+//             zip.file(fileRef.name, await blob.arrayBuffer());
+//         });
+//
+//         const sharedPromises = sharedResult.items.map(async (fileRef) => {
+//             const url = await getDownloadURL(fileRef);
+//             const response = await fetch(url, { mode: 'no-cors' });
+//             const blob = await response.blob();
+//
+//             zip.file(`shared_${fileRef.name}`, await blob.arrayBuffer());
+//         });
+//
+//         await Promise.all([...userPromises, ...sharedPromises]);
+//
+//         const zipBlob = await zip.generateAsync({ type: 'blob' });
+//
+//         saveAs(zipBlob, `${userId}.zip`);
+//     } catch (error) {
+//         console.error('Error downloading files:', error);
+//     }
+// }
 
 
 export const renameUserPlaylist = async () => {
