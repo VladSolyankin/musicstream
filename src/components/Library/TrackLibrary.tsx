@@ -2,7 +2,7 @@ import {Button} from "antd";
 import {Add, DownloadOutlined} from "@mui/icons-material";
 import React, {ChangeEvent, useEffect, useState} from "react";
 import {nanoid} from "nanoid";
-import {addStorageTrack, deleteStorageTrack, downloadAllStorageTracks, getAllTracks} from "@firebase/index.js";
+import {addStorageTrack, deleteStorageTrack, getAllTracks} from "@firebase/index.js";
 import AddNewTrackDialog from "../UI/AddNewTrackDialog";
 import {RxCrossCircled} from "react-icons/rx";
 import {MdPlayCircleFilled} from "react-icons/md";
@@ -75,7 +75,7 @@ const TrackLibrary = () => {
                     <h2 className="text-white text-4xl">Библиотека треков</h2>
                 </div>
                 <div className="flex flex-center items-center gap-5">
-                    <Button className="border-white flex items-center" type="primary" shape="default" icon={<DownloadOutlined />} size="large" onClick={() => downloadAllStorageTracks()}>Скачать всё</Button>
+                    <Button className="border-white flex items-center" type="primary" shape="default" icon={<DownloadOutlined />} size="large">Скачать всё</Button>
                     <Button className="border-white flex items-center" type="primary" shape="default" icon={<Add />} size="large" onClick={() => setIsDialogOpen(true)}>Новый трек</Button>
                 </div>
             </div>
