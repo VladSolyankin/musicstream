@@ -7,6 +7,7 @@
   base = "/"
   command = "npm run build"
   publish = "dist/"
+  functions = "functions/"
 
 # The following redirect is intended for use with most SPAs
 # that handle routing internally.

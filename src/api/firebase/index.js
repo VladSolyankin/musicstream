@@ -205,7 +205,7 @@ export const downloadAllStorageTracks = async () => {
 
         const userPromises = userResult.items.map(async (fileRef) => {
             const url = await getDownloadURL(fileRef);
-            const response = await fetch(url, { mode: 'no-cors' });
+            const response = await fetch(url, { mode: 'no-cors'});
             const blob = await response.blob();
 
             zip.file(fileRef.name, await blob.arrayBuffer());
@@ -228,6 +228,7 @@ export const downloadAllStorageTracks = async () => {
         console.error('Error downloading files:', error);
     }
 }
+
 
 export const renameUserPlaylist = async () => {
 

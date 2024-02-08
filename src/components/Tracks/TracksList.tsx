@@ -17,6 +17,7 @@ export const TracksList = () => {
         setIsFunctionExecuted,
         setLikedTracksIds } = useStore();
 
+
     const onTrackSearch = async (): Promise<void> => {
         try {
             const result = await fetch(`/getSearchedTracks?q=${query}&offset=${page*10}`).then(res => res.json())
@@ -45,18 +46,17 @@ export const TracksList = () => {
     }, [page, isFunctionExecuted]);
 
     return (
-        <div className="max-w-5xl mx-auto mb-52 min-h-screen">
+        <div className="flex flex-col w-[45%] max-w-5xl mx-auto mb-52 min-h-screen">
             <SearchBar setQuery={setQuery} onTrackSearch={onTrackSearch} />
             {
                 isFunctionExecuted ?
-                    <SearchedTracks likedTracksIds={likedTracksIds} tracks={tracks} onLikeClick={onLikeClick}></SearchedTracks>
+                    <SearchedTracks likedTracksIds={likedTracksIds} tracks={tracks} onLikeClick={onLikeClick} />
                     :
                     <div className="min-h-screen flex justify-center items-center text-white text-5xl">
                         <b>Тут будут ваши треки...</b>
                     </div>
             }
             <TracksPagination onPageChange={onPageChange} />
-
         </div>
     );
 };

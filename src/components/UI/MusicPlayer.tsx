@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useMusicPlayerStore } from "@store";
-import { RxCrossCircled } from "react-icons/rx";
-import { Track } from "@types";
-import { MdPauseCircleFilled, MdPlayCircleFilled, MdSkipNext, MdSkipPrevious } from "react-icons/md";
+import React, {useEffect, useRef, useState} from 'react';
+import {useMusicPlayerStore} from "@store";
+import {RxCrossCircled} from "react-icons/rx";
+import {Track} from "@types";
+import {MdSkipNext, MdSkipPrevious} from "react-icons/md";
 
 const MusicPlayer = () => {
 	const {
@@ -26,6 +26,7 @@ const MusicPlayer = () => {
 
 	useEffect(() => {
 		if (audioRef.current) {
+			audioRef.current.volume = 0.1
 			if (isTrackPlaying) {
 				audioRef.current.pause();
 			} else {
@@ -52,6 +53,7 @@ const MusicPlayer = () => {
 
 	const playPreviousTrack = () => {
 		const previousIndex = (playingTrackIndex - 1 + tracksQueue.length) % tracksQueue.length;
+		setPlayingTrackIndex(previousIndex)
 		setTrack(tracksQueue[previousIndex]);
 		setPlayingTrack(tracksQueue[previousIndex]);
 	};
@@ -64,17 +66,14 @@ const MusicPlayer = () => {
 	return (
 		isPlayerVisible && track ? (
 			<div className={`flex items-center justify-center bg-white w-full h-24 bottom-0 ${isPlayerVisible ? "fixed" : "hidden"}`}>
-				<img src={track.album.images[2].url} alt="Playing track image" className="basis-1/8 w-14 h-14" />
 				<div className="flex justify-center items-center basis-1/6">
-					<MdSkipPrevious className="w-12 h-12" onClick={() => playPreviousTrack()} />
-					<button onClick={onPlayPauseClick}>
-						{isTrackPlaying ? <MdPlayCircleFilled className="w-12 h-12" /> : <MdPauseCircleFilled className="w-12 h-12" />}
-					</button>
-					<MdSkipNext className="w-12 h-12" onClick={() => playNextTrack()} />
+					<MdSkipPrevious className="w-12 h-12 cursor-pointer" onClick={playPreviousTrack} />
+					<img src={track.album?.images[2]?.url || "assets/disco.svg"} alt="Playing track image" className="basis-1/8 w-14 h-14" />
+					<MdSkipNext className="w-12 h-12 cursor-pointer" onClick={playNextTrack} />
 				</div>
-				<span className="font-bold text-lg text-center basis-1/4">{track.name + " - " + track.artists[0].name || ""}</span>
-				<audio ref={audioRef} id="music-player" controls src={playingTrackPreview[playingTrackIndex].preview_url || track?.src} className="bg-white" autoPlay />
-				<button onClick={() => onPlayerClose()} className="absolute top-0 right-0 p-2">
+				<span className="font-bold text-lg text-center basis-1/4">{track.name}</span>
+				<audio ref={audioRef} id="music-player" controls src={(playingTrackPreview && playingTrackPreview[playingTrackIndex] && playingTrackPreview[playingTrackIndex].preview_url) || (track && track.src) || (tracksQueue[playingTrackIndex].url)} className="bg-white" autoPlay />
+				<button onClick={onPlayerClose} className="absolute top-0 right-0 p-2">
 					<RxCrossCircled className="basis-1/12 w-8 h-8 text-[#FF0000]" />
 				</button>
 			</div>

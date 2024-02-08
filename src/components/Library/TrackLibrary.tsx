@@ -59,8 +59,13 @@ const TrackLibrary = () => {
         }
     }
 
-    const onPlayClick = async () => {
-        setPlayerVisible(!isPlayerVisible)
+    const onPlayClick = async (track, index) => {
+        setIsTrackPlaying(!isTrackPlaying)
+        setPlayerVisible(true)
+        setPlayingTrack(track)
+        setTracksQueue(userStorageTracks)
+        setPlayingTrackIndex(index)
+        setPlayingTrackPreview(track.src)
     }
 
     return (
@@ -80,7 +85,7 @@ const TrackLibrary = () => {
                         <div key={nanoid()} className="flex text-center justify-between items-center gap-20 text-white text-2xl border-2 p-5 bg-gray-12">
                             <span className="font-bold basis-1/12">{index + 1}.</span>
                             <span className="font-jost basis-2/6  max-w-[200px]">{track.name}</span>
-                            <button onClick={() => onPlayClick()}>
+                            <button onClick={() => onPlayClick(track, index)}>
                                 <MdPlayCircleFilled className="w-12 h-12 basis-3/6" />
                             </button>
                             <button onClick={() => onDeleteStorageTrack(track.name)}>
