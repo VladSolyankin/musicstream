@@ -5,6 +5,7 @@ import ArtistTopTracksDialog from "../UI/PopularTracksDialog.tsx";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import {addLikedUserTrack, getUserLikedTracks} from "@firebase/index.js";
 import {userId} from "@constants";
+import {getAllArtists, getTracks} from '../../api/spotify/index.js'
 
 const ArtistList: React.FC = () => {
 
@@ -36,9 +37,8 @@ const ArtistList: React.FC = () => {
 
 	const getArtists = async (query: string) => {
 		try {
-			const response = await fetch(`/getArtists?q=${query}`);
-			const data = await response.json();
-			return data.artists.items.map((artist) => ({ name: artist.name, image: artist.images[0].url || artist.images[1] || artist.images[2] }));
+			const response = await getAllArtists(query)
+			return response.items.map((artist) => ({ name: artist.name, image: artist.images[0].url || artist.images[1] || artist.images[2] }));
 		} catch (error) {
 			console.error('Error fetching artists:', error.message);
 			return [];
@@ -47,9 +47,8 @@ const ArtistList: React.FC = () => {
 
 	const getArtistTopTracks = async (artist: string) => {
 		try {
-			const response = await fetch(`/getTracks?q=${artist}`)
-			const {tracks} = await response.json()
-			setTopArtistTracks(tracks)
+			const response = await getTracks(artist)
+			setTopArtistTracks(response)
 		} catch (error) {
 			console.error('Error fetching tracks: ', error.message)
 			return []

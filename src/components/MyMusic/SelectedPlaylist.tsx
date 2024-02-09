@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { deletePlaylist, deletePlaylistTrack, getPlaylistTracks } from "@firebase/index.js";
+import {deletePlaylist, deletePlaylistTrack, getPlaylistTracks, renameUserPlaylist} from "@firebase/index.js";
 import { SelectedPlaylistProps, Track } from "@types";
 import { userId } from "@constants";
 import CustomPopover from "../UI/CustomPopover";
@@ -11,12 +11,16 @@ import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 import { MdOutlinePauseCircleFilled } from "react-icons/md";
 import { IoMdPlayCircle } from "react-icons/io";
 import { useMusicPlayerStore, useStore } from "@store";
+import RenamePlaylistDialog from "../UI/RenamePlaylistDialog.tsx";
+import {getTracksByIds} from "../../api/spotify";
 
 const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({ selectedPlaylist, onPlaylistClosed }) => {
 	const [playlistTrackIds, setPlaylistTrackIds] = useState<object[]>([]);
 	const [playlistTracks, setPlaylistTracks] = useState<Track[]>([]);
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 	const [currentlyPlayingTrackId, setCurrentlyPlayingTrackId] = useState<string | null>(null);
+	const [isDialogOpen, setIsDialogOpen] = useState(false)
+	const [newPlaylistName, setNewPlaylistName] = useState()
 	const { isPlaylistVisible, setIsPlaylistVisible } = useStore();
 	const {
 		setPlayingTrack,
@@ -49,7 +53,14 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({ selectedPlaylist, o
 	};
 
 	const onRenamePlaylist = async () => {
-		setIsPopoverOpen(false)
+		setIsDialogOpen(true)
+	}
+
+	const onNameChange = (e) => setNewPlaylistName(e.target.value)
+
+	const onRenameDialogClose = async () => {
+		setIsDialogOpen(false)
+		await renameUserPlaylist(userId, selectedPlaylist.id, newPlaylistName)
 	}
 
 	const onPopoverHandle = () => {
@@ -61,11 +72,9 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({ selectedPlaylist, o
 		setCurrentlyPlayingTrackId(track.id);
 		await setPlayingTrack(track);
 		await setPlayingTrackPreview(trackIds);
-		console.log(trackIds)
 		await setPlayerVisible(true);
 		await setTracksQueue(playlistTracks);
 		await setPlayingTrackIndex(index);
-		console.log(index)
 	};
 
 	useEffect(() => {
@@ -74,8 +83,9 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({ selectedPlaylist, o
 			setPlaylistTrackIds(trackIds);
 
 			if (trackIds.length > 0) {
-				const { tracks } = await fetch(`/getTracksByIds?ids=${trackIds.map(elem => elem.trackId).join('%2C')}`).then(res => res.json());
-				setPlaylistTracks(tracks);
+				const response = await getTracksByIds(trackIds.map(elem => elem.trackId).join('%2C'))
+				console.log(response)
+				setPlaylistTracks(response);
 			}
 		};
 
@@ -136,6 +146,7 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({ selectedPlaylist, o
 						})}
 				</ul>
 			</div>
+			<RenamePlaylistDialog isOpen={isDialogOpen} onClose={onRenameDialogClose} onNameChange={onNameChange}/>
 		</div>
 	);
 };

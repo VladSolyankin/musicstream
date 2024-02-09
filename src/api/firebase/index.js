@@ -126,7 +126,7 @@ export const getPlaylistTracks = async (uid, playlistId) => {
 
 export const getUserLikedTracks = async (uid) => {
     const userDoc = await getDoc(doc(db, `users/${uid}`))
-    return userDoc.data().likedTracks
+    return await userDoc.data().likedTracks
 }
 
 export const getStorageImage = async (path) => {
@@ -190,45 +190,49 @@ export const deleteStorageTrack = async (fileName) => {
     await deleteObject(fileRef).then(() => console.log(`${fileName} deleted`))
 }
 
-// export const downloadAllStorageTracks = async () => {
-//     const userId = localStorage.getItem("currentUserId");
-//     const storageRef = ref(storage, `users/${userId}`);
-//     const sharedTracksRef = ref(storage, "sharedTracks");
-//     const zip = new JSZip();
-//
-//     try {
-//         const [userResult, sharedResult] = await Promise.all([
-//             listAll(storageRef),
-//             listAll(sharedTracksRef)
-//         ]);
-//
-//         const userPromises = userResult.items.map(async (fileRef) => {
-//             const url = await getDownloadURL(fileRef);
-//             const response = await fetch(url, { mode: 'no-cors'});
-//             const blob = await response.blob();
-//
-//             zip.file(fileRef.name, await blob.arrayBuffer());
-//         });
-//
-//         const sharedPromises = sharedResult.items.map(async (fileRef) => {
-//             const url = await getDownloadURL(fileRef);
-//             const response = await fetch(url, { mode: 'no-cors' });
-//             const blob = await response.blob();
-//
-//             zip.file(`shared_${fileRef.name}`, await blob.arrayBuffer());
-//         });
-//
-//         await Promise.all([...userPromises, ...sharedPromises]);
-//
-//         const zipBlob = await zip.generateAsync({ type: 'blob' });
-//
-//         saveAs(zipBlob, `${userId}.zip`);
-//     } catch (error) {
-//         console.error('Error downloading files:', error);
-//     }
-// }
+export const downloadAllStorageTracks = async () => {
+    const userId = localStorage.getItem("currentUserId");
+    const storageRef = ref(storage, `users/${userId}`);
+    const sharedTracksRef = ref(storage, "sharedTracks");
+    const tracksText = []; // Массив для хранения строк с информацией о треках
+
+    try {
+        const userResult = await listAll(storageRef);
+        for (const fileRef of userResult.items) {
+            const url = await getDownloadURL(fileRef);
+            tracksText.push(`${tracksText.length + 1}. ${fileRef.name}. URL: ${url}\n`); // Добавление строки с информацией о треке
+        }
+
+        const sharedResult = await listAll(sharedTracksRef);
+        for (const fileRef of sharedResult.items) {
+            const url = await getDownloadURL(fileRef);
+            tracksText.push(`${tracksText.length + 1}. ${fileRef.name}. URL: ${url}\n`); // Добавление строки с информацией о треке
+        }
+
+        const tracksTextContent = tracksText.join("\n");
+        const tracksBlob = new Blob([tracksTextContent], { type: "text/plain" });
+
+        saveAs(tracksBlob, `${userId}.txt`);
+    } catch (error) {
+        console.error('Error downloading files:', error);
+    }
+}
 
 
-export const renameUserPlaylist = async () => {
 
+export const renameUserPlaylist = async (uid, playlistId, newTitle) => {
+    try {
+        const playlistsRef = collection(db, `users/${uid}/playlists`);
+        const querySnapshot = await getDocs(query(playlistsRef, where('id', '==', playlistId)));
+
+        if (!querySnapshot.empty) {
+            const playlistDocRef = querySnapshot.docs[0].ref;
+            await updateDoc(playlistDocRef, { title: newTitle });
+            console.log(`Playlist ${playlistId} renamed to ${newTitle}`);
+        } else {
+            console.error('Playlist not found.');
+        }
+    } catch (error) {
+        console.error('Error renaming playlist:', error);
+    }
 }

@@ -46,6 +46,7 @@ const Playlists: React.FC<PlaylistsProps> = ({onPlaylistSelect}) => {
 
     useUserPlaylists(setPlaylists, userId)
 
+
     return (
         <div className="flex flex-col justify-center items-center border-2 min-h-32dvh min-w-full max-w-5xl mx-auto my-10 py-10 rounded-xl bg-gray-12 p-10 gap-3">
             <div className="flex items-center justify-between w-full">

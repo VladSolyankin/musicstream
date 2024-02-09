@@ -11,7 +11,6 @@ const PlaylistItem: React.FC<PlaylistItemProps> = ({ playlist, onPlaylistSelect 
                 <button onClick={() => {
                     onPlaylistSelect(playlist)
                     setIsPlaylistVisible(true)
-                    console.log(isPlaylistVisible)
                 }}>
                     <img className="w-44 h-44 rounded mr-2 hover:scale-90 duration-150"
                          src={playlist.imagePath} alt={playlist.title} />

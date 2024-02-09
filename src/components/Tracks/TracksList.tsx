@@ -3,6 +3,7 @@ import SearchBar from "./SearchBar";
 import SearchedTracks from "./SearchedTracks";
 import TracksPagination from "./TracksPagination";
 import useStore from "@store";
+import {getSearchedTracks} from "../../api/spotify";
 
 export const TracksList = () => {
     const {
@@ -20,8 +21,8 @@ export const TracksList = () => {
 
     const onTrackSearch = async (): Promise<void> => {
         try {
-            const result = await fetch(`/getSearchedTracks?q=${query}&offset=${page*10}`).then(res => res.json())
-            setTracks(result.tracks.items)
+            const result = await getSearchedTracks(query, page * 10)
+            setTracks(result.items)
             setIsFunctionExecuted(true)
         } catch (error: Error) {
             console.error('Error searching tracks:', error.message);

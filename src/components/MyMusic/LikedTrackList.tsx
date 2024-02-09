@@ -5,6 +5,7 @@ import {RxCrossCircled} from "react-icons/rx";
 import {userId} from "@constants";
 import {MdPlayCircle, MdPlayCircleFilled} from "react-icons/md";
 import {useMusicPlayerStore} from "@store";
+import {getTracksByIds} from "../../api/spotify";
 
 const LikedTrackList: React.FC = () => {
 	const [likedTracks, setLikedTracks] = useState([])
@@ -24,11 +25,10 @@ const LikedTrackList: React.FC = () => {
 		const userLikedTrackIds = await getUserLikedTracks(userId);
 		setFirebaseTracks(userLikedTrackIds)
 		if (userLikedTrackIds.length) {
-			const ids = userLikedTrackIds.map(track => track.id); // Извлекаем значения id из объектов
-			const likedTracks = await fetch(`/getTracksByIds?ids=${ids.join('%2C')}`)
-				.then(res => res.json());
-			setLikedTracks(likedTracks.tracks);
-			console.log(likedTracks);
+			const ids = userLikedTrackIds.map(track => track.id);
+			const likedTracks = await getTracksByIds(ids.join('%2C'))
+			console.log(likedTracks)
+			setLikedTracks(likedTracks);
 		} else {
 			console.warn("No liked tracks");
 		}
@@ -47,16 +47,14 @@ const LikedTrackList: React.FC = () => {
 		setIsTrackPlaying(!isTrackPlaying)
 		setPlayerVisible(true)
 		setPlayingTrack(track)
-		console.log(track)
 		setTracksQueue(firebaseTracks)
 		setPlayingTrackIndex(index)
 		setPlayingTrackPreview(firebaseTracks[index].url)
-		console.log(firebaseTracks)
 	}
 
 	return (
 		<div className="flex flex-col gap-5">
-			{likedTracks.length && likedTracks.map((track: Track, index) => (
+			{likedTracks.length ? likedTracks?.map((track: Track, index) => (
 				<li key={track.id} className="bg-white border p-4 mb-4 text-white flex items-center justify-between gap-10 rounded-2xl shadow-gray-600 shadow-playlist">
 					<img src={track.album.images[2].url} alt="" className="basis-1/8 rounded-[50%] border-gray-12 border-2"/>
 					<span className="font-bold text-center text-[#000000] basis-1/4">{track.name + " - " + track.artists[0].name}</span>
@@ -74,7 +72,7 @@ const LikedTrackList: React.FC = () => {
 						<RxCrossCircled className="w-8 h-7 text-[#FF0000]"/>
 					</button>
 				</li>
-			))}
+			)) : <></>}
 		</div>
 	);
 };
